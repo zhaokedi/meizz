@@ -1,0 +1,282 @@
+<include file="Public/min-header"/>
+<div class="wrapper">
+ <include file="Public/breadcrumb"/>
+ <style>#search-form > .form-group{margin-left: 10px;}</style>
+  <!-- Main content -->
+  <section class="content">
+    <div class="container-fluid">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title"><i class="fa fa-list"></i> 商品列表</h3>
+        </div>
+        <div class="panel-body">
+          <div class="navbar navbar-default">
+              <form action="" id="search-form2" class="navbar-form form-inline" method="post" onsubmit="return false">
+                <div class="form-group">
+                  <select name="cat_id" id="cat_id" class="form-control">
+                    <option value="">所有分类</option>
+                    <foreach name="categoryList" item="v" key="k" >
+                        <option value="{$v['id']}"> {$v['name']}</option>
+			 		</foreach>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <select name="brand_id" id="brand_id" class="form-control">
+                    <option value="">所有品牌</option>
+                        <foreach name="brandList" item="v" key="k" >
+                           <option value="{$v['id']}">{$v['name']}</option>
+						</foreach>
+                  </select>
+                </div>                
+
+                <div class="form-group">
+                  <select name="is_on_sale" id="is_on_sale" class="form-control">
+                    <option value="">全部</option>                  
+                    <option value="1">上架</option>
+                    <option value="0">下架</option>
+                  </select>
+                </div>                
+                <div class="form-group">
+                    <select name="intro" class="form-control">
+                        <option value="0">全部</option>
+                        <option value="is_new">新品</option>
+                        <option value="is_recommend">精品</option>
+                    </select>                
+                </div>                  
+                <div class="form-group">
+                  <select name="state" id="state" class="form-control">
+                    <option value="">全部</option>                  
+                    <option value="1">缺货</option>
+                    <option value="0">不缺货</option>
+                  </select>
+                </div> 
+                <div class="form-group">
+                  <label class="control-label" for="input-order-id">关键词</label>
+                  <div class="input-group">
+                    <input type="text" name="key_word" value="" placeholder="搜索词" id="input-order-id" class="form-control">
+                  </div>
+                </div>                  
+                <!--排序规则-->
+                <input type="hidden" name="orderby1" value="goods_id" />
+                <input type="hidden" name="orderby2" value="desc" />
+                <button type="submit" onclick="ajax_get_table('search-form2',1)" id="button-filter search-order" class="btn btn-primary"><i class="fa fa-search"></i> 筛选</button>
+                <button type="submit" onclick="ajax_export()" id="button-filter search-order" class="btn btn-primary"><i class="fa fa-heart"></i> 导出Excel</button>
+                <button type="submit" onclick="ajax_modifygoods()" id="button-filter search-order" class="btn btn-primary"><i class="fa fa-fire"></i> 批量修改</button>
+                <button type="button" onclick="location.href='{:U('Admin/goods/addEditGoods')}'" class="btn btn-primary pull-right"><i class="fa fa-plus"></i>添加新商品</button>
+              </form>
+          </div>
+          <div id="ajax_return"> </div>
+        </div>
+      </div>
+    </div>
+    <!-- /.row --> 
+  </section>
+  <!-- /.content --> 
+</div>
+<!-- /.content-wrapper -->
+
+<!-- 修改商品信息 -->
+<div class="modal fade" id="modal-modify">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">修改商品信息</h4>
+            </div>
+            <div class="modal-body" id="modal-form">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group"><div class="help-block"></div></div>
+                    </div>
+                </div>
+                <input type="hidden" id="ids" name="ids" value=""/>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="add-field3" class="control-label">本店售价</label>
+                            <input id="shop_price" class="form-control" type="text" name="shop_price" value=""/>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="add-field3" class="control-label">库存数量</label>
+                            <input id="store_count" class="form-control" type="text" name="store_count" value=""/>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="add-field3" class="control-label">商品品牌</label>
+                            <select name="brand_id" class="form-control" style="width:250px;">
+                                <option value="">所有品牌</option>
+                                <foreach name="brandList" item="v" key="k" >
+                                    <option value="{$v['id']}"  <if condition="$v['id'] eq $goodsInfo['brand_id'] ">selected="selected"</if>>
+                                    {$v['name']}
+                                    </option>
+                                </foreach>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="add-field3" class="control-label">赠送积分</label>
+                            <input id="give_integral" type="text" name="give_integral" value=""/>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="add-field3" class="control-label">设置:</label>
+                            <input type="checkbox" value="" name="is_on_sale"/> 上架&nbsp;&nbsp;
+                            <input type="checkbox" value="" name="is_free_shipping"/> 包邮&nbsp;&nbsp;
+                            <input type="checkbox" value="" name="is_recommend"/>精品&nbsp;&nbsp;
+                            <input type="checkbox" value="" name="is_new"/>新品&nbsp;&nbsp;
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="add-field3" class="control-label">关键字</label>
+                            <input type="text" class="form-control" value="" name="keywords"/>用空格分隔
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-info" onclick="domodifygoods()">提交</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function(){
+		// ajax 加载商品列表
+        ajax_get_table('search-form2',1);
+
+    });
+
+    //导出excel
+    function ajax_export(){
+        var param = '';
+        if($('#cat_id').val()){
+            param += 'cat_id='+$('#cat_id').val()+'&';
+        }
+        if($('#brand_id').val()){
+            param += 'brand_id='+$('#brand_id').val()+'&';
+        }
+        if($('#is_on_sale').val()){
+            param += 'is_on_sale='+$('#is_on_sale').val()+'&';
+        }
+        if($('#intro').val()){
+            param += 'intro='+$('#intro').val()+'&';
+        }
+        if($('#input-order-id').val()){
+            param += 'key_word='+$('#input-order-id').val()+'&';
+        }
+        param = param.substring(0,param.length-1);
+        location.href='/Admin/Goods/exportGoodList/?'+param
+    }
+
+    //批量修改商品页面
+    function ajax_modifygoods(){
+        var obj, str='';
+        obj = $('input:checkbox[name="selected[]"]:checked');
+        obj.each(function(){
+            str+=$(this).val()+',';
+        });
+        if(str == ''){
+            alert('请选择商品的id');
+            return false;
+        }
+        $('#ids').val(str);
+        $('#modal-modify').modal('show');
+    }
+
+    //批量修改商品操作
+    function domodifygoods(){
+        var $modal_modify = $('#modal-form');
+        var	$tip = $modal_modify.find('.help-block'),
+            $ids = $modal_modify.find("input[name='ids']"),
+            $shop_price = $modal_modify.find("input[name='shop_price']"),
+            $store_count = $modal_modify.find("input[name='store_count']"),
+            $brand_id = $modal_modify.find("select[name='brand_id']"),
+            $give_integral = $modal_modify.find("input[name='give_integral']"),
+            $is_on_sale = $modal_modify.find("input[name='is_on_sale']"),
+            $is_free_shipping = $modal_modify.find("input[name='is_free_shipping']"),
+            $is_recommend = $modal_modify.find("input[name='is_recommend']"),
+            $is_new = $modal_modify.find("input[name='is_new']"),
+            $keywords = $modal_modify.find("input[name='keywords']");
+
+            var param = {
+                'ids':$ids.val(),
+                'shop_price':$shop_price.val(),
+                'store_count':$store_count.val(),
+                'brand_id':$brand_id.val(),
+                'give_integral':$give_integral.val(),
+                'is_on_sale':$is_on_sale.is(':checked')?1:0,
+                'is_free_shipping':$is_free_shipping.is(':checked')?1:0,
+                'is_recommend':$is_recommend.is(':checked')?1:0,
+                'is_new':$is_new.is(':checked')?1:0,
+                'keywords':$keywords.val()};
+            $.post('/Admin/Goods/modifyGoods',param,function(json){
+                if(json['status']){
+                    $modal_modify.modal('hide');
+                    location.reload();
+                }else{
+                    $tip.text(json['msg']).parents('.form-group').addClass('has-error');
+                }
+            },'json');
+    }
+
+
+    // ajax 抓取页面 form 为表单id  page 为当前第几页
+    function ajax_get_table(form,page){
+		cur_page = page; //当前页面 保存为全局变量
+            $.ajax({
+                type : "POST",
+                url:"/index.php?m=Admin&c=goods&a=ajaxGoodsList&p="+page,//+tab,
+                data : $('#'+form).serialize(),// 你的formid
+                success: function(data){
+                    $("#ajax_return").html('');
+                    $("#ajax_return").append(data);
+                }
+            });
+        }
+      
+        // 点击排序
+        function sort(field)
+        {
+           $("input[name='orderby1']").val(field);
+           var v = $("input[name='orderby2']").val() == 'desc' ? 'asc' : 'desc';             
+           $("input[name='orderby2']").val(v);
+           ajax_get_table('search-form2',cur_page);
+        }
+        
+        // 删除操作
+        function del(id)
+        {
+            if(!confirm('确定要删除吗?'))
+                return false;
+		$.ajax({
+			url:"/index.php?m=Admin&c=goods&a=delGoods&id="+id,
+			success: function(v){	
+                                var v =  eval('('+v+')');                                 
+                                if(v.hasOwnProperty('status') && (v.status == 1))
+                                        ajax_get_table('search-form2',cur_page);                                                      
+                                else
+                                        layer.msg(v.msg, {icon: 2,time: 1000}); //alert(v.msg);
+			}
+		}); 
+               return false;
+          }
+</script> 
+</body>
+</html>
