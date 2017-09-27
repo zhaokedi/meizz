@@ -1,0 +1,108 @@
+<include file="Public/header" />
+<include file="User/navigate" />
+<section class="main">
+    <!-- main-left -->
+    <include file="User/menu" />
+    <!-- /main-left -->
+    <!-- main-right -->
+    <div class="main-right">
+        <h2>绑定邮箱</h2>
+        <div class="page52">
+            <form action="{:U('/Home/User/email_validate')}" method="post" onSubmit="return check_form();">
+            <div class="step1 yzm">
+                <div class="title">
+                    <span>邮箱验证</span>
+                    <span>完成验证</span>
+                </div>
+                <ul>
+                    <li><span>原邮箱</span><input type="text" name="old_email" id="old_email" placeholder="没有请留空"></li>
+                    <li><span>新邮箱</span><input type="text" id="new_email" name="email"></li>
+                    <li><span>验证码</span><input type="text" id="new_code" maxlength="4" style="width:100px;" class="imput_text" name="code"><input type="button" class="btn-yzm" id="btnemailAuthCode2" onclick="sendCode(this,'new_email')" value="发送验证码" />
+                    </li>
+                    <li><input type="submit" value="提交"></li>
+                </ul>
+            </div>
+            </form>
+        </div>
+    </div>
+    <!-- /main-right -->
+</section>
+<script type="text/javascript">
+function check_form()
+{
+    var old_email = $('#old_email').val();
+    var new_email = $('#new_email').val();
+    //原邮箱不为空的情况下 验证格式
+    if(old_email != ''){
+        if(!checkEmail(old_email)){
+            showErrorMsg('原邮箱格式错误');//alert('原邮箱格式错误');
+            return false;
+        }
+    }
+    if(!checkEmail(new_email)){
+        showErrorMsg('新邮箱格式错误');//alert('新邮箱格式错误');
+        return false;
+    }
+
+    if($.trim($('#new_code').val()) == '')
+    {
+        showErrorMsg('验证码不能为空');//alert('验证码不能为空');
+        return false;
+    }
+    return true;
+}
+function sendCode(obj,input_id){
+    var id = $(obj).attr('id');
+    var input = $('#'+input_id).val();
+    var old_email = $('#old_email').val();
+    //原邮箱不为空的情况下 验证格式
+    if(old_email != ''){
+        if(!checkEmail(old_email)){
+            showErrorMsg('原邮箱格式错误');//alert('原邮箱格式错误');
+            return false;
+        }
+    }
+    if(!checkEmail(input)){
+        showErrorMsg('邮箱格式错误');//alert('邮箱格式错误');
+        return false;
+    }
+    if(input_id == 'old_email')
+        var url = "/index.php?m=Home&c=User&a=send_validate_code&step=1&type=email&send="+input;
+    if(input_id == 'new_email')
+        var url = "/index.php?m=Home&c=User&a=send_validate_code&step=2&type=email&send="+input;
+    //发送验证码
+    $.ajax({
+        type : "GET",
+        url  : url,
+        dataType : 'json',
+        error: function(request) {
+            showErrorMsg('服务器繁忙, 请联系管理员!');//alert("服务器繁忙, 请联系管理员!");
+            return;
+        },
+        success: function(res) {
+            if(res.status == 1){
+                 $("#btnemailAuthCode2").addClass("disabled").attr("disabled",true);
+                 jsInnerTimeout("btnemailAuthCode2",{$mail_time_out});
+                 layer.alert(res.msg,{icon: 1,time:2000});
+            }else{
+                showErrorMsg(res.msg);//alert('发送失败');
+            }
+        }
+    });
+}
+//倒计时函数
+function jsInnerTimeout(id,intAs)
+{
+    var codeObj=$("#"+id);
+    intAs--;
+    if(intAs<=-1)
+    {
+        codeObj.removeAttr("disabled").removeClass('disabled');
+        codeObj.val("发送验证码");
+        return true;
+    }
+    codeObj.val(intAs+'秒');
+    setTimeout("jsInnerTimeout('"+id+"',"+intAs+")",1000);
+};
+</script>
+<include file="Public/footer" />

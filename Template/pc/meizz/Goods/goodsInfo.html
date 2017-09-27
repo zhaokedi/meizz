@@ -1,0 +1,637 @@
+<include file="Public/header" />
+<section class="crumb">
+    <a href="/">首页</a>
+    <volist name="navigate_goods" id="vo">
+        &nbsp;&gt;&nbsp;&nbsp;<a href="{:U('/Home/Goods/goodsList',array('id'=>$key))}">{$vo}</a>
+    </volist>&nbsp;&gt;&nbsp;&nbsp;{$goods.goods_name}
+</section>
+
+<!-- 产品页头部 -->
+<div class="product-detail">
+    <!-- 左侧图片展示 -->
+    <div class="product-detail-left">
+        <div id="banner" class="banner2">
+            <div class="bd">
+                <ul>
+                    <foreach name="goods_images_list" item="v" >
+                        <li><img src="{$v|get_sub_images=$v['goods_id'],800,800}" /></li>
+                    </foreach>
+                </ul>
+            </div>
+            <div class="hd">
+                <ul>
+                    <foreach name="goods_images_list" item="v2" key="k2" >
+                        <li <if condition="$k2 eq 0">class="on"</if>><img src="{$v2|get_sub_images=$v2['goods_id'],78,78}" /></li>
+                    </foreach>
+                </ul>
+            </div>
+            <a class="prev" href="javascript:void(0)"></a>
+            <a class="next" href="javascript:void(0)"></a>
+        </div>
+    </div>
+    <!-- /左侧图片展示 -->
+    <!-- 右侧 -->
+    <style>
+        .info-doubble img{
+            width: 2.5rem;
+            height: 2.5rem;
+            margin-right: 0.5rem;
+            margin-left: 0.5rem;
+        }
+    </style>
+    <div class="product-detail-right">
+        <h1>{$goods.goods_name}</h1>
+        <div class="price">
+            <span>现货</span>
+            网络特惠价 <sub>￥</sub><b id="goods_price">{$goods.shop_price}</b>
+            <div class="r">
+                <em>最近销售<i>{$goods['sales_sum']}</i></em>
+                <em>累计评价<i>{$commentStatistics['c0']}</i></em>
+                <em>人气<i>{$goods['click_count']}</i></em>
+                <em><a onClick="collect_goods({$goods.goods_id});" style="color:#f04c4c;cursor: pointer;">收藏</a></em>
+            </div>
+        </div>
+        <div class="info-doubble">
+            <if  condition="$goods['is_gift'] eq 1">
+                <div><span style="width: auto;margin-left: 1rem" >活动时间：</span>{$goods.on_time|date="Y年m月d日",###}-{$goods.down_time|date="Y年m月d日",###}</div>
+                <div> <span style="width: auto;margin-left: 1rem;" >包含商品：</span>
+                <volist name="goods.gift_link" key="key" id="vo">
+                    <img src="{$key|goods_thum_images=100,100}" title="{$vo}">X1
+                </volist>
+                </div>
+            </if>
+
+
+            <if condition="$flash_sale['description'] neq ''">
+                {$flash_sale['description']}
+            <else/>
+                {$goods.goods_remark}
+            </if>
+            <!-- <p>
+                <em>男 戒</em>
+                <span>主钻<i>1</i>颗<i>0.30ct</i></span>
+                <span>辅钻<i>0</i>颗</span>
+
+            </p>
+            <p>
+                <em>女 戒</em>
+                <span>主钻<i>4</i>颗<i>0.08ct</i></span>
+                <span>辅钻<i>8</i>颗<i>0.03ct</i></span>
+            </p> -->
+        </div>
+        <ul class="choose1">
+            <!--<if condition="$goods.prepay_price gt 0">-->
+            <li class="payclss">
+                <span>付款</span>
+                <i class="on" data-prepay="0" data-value="{$goods.shop_price}">全额购买</i>
+                <i data-prepay="1" data-value="{$goods.prepay_price}">支付订金</i>
+                <!--<i data-prepay="1" data-value="123">支付订金</i>-->
+            </li>
+            <!--</if>-->
+        </ul>
+        <if condition="$goods['prom_type'] eq 1">
+          <div class="bef_fo2" style="font-size:14px; background-color:#F60; color:#FFFFFF; line-height:30px; width:100%">
+            <p style="background-color:#f72862">
+                <span style="font-size:20px; padding:0px 16px 0px 26px; vertical-align:middle; ">抢购价￥{$goods['flash_sale']['price']}</span>
+                <img class="clock_w" height="24" style="vertical-align: middle;padding-right: 3px;" src="__STATIC__/images/lz.png"/>
+                <span id="surplus_text">0</span> 后结束，请快购买
+            </p>
+          </div>
+          <script>
+
+            // 倒计时
+            function GetRTime2(){
+              //var text = GetRTime('2016/02/27 17:34:00');
+              var text = GetRTime('{$goods['flash_sale']['end_time']|date="Y/m/d H:i:s",###}');
+              $("#surplus_text").text(text);
+            }
+            setInterval(GetRTime2,1000);
+          </script>
+        </if>
+        <form name="buy_goods_form" method="post" id="buy_goods_form" >
+            <ul class="choose1 bdn">
+                <foreach name="filter_spec" item="spec" key="k" >
+                <li>
+                    <span>{$k}</span>
+                    <foreach name="spec" item="v2" key="k2" >
+                    <if condition="$v2['src'] neq ''">
+                        <div style="display:inline-block;">
+                            <i onClick="switch_spec(this);" <if condition="$k2 eq 0 ">class="on"</if> style="padding:0;">
+                                <img src="{$v2['src']}" style="width:40px;height:40px;" onClick="$('#bigImage').attr('src','{$v2['src']}');$('#bigImage').attr('jqimg','{$v2['src']}');"/>
+                            </i>
+                            <input type="radio"  style="display:none;" name="goods_spec[{$k}]" value="{$v2['item_id']}" <if condition="$k2 eq 0 ">checked="checked"</if> />
+                            <p style="text-align: center;margin:0;">{$v2['item']}</p>
+                        </div>
+                    <else />
+                        <div style="display:inline-block;">
+                            <i onClick="switch_spec(this);" <if condition="$k2 eq 0 ">class="on"</if>">{$v2['item']}</i>
+                            <input type="radio"  style="display:none;" name="goods_spec[{$k}]" value="{$v2['item_id']}" <if condition="$k2 eq 0 ">checked="checked"</if> />
+                        </div>
+                    </if>
+                    </foreach>
+                </li>
+                </foreach>
+                <!--li>
+                    <span>刻字</span>
+                    <p><em>男</em><input type="letter[]" placeholder="5个汉字或10个字母"><input type="submit" value="添加符号"></p>
+                    <p><em>女</em><input type="letter[]" placeholder="5个汉字或10个字母"><input type="submit" value="添加符号"></p>
+                </li-->
+            </ul>
+            <div class="operate">
+                <a href="javascript:void(0);" class="btn-pay" onClick="javascript:AjaxAddCart({$goods.goods_id},1,1);return false;">立即支付</a>
+                <a href="javascript:void(0);" class="btn-cart" onClick="javascript:AjaxAddCart({$goods.goods_id},1,0);return false;">加入购物车</a>
+                <a   class="btn-pay fengqi">分期</a>
+            </div>
+
+            <input type="hidden" name="prepay_type" value="0" id="prepay_type">
+            <input type="hidden" value="1" name="goods_num" readonly/>
+            <input type="hidden" name="goods_id" value="{$goods.goods_id}" />
+        </form>
+        <div class="tips">
+            配送：全国包邮（港澳台除外）；现货预计3个工作日发出,购买前，钻戒类指圈号请咨询客服或备注留言, 现货指圈号，约7个工作日左右发货，定制发货时间据款式而定.
+        </div>
+        <div class="share">
+            <span>分享</span>
+            <!-- JiaThis Button BEGIN 分享商品链接-->
+            <div class="bdsharebuttonbox"><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a><a href="#" class="bds_mail" data-cmd="mail" title="分享到邮件分享"></a><a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a><a href="#" class="bds_more" data-cmd="more"></a></div>
+            <script>
+                window._bd_share_config = {
+                    "common" : {
+                        "bdSnsKey" : {},
+                        "bdText" : "{$goods.goods_name}",
+                        "bdUrl" : "http://{$_SERVER['HTTP_HOST']}/index.php?m=Home&c=Goods&a=goodsInfo&id={$_GET['id']}",
+                        "bdMini" : "2",
+                        "bdMiniList" : ["qzone","renren","tqf","douban","meilishuo","mogujie","huaban","duitang"],
+                        "bdPic" : "http://{$_SERVER['HTTP_HOST']}{$goods['goods_id']|goods_thum_images=400,400}",
+                        "bdStyle" : "1",
+                        "bdSize" : "16"
+                    },
+                    "share" : {}
+                };
+                with(document)
+                0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];
+            </script>
+            <!-- JiaThis Button END 分享商品链接-->
+        </div>
+    </div>
+    <!-- /右侧 -->
+</div>
+<!-- 关联商品 -->
+<div class="main">
+	<div class="page54-1">
+		<h2>关联商品</h2>
+		<ul>
+        <volist name="linkeds" id="v">
+            <li><a href="{:U('Home/Goods/goodsInfo',array('id'=>$v['goods_id']))}" title="{$v.goods_name}"><img src="{$v.goods_id|goods_thum_images=210,210}" alt="{$v.goods_name}">{$v.goods_name|getSubstr=0,15}<b>￥{$v.shop_price}</b></a></li>
+        </volist>
+		</ul>
+	</div>
+</div>
+
+<!-- 产品页详情 -->
+<div class="main">
+    <!-- 侧边栏 -->
+    <div class="main-left2">
+        <div class="side-article">
+			<h2>关联文章</h2>
+			<ul>
+               <volist name="articles" id="v">
+                  <li><a href="{:U('Home/Article/detail',array('article_id'=>$v['article_id']))}" title="{$v.title}">{$v.title|getSubstr=0,15}</a></li>
+              </volist>
+			</ul>
+		</div>
+        <form name="search_form2" id="search_form2" method="post" action="{:U('/Home/Goods/search')}">
+        <div class="side-search">
+            <h2>搜索宝贝</h2>
+            <ul>
+                <li class="li1"><span>关键字</span>
+                    <input type="text" placeholder="" name="q" id="q2">
+                </li>
+                <li class="li2"><span><i class="e1">价</i>格</span>
+                    <input type="text" name="start_price" placeholder="￥">-<input type="text" name="end_price" placeholder="￥">
+                </li>
+                <li class="li3"><input type="button" value="搜    索" onclick="if($.trim($('#q2').val()) != '') $('#search_form2').submit();"></li>
+            </ul>
+        </div>
+        </form>
+        <!-- <div class="side-classify">
+            <h2>宝贝分类</h2>
+            <div>
+                <h3>结婚珠宝</h3>
+                <div class="con on">
+                    <a href="">结婚女戒</a>
+                    <a href="">男士戒指</a>
+                    <a href="">结婚对戒</a>
+                </div>
+                <h3>裸钻定制</h3>
+                <div class="con">
+                    <a href="">结婚女戒</a>
+                    <a href="">男士戒指</a>
+                    <a href="">结婚对戒</a>
+                </div>
+                <h3>时尚钻饰</h3>
+                <div class="con on">
+                    <a href="">时尚女戒</a>
+                    <a href="">钻石吊坠/套链</a>
+                    <a href="">钻石耳钉/耳环</a>
+                    <a href="">钻石手链/手镯</a>
+                </div>
+                <h3>彩宝裸石</h3>
+                <div class="con">
+                    <a href="">红宝石</a>
+                    <a href="">蓝宝石</a>
+                    <a href="">碧玺</a>
+                    <a href="">坦桑石</a>
+                    <a href="">其它宝石</a>
+                </div>
+                <h3>K金铂金黄金首饰</h3>
+                <div class="con">
+                    <a href="">结婚女戒</a>
+                    <a href="">男士戒指</a>
+                    <a href="">结婚对戒</a>
+                </div>
+            </div>
+        </div> -->
+        <div class="side-hot">
+            <volist name="hot" id="vo2">
+                <div class="item">
+                    <img src="__STATIC__/images/icon341.png" alt="" class="icon">
+                    <a href="{:U('/Home/Goods/goodsInfo',array('id'=>$vo2['goods_id']))}" class="img" title="{$vo2['goods_name']}">
+                        <img src="{$vo2.goods_id|goods_thum_images=300,300}" alt="{$vo2['goods_name']}">
+                    </a>
+                    <p class="p1">
+                        {$vo2['goods_name']|getSubstr=0,15}
+                        <span>￥{$vo2['shop_price']}</span>
+                    </p>
+                    <p class="p2">已售{$vo2['sales_sum']}件<span>评价{$vo2['comment_count']}</span></p>
+                    <!-- <div class="operate">
+                        <a href="javascript:void(0);" class="btn-buy" onClick="javascript:AjaxAddCart({$vo2.goods_id},1,0,1);return false;">立即购买</a>
+                        <a href="javascript:void(0);" class="btn-cart" onClick="javascript:AjaxAddCart({$vo2.goods_id},1,0,0);return false;">加入购物车</a>
+                    </div> -->
+                </div>
+            </volist>
+        </div>
+    </div>
+    <!-- /侧边栏 -->
+    <!-- 详情主体 -->
+    <div class="main-right2">
+        <!-- tab -->
+        <div class="product-details-title">
+            <a href="javascript:void(0);" class="on">宝贝详情</a>
+            <a href="javascript:void(0);">累计评价({$commentStatistics['c0']})</a>
+            <a href="javascript:void(0);">如何购买</a>
+            <!-- <a href="javascript:void(0);">常见问题</a> -->
+            <!-- <a href="javascript:void(0);">售后服务</a> -->
+        </div>
+        <!-- 宝贝详情 -->
+        <div class="product-details-1 on">
+            {$goods.goods_content|htmlspecialchars_decode}
+            <div class="tips">
+                <span class="tt">声明</span>
+                <p>本站所有图片为美之钻实拍图，图片版权归美之钻所有，请勿侵权盗用本站图片用于商业用途</p>
+            </div>
+        </div>
+        <!-- /宝贝详情 -->
+        <!-- 如何购买 -->
+        <div class="product-details-3">
+            <div class="img-box">
+                <img src="__STATIC__/images/img321.jpg" alt="">
+            </div>
+        </div>
+        <!-- /如何购买 -->
+        <!-- 售后服务 -->
+        <!-- <div class="product-details-5">
+            <div class="img-box">
+                <img src="__STATIC__/images/img331.png" alt="">
+                <img src="__STATIC__/images/img332.png" alt="">
+            </div>
+        </div> -->
+        <!-- /售后服务 -->
+        <!-- 常见问题 -->
+        <!-- <div class="product-details-4">
+            <div class="product-details-search">
+                <input type="text" placeholder="问题关键字">
+                <input type="submit" value="">
+            </div>
+            q-a
+            <div class="q-a">
+                <div class="item">
+                    <h3>素金首饰如何保养？</h3>
+                    <div class="con">
+                        <p>1、为防止首饰变形、氧化，应避免接触化学物品如漂白水、洗洁精等，亦需避免于处理家务时佩戴K金/pt950首饰</p>
+                        <p>2、应避免把K金/pt950首饰与其他首饰放置一起，尤其是钻石首饰，因其硬度会引致互相摩擦而刮花，建议摘取后存放至我们特别订制的首饰盒内。</p>
+                        <p>3、K金/pt950是最耐磨的金属，若出现刮花或损坏时，只要把首饰联系我们客服打磨、翻新，首饰便能恢复昔日光彩，有划痕应尽快处理修补，首饰不使用时要放置我们特别定制的首饰盒内单独存放。</p>
+                        <p>4、建议每半年把首饰送至清洗，即可使其保持闪亮光芒5、清洗时，可以用稀释的皂液清洗K金/pt950首饰，再以软布吸干水分，可用非研磨性的布块清除表面指纹及污迹，如抹银布、眼镜布等。</p>
+                    </div>
+                    <a href="" class="btn-zan">35</a>
+                </div>
+                <div class="item">
+                    <h3>网上购买，如果手寸不合适或者想要修改刻字怎么办啊？</h3>
+                    <div class="con">
+                        小戴非常理解您的顾虑，请您放心。DR支持常规手寸范围内终身免工费修改手寸或刻字的呢。 注：女士常规手寸范围（8-15），男士常规手寸范围（15-22）；刻字范围（5个汉字/10个英文字母）
+                    </div>
+                    <a href="" class="btn-zan">35</a>
+                </div>
+                <div class="item">
+                    <h3>镶嵌（钻石）首饰如何保养？</h3>
+                    <div class="con">
+                        <p>1、佩戴首饰时不可接触如香水、化妆品、护肤品等化学物质，容易使宝石以及金属表面失去光泽；</p>
+                        <br>
+                        <p>2、虽然钻石首饰金属部分耐磨损，但是容易刮花，而钻石脆性很高，不可与硬物碰撞摔击，为防止破碎，家务时建议摘取后存放至我们特别订制的首饰盒内。</p>
+                        <br>
+                        <p>3、皮肤分泌的油脂跟汗液在长期佩戴后可能会使首饰变脏，甚至可能出现氧化的现象，所以不建议洗漱睡觉时佩戴；</p>
+                        <br>
+                        <p>4、居家环境下，建议将饰品摘取后分开存放于首饰盒内，便于保养，防止相互磨损，形成划痕，； （注：我们的首饰盒都是采取特别订制的，内里的材质采用具有环保效果的超纤皮，有着极其优异的耐寒、透气、耐磨、耐老化性能，首饰置于盒内，可以达到防氧化、防磨损、防撞击的保养效果）。</p>
+                        <br>
+                        <p>5、清洁钻石只需要经过稀释过的中性洗液浸泡，用软毛刷清洁，一定要用清水洗净，并用软布抹干后再放入首饰盒。勿用强烈皂液、腐蚀性极强的含氯漂白水或热水清洗，否则钻石会失去光泽。更不易用硬毛刷清洁，以免刮花宝石。</p>
+                        <br>
+                        <p>6、为了更好的保养您的首饰，以维持钻石原有的光芒，建议您每隔半年联系我们的售后服务人员为您购买的首饰清洗保养以及检查钻石是否在佩戴过程中出现松动迹象，darry ring更会提供免费的检查及清洁服务。</p>
+                    </div>
+                    <a href="" class="btn-zan">35</a>
+                </div>
+                <div class="item">
+                    <h3>素金首饰如何保养？</h3>
+                    <div class="con">
+                        <p>1、为防止首饰变形、氧化，应避免接触化学物品如漂白水、洗洁精等，亦需避免于处理家务时佩戴K金/pt950首饰</p>
+                        <p>2、应避免把K金/pt950首饰与其他首饰放置一起，尤其是钻石首饰，因其硬度会引致互相摩擦而刮花，建议摘取后存放至我们特别订制的首饰盒内。</p>
+                        <p>3、K金/pt950是最耐磨的金属，若出现刮花或损坏时，只要把首饰联系我们客服打磨、翻新，首饰便能恢复昔日光彩，有划痕应尽快处理修补，首饰不使用时要放置我们特别定制的首饰盒内单独存放。</p>
+                        <p>4、建议每半年把首饰送至清洗，即可使其保持闪亮光芒5、清洗时，可以用稀释的皂液清洗K金/pt950首饰，再以软布吸干水分，可用非研磨性的布块清除表面指纹及污迹，如抹银布、眼镜布等。</p>
+                    </div>
+                    <a href="" class="btn-zan">35</a>
+                </div>
+                <div class="item">
+                    <h3>网上购买，如果手寸不合适或者想要修改刻字怎么办啊？</h3>
+                    <div class="con">
+                        小戴非常理解您的顾虑，请您放心。DR支持常规手寸范围内终身免工费修改手寸或刻字的呢。 注：女士常规手寸范围（8-15），男士常规手寸范围（15-22）；刻字范围（5个汉字/10个英文字母）
+                    </div>
+                    <a href="" class="btn-zan">35</a>
+                </div>
+                <div class="item">
+                    <h3>镶嵌（钻石）首饰如何保养？</h3>
+                    <div class="con">
+                        <p>1、佩戴首饰时不可接触如香水、化妆品、护肤品等化学物质，容易使宝石以及金属表面失去光泽；</p>
+                        <br>
+                        <p>2、虽然钻石首饰金属部分耐磨损，但是容易刮花，而钻石脆性很高，不可与硬物碰撞摔击，为防止破碎，家务时建议摘取后存放至我们特别订制的首饰盒内。</p>
+                        <br>
+                        <p>3、皮肤分泌的油脂跟汗液在长期佩戴后可能会使首饰变脏，甚至可能出现氧化的现象，所以不建议洗漱睡觉时佩戴；</p>
+                        <br>
+                        <p>4、居家环境下，建议将饰品摘取后分开存放于首饰盒内，便于保养，防止相互磨损，形成划痕，； （注：我们的首饰盒都是采取特别订制的，内里的材质采用具有环保效果的超纤皮，有着极其优异的耐寒、透气、耐磨、耐老化性能，首饰置于盒内，可以达到防氧化、防磨损、防撞击的保养效果）。</p>
+                        <br>
+                        <p>5、清洁钻石只需要经过稀释过的中性洗液浸泡，用软毛刷清洁，一定要用清水洗净，并用软布抹干后再放入首饰盒。勿用强烈皂液、腐蚀性极强的含氯漂白水或热水清洗，否则钻石会失去光泽。更不易用硬毛刷清洁，以免刮花宝石。</p>
+                        <br>
+                        <p>6、为了更好的保养您的首饰，以维持钻石原有的光芒，建议您每隔半年联系我们的售后服务人员为您购买的首饰清洗保养以及检查钻石是否在佩戴过程中出现松动迹象，darry ring更会提供免费的检查及清洁服务。</p>
+                    </div>
+                    <a href="" class="btn-zan">35</a>
+                </div>
+                <div class="item">
+                    <h3>素金首饰如何保养？</h3>
+                    <div class="con">
+                        <p>1、为防止首饰变形、氧化，应避免接触化学物品如漂白水、洗洁精等，亦需避免于处理家务时佩戴K金/pt950首饰</p>
+                        <p>2、应避免把K金/pt950首饰与其他首饰放置一起，尤其是钻石首饰，因其硬度会引致互相摩擦而刮花，建议摘取后存放至我们特别订制的首饰盒内。</p>
+                        <p>3、K金/pt950是最耐磨的金属，若出现刮花或损坏时，只要把首饰联系我们客服打磨、翻新，首饰便能恢复昔日光彩，有划痕应尽快处理修补，首饰不使用时要放置我们特别定制的首饰盒内单独存放。</p>
+                        <p>4、建议每半年把首饰送至清洗，即可使其保持闪亮光芒5、清洗时，可以用稀释的皂液清洗K金/pt950首饰，再以软布吸干水分，可用非研磨性的布块清除表面指纹及污迹，如抹银布、眼镜布等。</p>
+                    </div>
+                    <a href="" class="btn-zan">35</a>
+                </div>
+                <div class="item">
+                    <h3>网上购买，如果手寸不合适或者想要修改刻字怎么办啊？</h3>
+                    <div class="con">
+                        小戴非常理解您的顾虑，请您放心。DR支持常规手寸范围内终身免工费修改手寸或刻字的呢。 注：女士常规手寸范围（8-15），男士常规手寸范围（15-22）；刻字范围（5个汉字/10个英文字母）
+                    </div>
+                    <a href="" class="btn-zan">35</a>
+                </div>
+                <div class="item">
+                    <h3>镶嵌（钻石）首饰如何保养？</h3>
+                    <div class="con">
+                        <p>1、佩戴首饰时不可接触如香水、化妆品、护肤品等化学物质，容易使宝石以及金属表面失去光泽；</p>
+                        <br>
+                        <p>2、虽然钻石首饰金属部分耐磨损，但是容易刮花，而钻石脆性很高，不可与硬物碰撞摔击，为防止破碎，家务时建议摘取后存放至我们特别订制的首饰盒内。</p>
+                        <br>
+                        <p>3、皮肤分泌的油脂跟汗液在长期佩戴后可能会使首饰变脏，甚至可能出现氧化的现象，所以不建议洗漱睡觉时佩戴；</p>
+                        <br>
+                        <p>4、居家环境下，建议将饰品摘取后分开存放于首饰盒内，便于保养，防止相互磨损，形成划痕，； （注：我们的首饰盒都是采取特别订制的，内里的材质采用具有环保效果的超纤皮，有着极其优异的耐寒、透气、耐磨、耐老化性能，首饰置于盒内，可以达到防氧化、防磨损、防撞击的保养效果）。</p>
+                        <br>
+                        <p>5、清洁钻石只需要经过稀释过的中性洗液浸泡，用软毛刷清洁，一定要用清水洗净，并用软布抹干后再放入首饰盒。勿用强烈皂液、腐蚀性极强的含氯漂白水或热水清洗，否则钻石会失去光泽。更不易用硬毛刷清洁，以免刮花宝石。</p>
+                        <br>
+                        <p>6、为了更好的保养您的首饰，以维持钻石原有的光芒，建议您每隔半年联系我们的售后服务人员为您购买的首饰清洗保养以及检查钻石是否在佩戴过程中出现松动迹象，darry ring更会提供免费的检查及清洁服务。</p>
+                    </div>
+                    <a href="" class="btn-zan">35</a>
+                </div>
+
+            </div>
+            /q-a
+            <div class="txt">
+                <h3>我要提问</h3>
+                <div class="con">
+                    <textarea name="" id="" cols="30" rows="10"></textarea>
+                    <a href="" class="btn-submit">提交问题</a>
+                    <a href="" class="btn-online">在线客服</a>
+                </div>
+            </div>
+
+            <div class="prv-nxt">
+                <a href="" class="prev">&nbsp;</a>
+                <a href="" class="active">1</a>
+                <a href="">2</a>
+                <a href="">3</a>
+                <a href="">4</a>
+                <a href="">5</a>
+                <a href="">6</a>
+                <span>···</span>
+                <a href="">231</a>
+                <a href="" class="next">&nbsp;</a>
+            </div>
+        </div> -->
+        <!-- /常见问题 -->
+        <!-- 累计评价 & 店长推荐 -->
+        <div class="product-details-2">
+            <div class="product-discuss">
+                <h3>累计评价({$commentStatistics['c0']})</h3>
+                <div id="ajax_comment_return">
+                    <!-- ajax 然后分页数据 -->
+                </div>
+            </div>
+            <script>
+                $(document).ready(function(){
+                  commentType = 1; // 评论类型
+                  ajaxComment(1,1);// ajax 加载评价列表
+                });
+                // 好评差评 切换
+                /*$(".eval-cen-le a").click(function(){
+                  $(".eval-cen-le li").removeClass('curres');
+                  $(this).parent().addClass('curres');
+                  commentType = $(this).data('t');// 评价类型   好评 中评  差评
+                  ajaxComment(commentType,1);
+                });*/
+                // 用ajax分页显示评论
+                function ajaxComment(commentType,page){
+                  $.ajax({
+                    type : "GET",
+                    url:"/index.php?m=Home&c=Goods&a=ajaxComment&goods_id={$goods['goods_id']}&commentType="+commentType+"&p="+page,//+tab,
+                    success: function(data){
+                      $("#ajax_comment_return").html('');
+                      $("#ajax_comment_return").append(data);
+                    }
+                  });
+                }
+            </script>
+            <!-- 店长推荐 -->
+            <div class="shopkeeper-recommend">
+                <div class="title">店长推荐 <a href="{:U('Home/Goods/goodsList',array('id'=>$goods['cat_id']))}" class="more">更多</a>
+                </div>
+                <div class="con">
+                    <volist name="recommend" id="v">
+                        <div class="item">
+                            <a href="{:U('Home/Goods/goodsInfo',array('id'=>$v['goods_id']))}" title="{$v.goods_name}"><img src="{$v.goods_id|goods_thum_images=210,210}" alt="{$v.goods_name}"></a>
+                            <p>{$v.goods_name|getSubstr=0,15}</p>
+                            <p>￥{$v.shop_price}<span>评价{$v.comment_count}</span></p>
+                        </div>
+                    </volist>
+                </div>
+            </div>
+        </div>
+        <!-- /累计评价 -->
+    </div>
+    <!-- /详情主体 -->
+</div>
+
+<div id="HBox" style="background-color: #ffffff">
+    <form action="" method="post" id="fenqiform">
+        <ul class="list">
+            <li><h2 id="ptitle"></h2></li>
+
+            <li>
+                <strong>姓 名  <font color="#ff0000">*</font></strong>
+                <div class="fl"><input type="text" name="username" value="" class="ipt nickname" /></div>
+            </li>
+            <li>
+                <strong>手 机 <font color="#ff0000">*</font></strong>
+                <div class="fl"><input type="text" name="mobile" value="" class="ipt phone" /></div>
+            </li>
+            <li>
+                <strong>备 注 <font color="#ff0000">*</font></strong>
+                <div class="fl">
+                    <textarea name="remark" style="width: 100%"></textarea>
+                </div>
+            </li>
+            <li>
+                <strong>几 期 <font color="#ff0000">*</font></strong>
+                <div class="fl">
+                    <select name="num">
+
+                        <option value="1">1期</option>
+                        <option value="2">2期</option>
+                        <option value="3">3期</option>
+                    </select>
+                </div>
+            </li>
+            <input type="hidden" value="{$goods.goods_id}" name="goods_id" />
+            <li><input type="button" value="确认提交" class="submitBtn" /></li>
+        </ul>
+
+
+    </form>
+    <div style="clear: both"></div>
+</div><!-- HBox end -->
+<script>
+    var $el = $('.dialog');
+    $el.hDialog();
+    $('.fengqi').hDialog({title: '分期',height: 430,width:400, beforeShow: function(){
+        $("#ptitle").html($("#xtitle").html());
+    }});
+    $('.submitBtn').click(function() {
+
+        var EmailReg = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/; //邮件正则
+        var PhoneReg = /^0{0,1}(13[0-9]|15[0-9]|153|156|18[7-9])[0-9]{8}$/ ; //手机正则
+        var $nickname = $('.nickname');
+        var $email = $('.email');
+        var $phone = $('[name="mobile"]');
+        if($nickname.val() == ''){
+
+            layer.msg('姓名还没填呢...'); $nickname.focus();
+        }else if($phone.val() == ''){
+            layer.msg('手机还没填呢...'); $phone.focus();
+        }else if(!PhoneReg.test($phone.val())){
+            layer.msg('手机格式错咯...'); $phone.focus();
+        }else{
+            $.ajax({
+                type : "POST",
+                url:"/index.php?m=Home&c=Goods&a=addfenqi",
+                data : $('#fenqiform').serialize(),// 你的formid 搜索表单 序列化提交
+                dataType:'json',
+                success: function(data){
+                    if(data.status == 1)
+                    {
+                        layer.msg('提交成功，等待客服联系,3秒后自动关闭',{time:3000});
+                        setTimeout(function(){
+                            //$el.hDialog('close',{box:'#HBox'},'http://smwell.sinaapp.com/');  //也可以加跳转链接哦~
+                            $el.hDialog('close',{box:'#HBox'});
+                        },2000);
+                    }else {
+                        layer.msg('提交失败',{time:2000});
+                    }
+
+
+                }
+            });
+
+
+        }
+    });
+</script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        // 更新商品价格
+        get_goods_price();
+        //定金操作
+        $(".choose1 .payclss i").click(function () {
+            $("#goods_price").text($(this).attr("data-value"));
+            $("#prepay_type").val($(this).attr("data-prepay"));
+        })
+    });
+    /**
+    * 切换规格
+    */
+    function switch_spec(spec)
+    {
+        $(spec).parent().siblings("div").children('i').removeClass("on");
+        $(spec).addClass("on");
+        $(spec).next('input').trigger('click');  // 让隐藏的 单选按钮选中
+        // 更新商品价格
+        get_goods_price();
+    }
+    // 用作 sort 排序用
+    function sortNumber(a,b)
+    {
+        return a - b;
+    }
+    /*** 查询商品价格*/
+    function get_goods_price()
+    {
+        var goods_price = {$goods.shop_price}; // 商品起始价
+        var store_count = {$goods.store_count}; // 商品起始库存
+        var spec_goods_price = {$spec_goods_price};  // 规格 对应 价格 库存表   //alert(spec_goods_price['28_100']['price']);
+        // 如果有属性选择项
+        if(spec_goods_price != null)
+        {
+          goods_spec_arr = new Array();
+          $("input[name^='goods_spec']:checked").each(function(){
+             goods_spec_arr.push($(this).val());
+          });
+          var spec_key = goods_spec_arr.sort(sortNumber).join('_');  //排序后组合成 key
+          goods_price = spec_goods_price[spec_key]['price']; // 找到对应规格的价格
+          store_count = spec_goods_price[spec_key]['store_count']; // 找到对应规格的库存
+          $(".store_count").text(store_count);
+        }
+        var goods_num = 1;//parseInt($("#goods_num").val());
+        // 库存不足的情况
+        if(goods_num > store_count)
+        {
+           goods_num = store_count;
+           layer.msg('库存仅剩 '+store_count+' 件', {icon: 2}); //alert('库存仅剩 '+store_count+' 件');
+           //$("#goods_num").val(goods_num);
+        }
+        $("#goods_price").html(goods_price * goods_num); // 变动价格显示
+    }
+</script>
+<include file="Public/footer" />

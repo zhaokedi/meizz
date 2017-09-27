@@ -1,0 +1,59 @@
+<include file="Public/header" />
+<include file="User/navigate" />
+<section class="main">
+    <!-- main-left -->
+    <include file="User/menu" />
+    <!-- /main-left -->
+    <!-- main-right -->
+    <div class="main-right">
+        <h2>我的优惠券</h2>
+        <div class="page8">
+            <div class="page8-rule">
+                <h3>优惠券使用说明 <a href="" class="btn-more">点击收起</a></h3>
+                <div class="con">
+                    <p>1.不同的代金券面值、有效期和使用限制不尽相同，使用前请认真核对；</p>
+                    <p>2.一个订单只能使用一张代金券；</p>
+                    <p>3.秒杀，抽奖类商品不允许使用代金券进行支付；</p>
+                    <p>4.代金券作为一种优惠手段，无法获得对应的积分；</p>
+                    <p>5.一个订单中的代金券部分不能退款或折现，使用代金券购买的订单发生退款后不能返还代金券；</p>
+                    <p>6.代金券绑定订单且付款后，将无法退回；如取消订单，订单中所使用的代金券将无法再次使用；</p>
+                    <p>7.代金券面值大于订单金额，则差额不予退回；如代金券面值小于订单金额，则需由用户支付差额；代金券不可兑现，且不开发票；</p>
+                    <p>8.所有代金券严禁出售或转让，如经发现并证实的，将予以作废处理。</p>
+                </div>
+            </div>
+
+            <volist name="coupon_list" id="coupon">
+            <div class="quan <if condition="$coupon['status'] eq 2">over</if>">
+                <div class="left">
+                    <if condition="$coupon['status'] eq 2">
+                        <img src="__STATIC__/images/quan3.png" alt="" class="quan-bg">
+                    <else/>
+                        <img src="__STATIC__/images/quan1.png" alt="" class="quan-bg">
+                    </if>
+                    <h3>{$coupon.name}</h3>
+                    <time>有效期至{$coupon.use_end_time|date="Y-m-d",###}</time>
+                    <p class="btm">本券只能抵扣钻饰类宝贝，并不与其它活动同享</p>
+                    <div class="rt">
+                        <sup>￥</sup>{$coupon.money}
+                    </div>
+                    <if condition="$coupon['status'] eq 2">
+                        <img src="__STATIC__/images/quan-over.png" alt="" class="over-img">
+                    </if>
+                </div>
+                <div class="right">
+                    <if condition="$coupon['status'] eq 2">
+                        <a href="javascript:void(0);">马上使用</a>
+                    <else/>
+                        <a href="{:U('/Home/Cart')}">马上使用</a>
+                    </if>
+                    <!-- <a href="">赠送朋友</a> -->
+                </div>
+            </div>
+            </volist>
+
+            <div class="prv-nxt">{$page}</div>
+        </div>
+    </div>
+    <!-- /main-right -->
+</section>
+<include file="Public/footer" />

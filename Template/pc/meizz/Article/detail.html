@@ -1,0 +1,30 @@
+<include file="Public/header" />
+<section class="crumb">
+    <a href="">首页</a> &gt;  <a href="{:U('/Home/Article')}">帮助中心</a>
+</section>
+<section class="main">
+    <!-- main-left -->
+    <div class="main-left">
+        <h2>帮助中心</h2>
+        <volist name="article_cat" id="cat">
+        <div class="side-menu <if condition="$detail['cat_id'] eq $cat['cat_id']">on</if>">
+            <h3>{$cat['cat_name']}</h3>
+            <ul>
+                <volist name="cat.article" id="article">
+                    <li <if condition="$detail['article_id'] eq $article['article_id']">class="on"</if>><a href="{:U('Home/Article/detail',array('article_id'=>$article['article_id']))}">{$article['title']}</a></li>
+                </volist>
+            </ul>
+        </div>
+        </volist>
+    </div>
+    <!-- /main-left -->
+    <!-- main-right -->
+    <div class="main-right">
+        <h2>{$detail.title}</h2>
+        <div class="page43">
+            {$detail.content|htmlspecialchars_decode}
+        </div>
+    </div>
+    <!-- /main-right -->
+</section>
+<include file="Public/footer" />

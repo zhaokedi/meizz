@@ -1,0 +1,35 @@
+<volist name="coupon_list" id="vo">
+    <if condition="$vo.usetype eq 1">
+        <div class="item1 <if condition="$vo.is_none eq 1">over</if> ">
+    <else/>
+    <div class="item2 <if condition="$vo.is_none eq 1">over</if>">
+    </if>
+    <div class="left">
+        <if condition="$vo.usetype eq 1">
+            <h2><sup>￥</sup>{$vo.money}</h2>
+            <else/>
+            <h2>{$vo.discount}<sup>折</sup></h2>
+        </if>
+
+        <h3>{$vo.name}</h3>
+        <p class="time">有效期至{$vo.use_end_time|date="Y-m-d",###}</p>
+        <p class="btm">{$vo.content}</p>
+    </div>
+
+    <div class="right">
+        <if condition="$vo.is_none eq 1">
+
+            <b class="js">已<br>领<br>完</b>
+
+            <else/>
+            <p class="tips">{$vo.remaining_number}</p>
+            <if condition="$vo.is_get eq 0">
+                <a href="javascript:getcoupon({$vo['id']});" class="btn" id="getnow">立即领取</a>
+                <else/>
+                <a href="javascript:;" class="btn" >已领取</a>
+            </if>
+        </if>
+    </div>
+    </div>
+
+</volist>

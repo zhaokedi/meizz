@@ -1,0 +1,228 @@
+<include file="Public/header" />
+<include file="User/navigate" />
+<section class="main">
+	<include file="User/menu" />
+	<div class="page57 main-right mywallets" style="display: none">
+		<h2>我的余额</h2>
+		<h3>账户概况</h3>
+		<div class="part1">
+			<div class="left">
+				<p>账户余额</p>
+				<p><b>￥{$user.user_money}</b></p>
+				<p class="btm">
+					<a onclick="mywalletstopup()" style="cursor:pointer;">充值</a>
+				</p>
+			</div>
+			<div class="right">
+				<p>积分</p>
+				<p><b>{$user.pay_points}</b></p>
+				<p>{$tpshop_config['shopping_point_rate']}积分=1元</p>
+			</div>
+		</div>
+		<table>
+			<tr>
+				<th>时间</th>
+				<th>状态</th>
+				<th>金额</th>
+				<th>支付方式</th>
+			</tr>
+			<foreach name="recharge_list" item="vo">
+			<tr><td>{$vo.ctime|date='Y-m-d H:i:s',###}</td>
+				<td><if condition="$vo[pay_status] eq 0">待支付<else/>已支付</if></td>
+				<td class="red">￥{$vo.account}</td>
+				<td>{$vo.pay_name}</td></tr>
+			</foreach>
+			<!--<tr><td>2016-06-23 18:23:33</td><td>充值</td><td class="red">￥50.00</td><td>微信支付</td></tr>-->
+			<!--<tr><td>2016-06-23 18:23:33</td><td>充值</td><td class="red">￥50.00</td><td>微信支付</td></tr>-->
+			<!--<tr><td>2016-06-23 18:23:33</td><td>充值</td><td class="red">￥50.00</td><td>微信支付</td></tr>-->
+
+		</table>
+		<div class="prv-nxt">
+			{$page}
+			<!--<a href="" class="prev">&nbsp;</a>-->
+			<!--<a href="" class="active">1</a>-->
+			<!--<a href="">2</a>-->
+			<!--<a href="">3</a>-->
+			<!--<a href="">4</a>-->
+			<!--<a href="">5</a>-->
+			<!--<a href="">6</a>-->
+			<!--<span>...</span>-->
+			<!--<a href="">8</a>-->
+			<!--<a href="" class="next">&nbsp;</a>-->
+		</div>
+
+	</div>
+	<div class="page44 page56 main-right addmon" style="width: 950px" >
+		<h2>充值</h2>
+		<div class="part1">
+			<h3>选择充值金额 <span style="float: right;cursor:pointer;"  onclick="mywalletsa();" >返回我的余额 </span></h3>
+
+			<div class="con">
+				<span rel="50" class="on">￥50.00</span>
+				<span rel="100">￥100.00</span>
+				<span rel="200" >￥200.00</span>
+				<span rel="500" >￥500.00</span>
+				<input type="text" placeholder="输入金额" id="input_val" >
+			</div>
+
+		</div>
+		<form action="" method="post"  id="recharge_form">
+		<div class="pay-box">
+			<h3>在线支付</h3>
+			<ul>
+				<foreach name="paymentList" item="v" key="k">
+					<li>
+						<input type="radio" name="pay_radio" value="pay_code={$v['code']}" id="pay{$k}">
+						<label for="pay{$k}"><img src="/plugins/{$v['type']}/{$v['code']}/{$v['icon']}" alt="" width="120" height="40"></label>
+					</li>
+				</foreach>
+			</ul>
+		</div>
+		<foreach name="bankCodeList" item="v" key="k">
+			<div class="pay-box">
+				<h3>{$paymentList[$k]['name']}网银支付</h3>
+				<ul>
+					<foreach name="v" item="v2" key="k2">
+						<li>
+							<input type="radio" name="pay_radio" value="pay_code={$k}&bank_code={$v2}" id="pay2{$k2}">
+							<label for="pay2{$k2}"><img src="__STATIC__/images/images-out/{$bank_img[$k2]}" alt="" width="120" height="40"></label>
+						</li>
+					</foreach>
+				</ul>
+			</div>
+		</foreach>
+		<!--<div class="pay-box">-->
+			<!--<h3>选择支付方式</h3>-->
+			<!--<table>-->
+				<!--<tr>-->
+					<!--<foreach name="paymentList" item="v"  key="k">-->
+					<!--<td><input type="radio" value="pay_code={$v['code']}" name="pay_radio" id="pay1"><label for=""><img src="/plugins/{$v['type']}/{$v['code']}/{$v['icon']}" width="120" height="40" alt=""></label></td>-->
+					<!--</foreach>-->
+					<!--&lt;!&ndash;<td><input type="radio" name="pay" id="pay2"><label for="pay2"><img src="__STATIC__/images/pay2.png" alt=""></label></td>&ndash;&gt;-->
+					<!--&lt;!&ndash;<td><input type="radio" name="pay" id="pay3"><label for="pay3"><img src="__STATIC__/images/pay3.png" alt=""></label></td>&ndash;&gt;-->
+					<!--&lt;!&ndash;<td><input type="radio" name="pay" id="pay4"><label for="pay4"><img src="__STATIC__/images/pay4.png" alt=""></label></td>&ndash;&gt;-->
+				<!--</tr>-->
+				<!--<foreach name="bankCodeList" item="v"  key="k">-->
+				<!--<tr>-->
+
+					<!--<foreach name="v" item="v2"  key="k2">-->
+					<!--<td><input type="radio" name="pay_radio" id="input-ALIPAY-1" value="pay_code={$k}&bank_code={$v2}"><label for=""><img src="__STATIC__/images/images-out/{$bank_img[$k2]}" width="120" height="40" alt=""></label></td>-->
+
+
+					<!--</foreach>-->
+					<!--&lt;!&ndash;<td><input type="radio" name="pay" id="pay6"><label for="pay6"><img src="__STATIC__/images/pay6.png" alt=""></label></td>&ndash;&gt;-->
+					<!--&lt;!&ndash;<td><input type="radio" name="pay" id="pay7"><label for="pay7"><img src="__STATIC__/images/pay7.png" alt=""></label></td>&ndash;&gt;-->
+					<!--&lt;!&ndash;<td><input type="radio" name="pay" id="pay8"><label for="pay8"><img src="__STATIC__/images/pay8.png" alt=""></label></td>&ndash;&gt;-->
+				<!--</tr>-->
+				<!--</foreach>-->
+
+				<!--<tr>-->
+					<!--&lt;!&ndash;<td><input type="radio" name="pay" id="pay9"><label for="pay9"><img src="__STATIC__/images/pay9.png" alt=""></label></td>&ndash;&gt;-->
+					<!--<td></td>-->
+					<!--<td></td>-->
+					<!--<td></td>-->
+				<!--</tr>-->
+			<!--</table>-->
+			<input type="hidden" name="account" id="add_money" value="50">
+			<input type="button"  onclick="recharge_submit()" value="确认支付">
+		</form>
+		<!--</div>-->
+	</div>
+</section>
+
+<script>
+	$(".page56 .part1 span").click(function () {
+		$(this).siblings("span").removeClass("on"), $(this).addClass("on")
+		$('#add_money').val($(this).attr('rel'));
+	})
+	$(function () {
+		$(".userdown-top ul li").click(function () {
+			$(this).addClass('alllist').siblings().removeClass('alllist');
+		});
+	});
+
+	function mywalletsa() {
+		$('.mywallets').show();
+		$('.addmon').hide();
+	};
+	function mywalletstopup() {
+		$('.addmon').show();
+		$('.mywallets').hide();
+	};
+
+	$(document).ready(function() {
+		$(document).on('click','.tag-item',function(){
+			$(this).find('.t-check').addClass('tptig').parent().siblings().find('.t-check').removeClass('tptig');
+			$('#add_money').val($(this).attr('rel'));
+		});
+		$('.tag-define').click(function(){
+			var goods_id = $(this).attr('data_id').substr(4);
+			$(this).find('.define-label').hide();
+			$(this).find('.define-input').show().focus();
+			$(this).find('.define-input').blur(function(){
+				var ce = $(this).val();
+				ce = ce.replace(/\D|^0/g,'')
+				$(this).parent('.tag-define').siblings('.tag-item').each(function(){
+					var a_text = $(this).text();
+					if(ce == a_text && ce != ''){
+						alert('已有该标签!');
+						ce = '';
+						$('.define-input').val('');
+					}
+				});
+				if(ce == ''){
+					$(this).prev('.define-label').show();
+					$(this).hide();
+				}else{
+
+				}
+			})
+		});
+
+	});
+
+	$(function () {
+		//高亮显示
+		var active = '{$active_status}';
+		if(!active)
+			active = 'ALL';
+		$('.wddd-li li').removeClass('wddd-red');
+		$('#'+active).addClass('wddd-red');
+
+		$("#h-s").mouseover(function () {
+			$('.ec-ta-x').css('left','124px');
+			$('.ec-ta-x').css('width','110px');
+			$(this).addClass("cullent");
+		});
+		$("#h-s").mouseout(function () {
+			$('.ec-ta-x').css('left','0px');
+			$('.ec-ta-x').css('width','124px');
+			$(this).removeClass("cullent");
+		});
+		$("#q-s").mouseover(function () {
+			$('.ec-ta-x').css('left','0px');
+			$(this).addClass("cullent");
+		});
+		$("#q-s").mouseout(function () {
+			$('.ec-ta-x').css('left','0px');
+		});
+	});
+
+	function recharge_submit(){
+		var input_val = parseInt($('#input_val').val());
+//		console.log(input_val);
+		if(input_val>0){
+			$('#add_money').val(input_val);
+		}
+		var account = $('#add_money').val();
+		if(isNaN(account) || parseInt(account)<=0 || account==''){
+			alert('请输入正确的充值金额');
+			return false;
+		}
+		$('#recharge_form').submit();
+	}
+</script>
+
+
+<include file="Public/footer" />
+

@@ -1,0 +1,61 @@
+
+
+	<include file="Public/header"/></head>
+
+
+    <link rel="stylesheet" href="__STATIC__/css/plus.css">
+
+
+<div class="designerCont">
+	
+    <div class="title">
+    	设计师简介
+    </div>
+    
+    <div>
+		<volist name="design" id="vo">
+
+            <div class="mainBlock cf">
+                <a href="{:U('designer_detail',array('id'=>$vo['id']))}">
+                <div class="bg">
+
+                </div>
+                <div class="img">
+                    <img src="{$vo.picture}">
+                </div>
+                <div class="text" style="background-image:url({$vo.goodsimg});">
+                    <!--<div class="img">-->
+                    <!--<img src="__STATIC__/images/designer_bg01.png">-->
+                    <!--</div>-->
+                    <div class="textBlock">
+                        <h1>{$vo.name}</h1>
+                        <h2>{$vo[job][0]}</h2>
+                        <b><i></i></b>
+                        <p>个人案例 &gt;&gt;</p>
+                    </div>
+                </div>
+                </a>
+            </div>
+
+		</volist>
+    </div>
+    
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<include file="Public/footer" />

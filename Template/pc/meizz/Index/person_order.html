@@ -1,0 +1,99 @@
+
+
+<include file="Public/header"/>
+<link rel="stylesheet" href="__STATIC__/css/plus.css">
+
+<div class="smdzc2Cont">
+	
+    <div class="imgs">
+    	<img src="__STATIC__/images/smdz_c2_img01.jpg"><br>
+        <img src="__STATIC__/images/smdz_c2_img02.jpg">
+    </div>
+    <div class="form">
+    	<img src="__STATIC__/images/smdz_c2_img03.jpg">
+        <div class="formBlock">
+        	<h1>上门服务预约</h1>
+            <h2>预约设计师上门定制，一对一沟通</h2>
+            <form id="signupForm" action="" method="post">
+            	<div class="inputBlock">
+                	<div class="name">
+                    	您的姓名
+                    </div>
+                    <div class="input">
+                    	<input type="text" name="username">
+                    </div>
+                </div>
+                <div class="inputBlock">
+                	<div class="name">
+                    	手机号码
+                    </div>
+                    <div class="input">
+                    	<input type="text" name="mobile">
+                    </div>
+                </div>
+                <div class="inputBlock">
+                	<div class="name">
+                    	您的地址
+                    </div>
+                    <div class="input">
+                    	<input type="text" name="address">
+                    </div>
+                </div>
+                <div class="inputBlock">
+                	<div class="name">
+                    	预约时间
+                    </div>
+                    <div class="input">
+                    	<!--<input type="text" name="yuyue_time" value="{$design.server_time}">-->
+                    	<input type="text" name="yuyue_time" onclick="WdatePicker({lang:'zh-cn',skin:'twoer'})">
+                    </div>
+                </div>
+                <div class="inputBlock">
+                	<div class="name">
+                    	我的需求
+                    </div>
+                    <div class="input">
+                    	<input type="text" name="request">
+                    </div>
+                </div>
+                <div class="btn">
+                	<button type="submit">提交预约</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+</div>
+
+
+
+
+<script type="text/javascript" src="__STATIC__/js/jquery.validate.js"></script>
+<script>
+jQuery.validator.setDefaults({
+//	submitHandler: function() {
+//		alert("submitted!");
+//	}
+});
+
+jQuery().ready(function() {
+
+	jQuery("#signupForm").validate({
+		rules: {
+			username: "required",
+			mobile: "required",
+			address: "required",
+			yuyue_time: "required",
+			request: "required"
+		},
+		messages: {
+			username: "请输入姓名",
+			mobile: "请输入手机号码",
+			address: "请输入地址",
+			yuyue_time: "请选择时间",
+			request: "请描述您的要求"
+		}
+	});
+});
+</script>
+<include file="Public/footer" />

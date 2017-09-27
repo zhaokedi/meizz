@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<link rel="stylesheet" href="__STATIC__/css/main1.css">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=0">
+	<meta name="imagemode" content="force">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="keywords" content="">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<meta http-equiv="Pragma" content="no-cache">
+	<meta http-equiv="Expires" content="-1">
+	<link rel="shortcut icon" type="image/x-icon" href="">
+	<link rel="apple-touch-icon-precomposed" href="">
+	<meta name="MobileOptimized" content="320">
+	<style>
+		.swiper-slide a{
+			top: 83%;
+
+		display: block;
+		float: left;
+		padding-left: 10px;
+		padding-right: 10px;
+		height: 28px;
+		width: 180px;
+		line-height: 28px;
+		text-align: center;
+		}
+
+		.btn1 {
+			/*top: 83%;*/
+			color: #ee5d6c;
+			margin: 161% 0 0 100px;
+			display: block;
+			font-size: 16px;
+			font-weight: bold;
+			width: 100%;
+			text-align: center;
+
+			border-radius: 3px;
+			/*border: 1px solid #8f7958;*/
+			margin-right: 10px;
+
+		}
+	</style>
+</head>
+<body>
+	<div class="loading">
+		<div class="percent2"><img loadsrc="__STATIC__/images/new/loading.png" alt=""></div>
+		<div class="percent">0%</div>
+	</div>
+
+
+	<div class="swiper-container" id="mySwiper" >
+		<div class="swiper-wrapper">
+			<div class="swiper-slide">
+				<div class="bg"><img loadsrc="__STATIC__/images/new/bg1.jpg" alt=""></div>
+				<div class="t11 animate"><img loadsrc="__STATIC__/images/new/t11.png" alt=""></div>
+			</div>
+			<div class="swiper-slide">
+				<div class="img21 animate"><img loadsrc="__STATIC__/images/new/img21.png" alt=""></div>
+				<div class="txt21 animate"><img loadsrc="__STATIC__/images/new/txt21.png" alt=""></div>
+				<div class="txt22 animate">{$User.nickname}</div>
+				<div class="img22 animate"><img loadsrc="__STATIC__/images/new/img22.png" alt=""></div>
+				<div class="txt23 animate">
+					<p>厦门美之钻珠宝</p>
+					<p>希望您喜欢这份礼物</p>
+				</div>
+				<div class="img23 animate"><img loadsrc="__STATIC__/images/new/img23.png" alt=""></div>
+				<div class="txt24 animate">2016.12.25</div>
+				<a class="btn1" href="{:U('index')}">进入商城</a>
+			</div>
+		</div>
+	</div>
+
+
+	<div id="music">
+		<div class="music"  style="background-color: rgba(241, 219, 237, 0.54)"></div>
+		<span>开启</span>
+		<div class="musics">
+		</div>
+		<audio src="__STATIC__/js/card/1.mp3" id="mp3" loop autoplay="autoplay"></audio>
+	</div>
+</body>
+</html>
+<script src="__STATIC__/js/jquery.min.js"></script>
+<script src="__STATIC__/js/card/swiper.jquery.min.js"></script>
+<script src="__STATIC__/js/card/velocity.min.js"></script>
+<script src="__STATIC__/js/card/velocity.ui.min.js"></script>
+<script src="__STATIC__/js/card/main.js"></script>

@@ -1,0 +1,41 @@
+<include file="Public/header"/>
+
+	<link rel="stylesheet" href="__STATIC__/css/stypleex.css">
+
+</head>
+<body>
+
+<header>
+	<a href="javascript:history.back(-1)" class="back"></a>
+	<h3>体验店列表</h3>
+	<a href="" class="menu"></a>
+	<include file="Public/menu"/>
+</header>
+<div class="h50"></div>
+
+
+
+<div class="page63" id="tiyan">
+
+	<ul class="con">
+		<volist name="storelist" id="vo">
+			<li>
+				<span class="a">{$vo.name}</span>
+				<span class="b"><a href="{:U('shopmap',array('id'=>$vo['id']))}" class="mapbtn">到这里去</a></span>
+			</li>
+		</volist>
+
+	</ul>
+
+
+
+</div>
+
+
+
+
+
+<script src="__STATIC__/js/slide.js"></script>
+<script src="__STATIC__/js/main.js"></script>
+</body>
+</html>

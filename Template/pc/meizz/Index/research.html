@@ -1,0 +1,118 @@
+<include file="Public/header" />
+<!--<include file="Public/banner" />-->
+
+
+<section class="crumb">
+	<a href="">首页</a> &gt;  <a href="">在线调查</a>
+</section>
+
+
+
+<section class="main">
+	<div class="page58">
+		<h2>在线调查</h2>
+		<h3>{$research_list.title}</h3>
+		<form method="post" action="" id="researchform">
+		<volist name="question" id="vo" key="k1">
+			<div class="title">{$k1}、{$vo.title}</div>
+
+
+			<div class="con">
+				<input type="hidden" name="ids[]" value="{$vo.id}">
+				<input type="hidden" name="sort[]">
+				<volist name="vo.option" id="vo1">
+				<div class="row">
+					<label for="" class="radio58" data-sort="{$vo1.sort}">{$vo1.que}</label>
+
+					<div class="percent"><span style="width: {:percent($vo1[count],$vo[sum])}%;"></span></div>
+					<i>({:percent($vo1[count],$vo[sum])}%){$vo1[count]}</i>
+				</div>
+				</volist>
+
+			</div>
+		</volist>
+
+		</form>
+		<!--<div class="title">4、您对本官网买到的商品满意吗？</div>-->
+		<!--<div class="con">-->
+			<!--<div class="row">-->
+				<!--<label for="" class="radio58">很满意</label>-->
+				<!--<div class="percent"><span style="width: 50%;"></span></div>-->
+				<!--<i>(50%)</i>-->
+			<!--</div>-->
+			<!--<div class="row">-->
+				<!--<label for="" class="radio58">一般</label>-->
+				<!--<div class="percent"><span style="width: 12%;"></span></div>-->
+				<!--<i>(12%)</i>-->
+			<!--</div>-->
+			<!--<div class="row">-->
+				<!--<label for="" class="radio58">不太满意</label>-->
+				<!--<div class="percent"><span style="width: 37%;"></span></div>-->
+				<!--<i>(37%)</i>-->
+			<!--</div>-->
+		<!--</div>-->
+
+		<!--<div class="title">5、您对钻石产品的印象？（可多选）</div>-->
+		<!--<div class="con">-->
+			<!--<div class="row">-->
+				<!--<label for="" class="radio58">很满意</label>-->
+				<!--<div class="percent"><span style="width: 50%;"></span></div>-->
+				<!--<i>(50%)</i>-->
+			<!--</div>-->
+			<!--<div class="row">-->
+				<!--<label for="" class="radio58">一般</label>-->
+				<!--<div class="percent"><span style="width: 12%;"></span></div>-->
+				<!--<i>(12%)</i>-->
+			<!--</div>-->
+			<!--<div class="row">-->
+				<!--<label for="" class="radio58">不太满意</label>-->
+				<!--<div class="percent"><span style="width: 37%;"></span></div>-->
+				<!--<i>(37%)</i>-->
+			<!--</div>-->
+		<!--</div>-->
+		<input type="submit" value="提交" onclick="ajax_research()">
+	</div>
+</section>
+<script>
+$("body").delegate(".radio58", "click", function () {
+$(this).parent().siblings().children(".radio58").removeClass("on"), $(this).addClass("on")
+
+	$(this).parent().parent().find("input[name='sort[]']").val($(this).data('sort'));
+});
+function ajax_research(){
+	var sort=$("input[name='sort[]']");
+	flag=true;
+	$(sort).each(function(i){
+		var val=$(sort[i]).val();
+		if(val ==''){
+			flag=false
+		}
+
+	})
+	if(flag==false){
+		layer.msg("有选项未选择");
+		return
+	}
+	$.ajax({
+		url:"{:U('User/research')}",
+		data:$("#researchform").serialize(),
+		type:"POST",
+		dataType:"json",
+		success:function(rdata){
+			if(rdata.status==1){
+				layer.msg("提交成功",{time:1500},function(){
+					location.reload();
+				})
+			}else {
+				layer.msg(rdata.msg);
+			}
+
+		}
+	})
+
+}
+</script>
+
+
+
+<include file="Public/footer" />

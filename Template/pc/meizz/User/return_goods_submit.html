@@ -1,0 +1,231 @@
+<include file="Public/header" />
+<include file="User/navigate" />
+
+<section class="main">
+	<!-- main-left -->
+	<include file="User/menu" />
+	<!-- /main-left -->
+	<!-- main-right -->
+	<div class="main-right">
+		<h2>申请售后</h2>
+		<div class="page14-rule">
+			<div class="con">
+				<h3>售后服务条款</h3>
+				<h4>1.终身免费清洗保养:</h4>
+				<p>我们为您的首饰提供终身免费清洗保养的服务，让您的首饰能够焕然一新；</p>
+				<h4>2.成本价改款:</h4>
+				<p>如果您佩戴了一段时间后想重新换款式，我们可以提供您成本价改款的服务，让您的首饰永远走在流行的前沿；可抵值金额计算：</p>
+				<p><i>·</i>原产品抵值=原产品实际购买价格（不收取折旧费）</p>
+				<p><i>·</i>旧托回收金额=旧托实际可回收重量*回收当日美之钻回收价</p>
+				<p><i>·</i>应补差价=新成品的工费+新托金费-旧托回收金额</p>
+				<h4>3.免费修改手寸:</h4>
+				<p>我们还提供戒指免费修改手寸服务（正负2号内，部分款式不宜于改款的，不建议修改，具体按款式而定）；</p>
+				<h4>4.免费刻字：</h4>
+				<p>我们为您的首饰提供免费个性刻字服务，让首饰打上专属于您的特殊烙印，彰显与众不同的贵宾特质；</p>
+				<h4>5.免费维修、翻新、和质检：</h4>
+				<p>也为您的首饰提供终生免费维修、翻新、和质检服务；</p>
+				<h4>6.钻饰原价以小换大服务：</h4>
+				<p>置换规则：</p>
+				<p><i>·</i>以小换大的产品为美之钻珠宝销售的产品</p>
+				<p><i>·</i>适合主钻单颗10分以上钻石产品</p>
+				<p><i>·</i>持有美之钻珠宝销售单据和证书（证书无污损和折皱）</p>
+				<p><i>·</i>一对一换购钻石产品，且换购价格至少高于原产品30%的正价钻石产品</p>
+				<p><i>·</i>以小换大只限换购同类型证书</p>
+				<p><i>·</i>钻饰以小换大的服务是原价补差价，是为会员提供的增值服务，故换购的钻饰产品不享受同期店内其它优惠活动</p>
+				<p><i>·</i>此项业务仅限在体验中心实施，回收之前需先作鉴定检验。</p>
+				<p>可抵值金额计算：</p>
+				<p><i>·</i>原产品抵值=原产品实际购买价格（不收取折旧费）</p>
+				<p><i>·</i>应补差价=新产品价格—原产品抵值</p>
+				<h4>7.退换货服务条款：</h4>
+				<p><i>·</i>当您在美之钻购买的产品出现质量问题，可以在收到货品15天内（以签收销售单据上的日期为准）退换购买的货品。我们将依据《中华人民共和国消费者权益保护法》、《中华人民共和国产品质量法》及其他相关法规，为您提供周到的退换货服务，美之钻15天退货承诺为您无忧购物提供保障和信心。美之钻所有承诺工作日，遇国家法定节假日相应顺延，敬请谅解。</p>
+				<p><i>·</i>产品退换货注意事项：</p>
+				<p>需将原产品、赠品及所有原包装、质量鉴定书以及销售单据一并交由珠宝顾问。</p>
+			</div>
+			<div class="operate"><a href="" class="btn-rule">查看服务条款</a></div>
+		</div>
+
+
+		<div class="page14">
+			<table class="page14-apply">
+				<tr>
+					<th class="th1">订单编号</th>
+					<th class="th2">宝贝信息</th>
+					<th class="th3">购买金额</th>
+					<th class="th4">购买时间</th>
+					<th class="th5">服务类型</th>
+					<th class="th7">备注</th>
+					<th class="th6">操作</th>
+				</tr>
+				<form action="{:U('save_return')}" method="post" id="returnform">
+					<input type="hidden" name="goods_id" value="" id="goods_id">
+					<input type="hidden" name="order_id" value="" id="order_id">
+					<input type="hidden" name="spec_key" value="" id="spec_key">
+					<tr class="bd">
+						<td class="td1">
+							<input type="text">
+							<input type="hidden"  value="确定">
+							<span>M20160301245801</span>
+							<a href="" class="btn-change">更改</a>
+							<a href="" class="btn-list">列表</a>
+						</td>
+						<td class="td2">-</td>
+						<td class="td3">-</td>
+						<td class="td4">-</td>
+						<td class="td5">
+							<select name="type" id="">
+								<option value="1">更换款式</option>
+								<option value="2">退货</option>
+								<option value="3">戒指清洗</option>
+								<option value="4">刻字</option>
+								<option value="5">改指圈</option>
+								<option value="6">钻石以小换大</option>
+							</select>
+						</td>
+						<td class="td7"><input name="reason" type="text"></td>
+						<td class="td6">
+							<button type="button" class="btn-apply">申 请</button>
+						</td>
+					</tr>
+				</form>
+			</table>
+
+			<div class="page14-list" style="overflow: hidden">
+				<li>
+					<span class="th1">订单编号</span>
+					<span class="th2">下单时间</span>
+					<span class="th3">宝贝信息</span>
+					<span class="th4">购买金额</span>
+					<span class="th5">操 作</span>
+				</li>
+				<volist name="lists" id="vo">
+					<li>
+						<input type="hidden" name="order_id" value="{$vo.order_id}" class="td8">
+						<span class="td1">{$vo.order_sn}</span>
+						<span class="td2">{$vo.add_time|date='Y-m-d',###}</span>
+						<volist name="vo.goods_list" id="good" key="k">
+							<input type="hidden" name="goods_id" value="{$good.goods_id}" class="td9">
+							<input type="hidden" name="spec_key" value="{$good.spec_key}" class="td10">
+							<span class="td3">
+								<img src="{$good.goods_id|goods_thum_images=80,80}" alt="{$good.goods_name}">
+								<p class="txt">{$good.goods_name}</p>
+								<div class="r">
+									{$good.spec_key_name}
+									<!--手寸：12 <br>-->
+									<!--材质：18K <br>-->
+									<!--类型：钻饰 <br>-->
+								</div>
+							</span>
+							<!--<span class="td4">{$vo['order_amount']}</span>-->
+							<!--<span class="td5">-->
+								<!--<a href="" class="btn-sure">确 定</a>-->
+							<!--</span>-->
+						</volist>
+						<!--<span class="td3">-->
+							<!--<img src="{$good.goods_id|goods_thum_images=80,80}" alt="{$good.goods_name}">-->
+							<!--<p class="txt">{$good.goods_name}</p>-->
+							<!--<div class="r">-->
+								<!--{$good.spec_key_name}-->
+								<!--&lt;!&ndash;手寸：12 <br>&ndash;&gt;-->
+								<!--&lt;!&ndash;材质：18K <br>&ndash;&gt;-->
+								<!--&lt;!&ndash;类型：钻饰 <br>&ndash;&gt;-->
+							<!--</div>-->
+						<!--</span>-->
+						<span class="td4">{$vo['order_amount']}</span>
+						<span class="td5">
+							<a href="" class="btn-sure">确 定</a>
+						</span>
+					</li>
+
+				</volist>
+
+			</div>
+		</div>
+
+
+
+
+
+		<div class="page17">
+
+			<div class="title">
+				<span class="sp1">售后单号</span>
+				<span class="sp2">订单编号</span>
+				<span class="sp3">申请日期</span>
+				<span class="sp4">客服</span>
+				<span class="sp5">售后类型</span>
+				<span class="sp6">状 态</span>
+				<span class="sp7">操 作</span>
+			</div>
+			<volist name="list" id="item">
+			<div class="item">
+				<div class="item-hd">
+					<span class="sp1">{$item.id}</span>
+					<span class="sp2">{$item.order_sn}</span>
+					<span class="sp3">{$item.addtime|date="Y-m-d",###}</span>
+					<span class="sp4">{$item.service}</span>
+					<span class="sp5">{$item.typename}<if condition="$item.is_money eq 1"><i>需要补差价</i> </if>
+						<if condition="$item.is_money eq 1 and $item.is_pay eq 0">
+						<a href="{:U('cart/cart4',array('chajia'=>1,'return_id'=>$item['id']))}">去付款</a>
+						</if>
+
+					</span>
+					<span class="sp6">
+					  <if condition="$item['status'] eq 0">待客服处理</if>
+					  <if condition="$item['status'] eq 1">客服处理中</if>
+					  <if condition="$item['status'] eq 2">已完成</if>
+					  <if condition="$item['status'] eq 3">已取消</if>
+
+					</span>
+
+					<span class="sp7"><a href="" class="btn-detail">查看详情</a></span>
+				</div>
+				<div class="item-bd">
+					<a href="" class="close"></a>
+					<ul>
+						<li><em>客服回复</em>{$item.remark}</li>
+						<!--<li><em>宝贝状态</em>新款宝贝在 <time>2016-06-23 14:30</time>已发货 <a href="">查看物流</a></li>-->
+						<li><em><i class="e2">备</i>注</em>{$item.reason}</li>
+						<li><em>联系电话</em>{$user.mobile} </li>
+						<li><em>售后记录</em>
+							<volist name="item.log" id="vo">
+							<i class="record">{$vo.typename}{$vo.date}</i>
+							</volist>
+							<!--<i class="record">清洗2015-03-26</i><i class="record">更换款式2015-03-26</i>-->
+						</li>
+					</ul>
+					<!--<div class="btm">你的专属售后客服 {$item.service}小雅  微信 XMMDF <span class="tel">电话138888888888</span></div>-->
+					<div class="btm">你的专属售后客服 {$item.service}</div>
+				</div>
+			</div>
+			</volist>
+
+			<div class="operate">
+				<!--<a href="{:U('Home/User/return_goods_submit')}" class="btn">申请售后</a>-->
+			</div>
+
+		</div>
+	</div>
+	<!-- /main-right -->
+</section>
+
+<script>
+
+	$(".btn-apply").click(function(){
+		var order_id =$("#order_id").val();
+//		console.log(order_id);
+
+		if(!order_id){
+			layer.msg('请选择要申请售后的订单');
+			return;
+		}
+		$("#returnform").submit();
+	})
+
+</script>
+<!--<script src="js/jquery.min.js"></script>-->
+<!--<script src="js/slide.min.js"></script>-->
+<!--<script src="js/selectivizr.min.js"></script>-->
+<!--<script src="js/WdatePicker.js"></script>-->
+<!--<script src="js/main.js"></script>-->
+<include file="Public/footer" />
+

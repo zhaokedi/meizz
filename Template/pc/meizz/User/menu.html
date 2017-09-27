@@ -1,0 +1,71 @@
+<div class="main-left">
+    <h2>会员中心</h2>
+    <div class="side-menu">
+        <h3>账户管理</h3>
+        <ul>
+            <li class="info"><a href="{:U('/Home/User/info')}">个人信息</a></li>
+            <li class="safe"><a href="{:U('Home/User/safety_settings')}">账户安全</a></li>
+            <li class="recharge"><a href="{:U('Home/User/recharge')}">我的余额</a></li>
+            <!-- li><a href="#">我的消息</a></li-->
+            <!-- <li class="password"><a href="{:U('Home/User/password')}">修改密码</a></li> -->
+            <li class="address_list"><a href="{:U('Home/User/address_list')}">地址管理</a></li>
+            <li class="message"><a href="{:U('Home/User/message')}">留言列表</a></li>
+        </ul>
+    </div>
+    <div class="side-menu">
+        <h3>订单中心</h3>
+        <ul>
+            <!-- li><a href="">我的预约</a></li-->
+            <li class="order_list"><a href="{:U('Home/User/order_list')}">我的订单</a></li>
+            <li class="order_design_list"><a href="{:U('Home/User/order_design_list')}">设计师预约订单</a></li>
+            <!-- <li><a href="">我的购物车</a></li> -->
+            <li class="comment"><a href="{:U('Home/User/comment')}">我的评价</a></li>
+            <li class="coupon"><a href="{:U('Home/User/coupon')}">我的优惠券</a></li>
+            <li class="goods_collect"><a href="{:U('/Home/User/goods_collect')}">我的收藏</a></li>
+        </ul>
+    </div>
+    <div class="side-menu">
+        <h3>售后管理</h3>
+        <ul>
+            <li class="return_submit"><a  href="{:U('Home/User/return_goods_submit')}">售后申请</a></li>
+            <li class="return"><a href="{:U('Home/User/return_goods_list')}">我的售后</a></li>
+        </ul>
+    </div>
+    <div class="side-menu">
+        <h3>分期</h3>
+        <ul>
+            <li class="fenqi"><a  href="{:U('Home/User/fenqi')}">分期</a></li>
+
+        </ul>
+    </div>
+    <!--
+   <div class="side-menu">
+       <h3>推广积分</h3>
+       <ul>
+           <li><a href="#">我的推广</a></li>
+           <li><a href="#">推广规则</a></li>
+       </ul>
+   </div>-->
+    <div class="side-menu">
+        <h3>积分商城</h3>
+        <ul>
+            <li class="change"><a href="{:U('Home/User/integral_change')}">积分兑换</a></li>
+            <li class="rule"><a href="{:U('Home/User/integral_rule')}">积分规则</a></li>
+        </ul>
+    </div>
+    <div class="side-menu">
+        <h3>推荐管理</h3>
+        <ul>
+            <li class="myson"><a  href="{:U('Home/User/myson')}">我的下级</a></li>
+            <li class="invite"><a  href="{:U('Home/User/invite')}">推荐奖励</a></li>
+            <li class="commission"><a  href="{:U('Home/User/commission')}">我的佣金记录</a></li>
+
+        </ul>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $(".side-menu").removeClass('on');
+        $("li.{$active}").addClass('on').parents("div.side-menu").addClass('on');
+    })
+</script>

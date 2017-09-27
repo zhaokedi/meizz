@@ -1,0 +1,19 @@
+<div id="banner" class="banner">
+    <div class="hd">
+        <ul>
+            <volist name="banner" id="vo">
+            <li></li>
+            </volist>
+        </ul>
+    </div>
+    <div class="bd">
+        <ul>
+            <volist name="banner" id="vo">
+                <li><a href="{$vo.ad_link}" <if condition="$vo['target'] eq 1">target="_blank"</if>><img src="{$vo[ad_code]}" width="100%" title="{$vo[title]}" style="{$vo[style]}" /></a></li>
+            </volist>
+        </ul>
+    </div>
+    <a class="prev" href="javascript:void(0)"></a>
+    <a class="next" href="javascript:void(0)"></a>
+</div>
+<!--<div class="h800"></div>-->

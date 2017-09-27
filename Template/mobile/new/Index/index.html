@@ -1,0 +1,511 @@
+<!DOCTYPE html >
+<html style="font-size: 58.5938px;">
+<head>
+<meta name="Generator" content="TPshop v1.1" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<title>首页-{$tpshop_config['shop_info_store_title']}</title>
+<meta http-equiv="keywords" content="{$tpshop_config['shop_info_store_keyword']}" />
+<meta name="description" content="{$tpshop_config['shop_info_store_desc']}" />
+<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+<link rel="stylesheet" type="text/css" href="__STATIC__/css/public.css"/>
+<link rel="stylesheet" type="text/css" href="__STATIC__/css/index.css"/>
+<link rel="stylesheet" type="text/css" href="__STATIC__/css/main.css">
+    <link href="__STATIC__/css/mobiscroll_002.css" rel="stylesheet" type="text/css">
+    <link href="__STATIC__/css/mobiscroll.css" rel="stylesheet" type="text/css">
+    <link href="__STATIC__/css/mobiscroll_003.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="__STATIC__/js/flexible.js"></script>
+<script type="text/javascript" src="__STATIC__/js/jquery.js"></script>
+<script type="text/javascript" src="__STATIC__/js/TouchSlide.1.1.js"></script>
+<script type="text/javascript" src="__STATIC__/js/jquery.json.js"></script>
+<script type="text/javascript" src="__STATIC__/js/touchslider.dev.js"></script>
+<script type="text/javascript" src="__STATIC__/js/layer.js" ></script>
+    <!--<script src="__STATIC__/js/zepto.js"></script>-->
+
+    <script src="__STATIC__/js/mobiscroll_002.js" type="text/javascript"></script>
+    <script src="__STATIC__/js/mobiscroll_004.js" type="text/javascript"></script>
+    <script src="__STATIC__/js/mobiscroll_003.js" type="text/javascript"></script>
+    <script src="__STATIC__/js/mobiscroll_005.js" type="text/javascript"></script>
+    <script src="__STATIC__/js/mobiscroll.js" type="text/javascript"></script>
+<script src="__PUBLIC__/js/global.js"></script>
+<script src="__PUBLIC__/js/mobile_common.js"></script>
+<style type="text/css">
+    .yuyue select { display: block;  width: 95.3%; margin: .1rem .15rem;border-radius: 0; border-color: #f0f0f0;
+        background: url("__STATIC__/images/new/input21.png") 0.1rem center no-repeat; background-size: .44rem .34rem;
+        padding-left: .7rem; font-size: .22rem; height: .6rem; }
+     .three .title {width: 100%; text-align: center;  position: relative;  line-height: .5rem;  color: #ba9c6a;  font-size: .22rem;  }
+    .three .title i {  width: .9rem;  height: 1px;  display: inline-block;  background-color: #ba9c6a;  position: relative;  top: -.05rem;  }
+    .three .title img {  width: .26rem;  height: .26rem;  display: inline-block;  position: relative;  top: -0.03rem; }
+</style>
+</head>
+<body>
+
+<div id="page" class="showpage">
+<div id="homepage">
+<header id="header" style="height: .9rem" >
+<!-- <a href="{:U('Goods/categoryList')}" class="top_bt"></a><a href="{:U('Cart/cart')}" class='user_btn'></a> -->
+    <div class="search" >
+        <input type="text" placeholder="宝贝查找" id="search_text">
+    </div>
+    <a href="javascript:void(0);" class="menu2"></a>
+</header>
+
+    <div class="alert-menu2">
+        <div class="box">
+            <volist name="cat_lists" id="vo">
+                <h3>{$vo.mobile_name}</h3>
+                <div class="con">
+                    <volist name="vo.son" id="vo2">
+                    <a href="{:U('Goods/goodsList',array('id'=>$vo2['id']))}">{$vo2.mobile_name}</a>
+                </volist>
+                </div>
+            </volist>
+
+        </div>
+    </div>
+    <div class="overly-menu2"></div>
+
+    <!--<span href="javascript:void(0)" class="logo">{$tpshop_config['shop_info_store_title']}</span>-->
+
+
+<div id="scrollimg" class="scrollimg">
+  <div class="bd">
+	 <ul>
+	 	<adv pid ="2" limit="5" item="v">
+	    	<li><a href="{$v.ad_link}"
+                <if condition="$v['target'] eq 1">target="_blank"</if> >
+                <img src="{$v[ad_code]}" title="{$v[title]}"width="100%" style="{$v[style]}"/></a></li>
+     	</adv>
+     </ul>
+  </div>
+  <div class="hd">
+	<ul></ul>
+  </div>
+</div>
+<script type="text/javascript">
+	TouchSlide({
+		slideCell:"#scrollimg",
+		titCell:".hd ul", //开启自动分页 autoPage:true ，此时设置 titCell 为导航元素包裹层
+		mainCell:".bd ul",
+		effect:"leftLoop",
+		autoPage:true,//自动分页
+		autoPlay:true //自动播放
+	});
+</script>
+
+<script type="text/javascript">
+	TouchSlide({
+		slideCell:"#index_banner",
+		titCell:".hd ul", //开启自动分页 autoPage:true ，此时设置 titCell 为导航元素包裹层
+		mainCell:".bd ul",
+		effect:"leftLoop",
+		autoPage:true,//自动分页
+		autoPlay:true //自动播放
+	});
+</script>
+
+<script type="text/javascript">
+var url = "index.php?m=Mobile&c=Index&a=ajaxGetMore";
+$(function(){
+	//$('#J_ItemList').more({'address': url});
+	getGoodsList();
+});
+
+var page = 1;
+function getGoodsList(){
+	$('.get_more').show();
+	$.ajax({
+		type : "get",
+		url:"/index.php?m=Mobile&c=Index&a=ajaxGetMore&p="+page,
+		dataType:'html',
+		success: function(data)
+		{
+			if(data){
+				$("#J_ItemList>ul").append(data);
+				page++;
+				$('.get_more').hide();
+			}else{
+				$('.get_more').hide();
+				$('#getmore').remove();
+			}
+		}
+	});
+}
+</script>
+<!--<ul class="cnav33-1">-->
+    <!--<li><a href="">-->
+        <!--<img src="__STATIC__/images/new/c33-1.png" alt="">-->
+        <!--<h3>名师设计</h3>-->
+        <!--<p>DESIGN</p>-->
+    <!--</a></li>-->
+    <!--<li><a href="">-->
+        <!--<img src="__STATIC__/images/new/c33-2.png" alt="">-->
+        <!--<h3>工匠品质</h3>-->
+        <!--<p>quality</p>-->
+    <!--</a></li>-->
+    <!--<li><a href="">-->
+        <!--<img src="__STATIC__/images/new/c33-3.png" alt="">-->
+        <!--<h3>上门定制</h3>-->
+        <!--<p>Customized</p>-->
+    <!--</a></li>-->
+    <!--<li><a href="">-->
+        <!--<img src="__STATIC__/images/new/c33-4.png" alt="">-->
+        <!--<h3>专车服务</h3>-->
+        <!--<p>CAR</p>-->
+    <!--</a></li>-->
+<!--</ul>-->
+    <!--<notempty name="ad1">-->
+        <!--<if condition="$ad1[enabled] eq 1">-->
+<!--<div class="ad33"><a href="{$ad1.ad_link}"><img src="{$ad1.ad_code}" alt=""></a></div>-->
+            <!--</if>-->
+    <!--</notempty>-->
+    <!--<div style="background-color: #f2f2f2;width:100%;padding:.15rem .15rem  .15rem">-->
+        <!--<ul class="cnav33-2">-->
+            <!--<volist name="cat_list" id="vo">-->
+            <!--<li><a href="{:U('/Mobile/Goods/goodsList',array('id'=>$vo['id']))}"><img src="{$vo.image}" alt="">{$vo.mobile_name}</a></li>-->
+            <!--</volist>-->
+            <!--<li><a href=""><img src="__STATIC__/images/new/c332-7.png" alt="">限时秒杀</a></li>-->
+            <!--<li><a href=""><img src="__STATIC__/images/new/c332-8.png" alt="">零元分期</a></li>-->
+            <!--<li><a href="{:U('Mobile/User/coupon')}"><img src="__STATIC__/images/new/c332-9.png" alt="">优惠券</a></li>-->
+            <!--<li><a href=""><img src="__STATIC__/images/new/c332-10.png" alt="">壹元许愿</a></li>-->
+        <!--</ul>-->
+    <!--</div>-->
+
+
+<!--<div class="three">-->
+
+    <!--<div class="title">-->
+        <!--<i class="l"></i>-->
+        <!--<img src="__STATIC__/images/new/t331.png" alt="">-->
+        <!--今日新品-->
+        <!--<i class="r"></i>-->
+    <!--</div>-->
+    <!--<volist name="new_goods" id="vo">-->
+        <!--<li >-->
+            <!--<a href="{:U('Goods/goodsinfo',array('id'=>$vo[goods_id]))}" class="img"><img src="{$vo.goods_id|goods_thum_images=250,250}" alt=""></a>-->
+        <!--</li>-->
+    <!--</volist>-->
+<!--</div>-->
+
+<div class="page33-product">
+    <!--<div class="title">-->
+        <!--<i class="l"></i>-->
+        <!--<img src="__STATIC__/images/new/t331.png" alt="">-->
+        <!--裸钻定制-->
+        <!--<i class="r"></i>-->
+    <!--</div>-->
+    <!--<ul class="list4">-->
+        <!--<volist name="favourite_goods" id="vo">-->
+        <!--<li><a href="{:U('Goods/goodsinfo',array('id'=>$vo[goods_id]))}"><img src="{$vo.goods_id|goods_thum_images=400,400}" alt=""></a></li>-->
+        <!--</volist>-->
+
+    <!--</ul>-->
+    <div class="title">
+        <i class="l"></i>
+        <img src="__STATIC__/images/new/t332.png" alt="">
+        网红必备
+        <i class="r"></i>
+    </div>
+    <ul class="list4-2">
+
+        <volist name="favourite_goods" id="vo">
+            <li>
+                <a href="{:U('Goods/goodsinfo',array('id'=>$vo[goods_id]))}" class="img">
+                    <img src="{$vo.goods_id|goods_thum_images=200,200}" alt="">
+                </a>
+                <h3 style="white-space:nowrap; overflow-x: hidden;text-overflow:ellipsis;">{$vo.goods_name}</h3>
+                <p class="price" style="height: 20px">￥{$vo.shop_price}<del>￥{$vo.market_price}</del></p>
+            </li>
+        </volist>
+
+    </ul>
+    <div class="title red">
+        <a href="{:U('Goods/goodsList')}" target="_blank"><font color="#8f7958" size=".22rem">点击查看更多 &gt;&gt;</font></a>
+    </div>
+
+    <div class="title red">
+        <i class="l"></i>
+        <img src="__STATIC__/images/new/b333.png" alt="">
+        热门钻饰
+        <i class="r"></i>
+    </div>
+    <ul class="list4-2">
+        <volist name="hot_goods" id="vo">
+            <li>
+                <a href="{:U('Goods/goodsinfo',array('id'=>$vo[goods_id]))}" class="img"><img src="{$vo.goods_id|goods_thum_images=200,200}" alt=""></a>
+                <h3 style="white-space:nowrap; overflow-x: hidden;text-overflow:ellipsis;">{$vo.goods_name}</h3>
+                <p class="price" style="height: 20px">￥{$vo.shop_price}<del>￥{$vo.market_price}</del></p>
+            </li>
+        </volist>
+    </ul>
+    <div class="title red">
+        <a href="{:U('Goods/goodsList')}" target="_blank"><font color="#8f7958" size=".22rem">点击查看更多 &gt;&gt;</font></a>
+    </div>
+</div>
+
+<!--<div class="ad33"><a href=""><img src="__STATIC__/images/new/ad2.jpg" alt=""></a></div>-->
+    <notempty name="ad2">
+        <if condition="$ad2[enabled] eq 1">
+    <div class="ad33"><a href="{$ad2.ad_link}"><img src="{$ad2.ad_code}" alt=""></a></div>
+        </if>
+</notempty>
+<div class="yuyue" id="baoming" style="display: none;">
+    <form action="" id="pointForm" name="pointForm" method="post"  onsubmit="return check_submit()">
+    <h2>预约进店</h2>
+    <div class="tips">我的位置  <span id="position">湖里大厦</span><br>最近门店  <span id="nearaddress"></span></div>
+    <input type="text" id="username" placeholder="姓名" class="input31" name="username">
+    <input type="text" id="mobile" placeholder="手机" class="input32" name="mobile" onBlur="checkMobilePhone(this.value)">
+    <input type="text" id="address" placeholder="地址" class="input33" name="address" >
+        <!--<input type="text" class="form-control" id="start_time" name="start_time" value="{$info.start_time}">-->
+        <input value="{$today}" class=""  name="yuyue_time" id="appDateTime" type="text">
+        <select name="type_id">
+            <volist name="apointtypelist" id="vo">
+            <option value="{$vo.id}">{$vo.type_name}</option>
+            </volist>
+        </select>
+        <input type="hidden" value="{$storeinfo[id]}" name="store_id" id="store_id">
+    <div class="" style="padding-left: 35px;font-size:.23rem">
+        <span id="mobile_phone_notice"></span>
+    </div>
+
+        <!--<a href="{:U('store_list')}"><div class="tips2">默认选择  <span id="default">{$storeinfo[address]}</span></div></a>-->
+        <a href="javascript:void(0);" id="store">
+            <div class="tips2">默认选择
+                <span id="default">{$storeinfo[address]}</span>
+            </div>
+        </a>
+    <input type="submit" value="提    交">
+    <div class="other">
+        <a href="{:U('User/reg')}">注 册</a><a href="{:U('User/login')}">登 录</a>
+    </div>
+        </form>
+</div>
+    <!--<notempty name="ad3">-->
+        <!--<if condition="$ad3[enabled] eq 1">-->
+            <!--<div class="video">-->
+
+            <!--<a href="{$ad3.ad_link}"><img src="{$ad3.ad_code}" alt=""></a>-->
+            <!--</div>-->
+        <!--</if>-->
+    <!--</notempty>-->
+<div class="kf"><img src="__STATIC__/images/new/kf.png" alt=""></div>
+<div class="cpt">copyright © </div>
+    <div id="allmap" ></div>
+<div class="h50"></div>
+</div>
+<div id="search_hide" class="search_hide">
+ <h2> <span class="close"><img src="__STATIC__/images/close.png"></span>商品搜索</h2>
+ <div id="mallSearch" class="search_mid">
+    <div id="search_tips" style="display:none;"></div>
+    <div class="searchdotm">
+      <form class="set_ip"name="sourch_form" id="sourch_form" method="post" action="{:U('Goods/search')}">
+        <div class="mallSearch-input" style="border-color: #8f7958">
+          <div id="s-combobox-135">
+            <input class="s-combobox-input" style="height: .6rem" name="q" id="q"  placeholder="请输入关键词"  type="text" value="<?php echo I('q'); ?>" />
+          </div>
+          <input type="button" value="" class="button"  onclick="if($.trim($('#q').val()) != '') $('#sourch_form').submit();" />
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<style>
+    .storeChoice{ position:fixed; top:0; width:100%; height:100vh; box-sizing:border-box; padding-top:0.9rem; background-color:rgba(0,0,0,0.6); z-index:10; display:none;}
+    .storeChoice .TCBlock{ height:100%; background-color:#fff; overflow-y:auto; padding:0 0.2rem;}
+    .storeChoice .TCHelp{ text-align:right; font-size:0.26rem; line-height:0.34rem; padding:0.2rem 0;}
+    .addr-manager .item i {  display: inline-block;  }
+</style>
+<!--门店选择-->
+    <div class="storeChoice" style="display: none">
+        <header>
+            <a href="javascript:;" class="TCBack back"></a>
+            <h3>门店列表</h3>
+        </header>
+        <div class="TCBlock">
+            <div class="TCHelp">
+            </div>
+            <div class="TCList">
+                    <!--<li class="addr-manager">-->
+                        <ul class="addr-manager">
+                        <volist name="store_list" id="list" key="k">
+                            <!--<div class="address_add   <if condition="$list[is_default] eq 1"> Default</if>">-->
+                            <li data-storeid="{$list['id']}" class="item <if condition="$k eq 1"> Default</if>" >
+
+                            <!--<a href="{:U('/Mobile/index/index',array('store_id'=>$list['id']))}">-->
+                                <h3>店名: {$list[name]}</h3>
+                                <!--<p><if condition="$k eq 1">   <i>默认</i></if>{$list[address]}</p>-->
+                                <p >地址: {$list[address]}</p>
+                        </li>
+                        </volist>
+                     </ul>
+                    </div>
+            </div>
+        </div>
+    </div>
+    <include file="Public/footer_nav"/>
+<script>
+    jQuery(document).ready(function(e) {
+        $("#store").click(function(){
+            $(".storeChoice").show();
+        });
+
+        $(".TCBack").click(function(){
+            $(".storeChoice").hide();
+        });
+
+        $(".TCList li").click(function(){
+            var id=$(this).data('storeid');
+            var text=$(this).children('p').text();
+            if($(this).hasClass("disable"))
+            {
+            }
+            else
+            {
+                $(this).addClass("curr").siblings().removeClass("curr");
+                var textL = $(this).find("h1").html()+"-"+$(this).find(".text3").html();
+                $(".ticket b").html(textL);
+                $("#store_id").val(id);
+                $("#default").text(text);
+
+                $(".storeChoice").hide();
+            }
+        });
+
+    });
+</script>
+
+<!--<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=zg6GQgG0U2YZgGp8ciGuGIco"></script>-->
+    <script>
+
+        $(function(){
+            var currYear = (new Date()).getFullYear();
+            var opt={};
+            opt.datetime = {preset : 'datetime'};
+            opt.default = {
+                theme: 'android-ics light', //皮肤样式
+                display: 'modal', //显示方式
+                mode: 'scroller', //日期选择模式
+                dateFormat: 'yyyy-mm-dd',
+                lang: 'zh',
+                showNow: true,
+                nowText: "今天",
+                startYear: currYear, //开始年份
+                endYear: currYear + 10 //结束年份
+            };
+
+            var optDateTime = $.extend(opt['datetime'], opt['default']);
+
+            $("#appDateTime").mobiscroll(optDateTime).datetime(optDateTime);
+
+
+
+//            var map = new BMap.Map("allmap");
+//            var point = new BMap.Point(116.331398,39.897445);
+//            map.centerAndZoom(point,12);
+//            var geoc = new BMap.Geocoder();
+//            var geolocation = new BMap.Geolocation();
+//            geolocation.getCurrentPosition(function(r){
+//                if(this.getStatus() == BMAP_STATUS_SUCCESS){
+//                    var mk = new BMap.Marker(r.point);
+//                    map.addOverlay(mk);
+//                    map.panTo(r.point);
+//                    geoc.getLocation(r.point, function(rs){
+//                        var addComp = rs.addressComponents;
+////                    console.log( addComp.street + ", " + addComp.streetNumber);
+////                    console.log(addComp);
+//                        $("#position").text(addComp.street+addComp.streetNumber);
+//                        $.ajax({
+//                            datetype:"json",
+//                            type : "POST",
+//                            url:"{:U('index/getstore')}",
+//                            data : {lng:r.point.lng,lat:r.point.lat},// 你的formid 搜索表单 序列化提交
+//                            success: function(data)
+//                            {
+//                                if(data.status==1){
+//                                        $("#nearaddress").text(data.address);
+//                                        $("#default").text(data.address);
+//                                        $("input[name='store_id']").val(data.store_id);
+//
+//
+//                                }
+//
+//                            }
+//                        });
+//                    });
+//                }
+//                else {
+//                    alert('failed' + this.getStaus());
+//
+//                }},{enableHighAccuracy:true})
+
+
+        // 百度地图API功能
+        })
+
+
+    </script>
+<script type="text/javascript">
+    function check_submit()
+    {
+        var username = $.trim($("#pointForm").find('#username').val());
+        var mobile = $("#pointForm").find('#mobile').val();
+
+        if(username.length >0 && mobile.length > 0 )
+        {
+            return true;
+        } else{
+            return false;
+        }
+
+    }
+    function checkMobilePhone(mobile){
+        if(mobile == ''){
+            $('#mobile_phone_notice').css('color','red');
+            $('#mobile_phone_notice').html('* 手机号码不能为空');
+//            flag = false;
+        }else if(checkMobile(mobile)){
+            $('#mobile_phone_notice').css('color','green');
+            $('#mobile_phone_notice').html('');
+//            flag = true;
+        }else{
+            $('#mobile_phone_notice').css('color','red');
+            $('#mobile_phone_notice').html('* 手机号码格式不正确');
+//            flag = false;
+        }
+    }
+
+$(function() {
+    $('#search_text').on("click",function(){
+//            alert(1);
+            $(".showpage").children('div').hide();
+            $("#search_hide").css('position','fixed').css('top','0px').css('width','100%').css('z-index','999').show();
+
+    })
+    $('#get_search_box').click(function(){
+        $(".showpage").children('div').hide();
+        $("#search_hide").css('position','fixed').css('top','0px').css('width','100%').css('z-index','999').show();
+    })
+    $("#search_hide .close").click(function(){
+        $("#homepage").show();
+        $("#search_hide").hide();
+    })
+
+
+
+});
+</script>
+<script>
+$('.search-type li').click(function() {
+    $(this).addClass('cur').siblings().removeClass('cur');
+    $('#searchtype').val($(this).attr('num'));
+});
+$('#searchtype').val($(this).attr('0'));
+</script>
+    <script src="__STATIC__/js/slide.js"></script>
+    <script src="__STATIC__/js/main.js"></script>
+<script src="__PUBLIC__/js/jqueryUrlGet.js"></script><!--获取get参数插件-->
+</body>
+</html>

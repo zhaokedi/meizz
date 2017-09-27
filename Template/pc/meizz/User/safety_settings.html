@@ -1,0 +1,35 @@
+<include file="Public/header" />
+<include file="User/navigate" />
+<section class="main">
+    <!-- main-left -->
+    <include file="User/menu" />
+    <!-- /main-left -->
+    <!-- main-right -->
+    <div class="main-right">
+        <h2>账户安全 <span class="page27-tips">建议您启动全部安全设置，以保障账户及资金安全</span></h2>
+        <div class="page27">
+            <ul>
+                <li>
+                    <if condition="$User.mobile_validated eq 1">
+                        <img src="__STATIC__/images/icon271-on.png" alt="" class="icon">
+                        <span>手机验证</span>您绑定的手机<b>{$User.mobile}</b>若已丢失或停用,请立即更换,避免账户被盗.<a href="{:U('Home/User/mobile_validate',array('type'=>'mobile','step'=>1))}">修改手机</a>
+                    <else/>
+                        <img src="__STATIC__/images/icon271.png" alt="" class="icon">
+                        <span>手机验证</span>您的手机<b>{$User.mobile}</b>还未绑定.<a href="{:U('Home/User/mobile_validate',array('type'=>'mobile','step'=>1))}">立即绑定</a>
+                    </if>
+                </li>
+                <li>
+                    <if condition="$User.email_validated eq 1">
+                    <img src="__STATIC__/images/icon272-on.png" alt="" class="icon">
+                    <else/>
+                    <img src="__STATIC__/images/icon272.png" alt="" class="icon">
+                    </if>
+                    <span>邮箱验证</span>邮箱验证后,可第一时间收到最新订单信息等.<a href="{:U('Home/User/email_validate',array('type'=>'email','step'=>1))}"><if condition="$user['email_validated'] eq 0">点击验证<else/>修改邮箱</if></a>
+                </li>
+                <li><img src="__STATIC__/images/icon273-on.png" alt="" class="icon"><span>密码修改</span>建议您保存好您的账号密码,并且不要和其他账号共用同一个密码.<a href="{:U('Home/User/password')}">修改密码</a></li>
+            </ul>
+        </div>
+    </div>
+    <!-- /main-right -->
+</section>
+<include file="Public/footer" />

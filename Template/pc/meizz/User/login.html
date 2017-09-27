@@ -1,0 +1,78 @@
+<include file="Public/header" />
+<div class="login">
+    <h3><img src="__STATIC__/images/login.png" alt=""></h3>
+    <form id="login-form" method="post">
+        <ul>
+            <li><input name="username" id="username" type="text" placeholder="用户名/手机号码"></li>
+            <li><input name="password" id="password" type="password" name="" id="" placeholder="密码"></li>
+             <if condition="$tpshop_config['verify_code_login_show'] neq '1'">
+                    <li class="yzm">
+                        <input type="text" class="form-control" id="verify_code" style="width:76%;" name="verify_code" placeholder="图形验证码*">
+                        <img onclick="verify('user_login');" style="vertical-align: middle;width:90px;height:40px;" src="/index.php/Home/User/verify/type/user_login.html" id="verify_code_img" title="点击刷新">
+                    </li>
+                    </if>
+            <li class="li3">
+                <label for="ss"><input type="checkbox" name="remember" value="1" id="ss">自动登录</label>
+                | <a href="{:U('/Home/User/reg')}">注册会员</a> | <a href="{:U('/Home/User/forget_pwd')}">忘记密码</a> <!-- | <a href="#">绑定客服</a> -->
+            </li>
+            <li><input onClick="checkSubmit()" type="button" value="登  录"></li>
+            <!--<li class="li3">第三方平台登录</li>
+            <li class="li4">
+                 <a href="" class="a1"><img src="__STATIC__/images/icon21.png" alt=""></a> 
+                 <a href="{:U('LoginApi/login',array('oauth'=>'qq'))}" class="a2" title="QQ登录"><img src="__STATIC__/images/icon23.png" alt=""></a> 
+                <a href="{:U('LoginApi/login',array('oauth'=>'weixin'))}" class="a3" title="微信登录"><img src="__STATIC__/images/icon22.png" alt=""></a>
+            </li>-->
+        </ul>
+    </form>
+    <input type="hidden" name="referurl" id="referurl" value="{$referurl}">
+</div>
+<script type="text/javascript">
+    function checkSubmit()
+    {
+        var username = $.trim($('#username').val());
+        var password = $.trim($('#password').val());
+        var referurl = $('#referurl').val();
+        if(username == ''){
+            showErrorMsg('用户名不能为空!');
+            return false;
+        }
+		var code='';
+		<if condition="$tpshop_config['verify_code_login_show'] neq '1'">
+           code = $("#verify_code").val();
+		if(code == ''){
+            showErrorMsg('验证码不能为空');
+            return false;
+        }
+		</if>
+        if(!checkMobile(username) && !checkEmail(username)){
+            showErrorMsg('账号格式不匹配!');
+            return false;
+        }
+        if(password == ''){
+            showErrorMsg('密码不能为空!');
+            return false;
+        }
+        // if($.trim($('#verify_code').val()) == ''){
+            //showErrorMsg('验证码不能为空!');
+            //return false;
+        // }
+        //$('#login-form').submit();
+        $.ajax({
+            type : 'post',
+            url : '/index.php?m=Mobile&c=User&a=do_login&t='+Math.random(),
+            data : {username:username,password:password,referurl:referurl,verify_code:code},
+            dataType : 'json',
+            success : function(res){
+                if(res.status == 1){
+                    top.location.href = res.url;
+                }else{
+                    showErrorMsg(res.msg);
+                }
+            },
+            error : function(XMLHttpRequest, textStatus, errorThrown) {
+                showErrorMsg('网络失败，请刷新页面后重试');
+            }
+        })
+    }
+</script>
+<include file="Public/footer" />

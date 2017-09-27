@@ -1,0 +1,105 @@
+<include file="Public/header" />
+<include file="User/navigate" />
+<section class="main">
+    <!-- main-left -->
+    <include file="User/menu" />
+    <!-- /main-left -->
+    <!-- main-right -->
+    <div class="main-right">
+        <h2>订单详情</h2>
+        <div class="page46">
+            <div class="part1">
+                <p>提交订单<i></i>订单支付<i></i><!-- 商品备货<i></i>商品检验<i></i> -->商品发货<i></i>已完成</p>
+                <p class="tips">{$order_info.add_time|date='Y-m-d',###}<br>{$order_info.add_time|date='H:i:s',###}</p>
+                <p class="tips"><if condition="$order_info['pay_time'] gt 0">{$order_info.pay_time|date='Y-m-d',###}<br>{$order_info.pay_time|date='H:i:s',###}<else/>-</if></p>
+                <p class="tips"><if condition="$order_info['shipping_time'] gt 0">{$order_info.shipping_time|date='Y-m-d',###}<br>{$order_info.shipping_time|date='H:i:s',###}<else/>-</if></p>
+                <p class="tips"><if condition="$order_info['confirm_time'] gt 0">{$order_info.confirm_time|date='Y-m-d',###}<br>{$order_info.confirm_time|date='H:i:s',###}<else/>-</if></p>
+            </div>
+            <div class="part2">
+                <h3>订单信息</h3>
+                <ul>
+                    <li><span>订单号码：</span>{$order_info.order_sn}</li>
+                    <li>
+                        <span>订单状态：</span>{$order_info.order_status_desc}
+                        <if condition="$order_info.cancel_btn eq 1"><a href="javascript:void(0);" class="btn-pay" onClick="cancel_order({$order_info.order_id})">取消订单</a></if>
+                        <if condition="$order_info.pay_btn eq 1"><a href="javascript:void(0);" class="btn-pay" onclick="location.href='{:U('/Home/Cart/cart4',array('order_id'=>$order_info[order_id]))}'">去支付</a></if>
+                        <if condition="$order_info.receive_btn eq 1"><a href="javascript:void(0);" class="btn_pay"  onClick=" if(confirm('你确定收到货了吗?')) location.href='{:U('Home/User/order_confirm',array('id'=>$order_info['order_id']))}'">收货确认</a></if></li>
+                </ul>
+                <h3>收货人信息</h3>
+                <ul>
+
+                    <li><span>收货人：</span>{$order_info.consignee}</li>
+                    <li><span>收货人地址：</span>{$region_list[$order_info['province']]['name']}{$region_list[$order_info['city']]['name']}{$region_list[$order_info['district']]['name']}{$order_info.address}</li>
+                    <li><span>收货人电话：</span>{$order_info.mobile}</li>
+                    <li><span>邮编号码：</span>{$order_info.zipcode}</li>
+                </ul>
+            </div>
+            <div class="part3">
+                <h3>配送与支付方式</h3>
+                <ul>
+                    <li><span>配送方式：</span>{$order_info.shipping_name}</li>
+                    <li><span>支付方式：</span>{$order_info.pay_name}</li>
+                    <li><span>订单总额：</span>{$order_info.order_amount}</li>
+                </ul>
+            </div>
+            <if condition="$order_info.is_integral eq 0">
+            <div class="part4">
+                <h3>其他信息</h3>
+                <ul>
+                    <li><span>发票类型：</span>增值税</li>
+                    <li><span>发票抬头：</span>{$order_info.invoice_title}</li>
+                </ul>
+            </div>
+            </if>
+            <div class="part5">
+                <table>
+                    <tr>
+                        <th class="th1">商品信息</th>
+                        <th class="th2">手寸</th>
+                        <th class="th3">原价/数量</th>
+                        <th class="th4">优惠</th>
+                        <th class="th5">小计</th>
+                    </tr>
+                    <volist name="order_info.goods_list" id="good">
+                    <tr>
+                        <td class="td1">
+                            <a href="{:U('Home/Goods/goodsInfo',array('id'=>$good['goods_id']))}" class="img"><img src="{$good.goods_id|goods_thum_images=65,65}" alt=""></a>
+                            <a href="{:U('Home/Goods/goodsInfo',array('id'=>$good['goods_id']))}" class="txt">{$good.goods_name}</a>
+                        </td>
+                        <td class="td2">{$good.spec_key_name}</td>
+                        <td class="td3">￥{$good.goods_price} * {$good.goods_num}</td>
+                        <td class="td4">￥{$good.member_goods_price}</td>
+                        <td class="td5">￥{$good['member_goods_price'] * $good['goods_num']}</td>
+                    </tr>
+                    </volist>
+                </table>
+                <if condition="$order_info.is_integral eq 0">
+                <div class="tips">
+                    会员折扣  -￥{$order_info.coupon_price} <br>商品总额   ￥{$order_info.order_amount}
+                </div>
+                    <else/>
+                    <div class="tips">
+                      商品总额   积分{$order_info.integral}
+                    </div>
+                </if>
+            </div>
+            <div class="part6">
+                <h3>温馨提示</h3>
+                <p>发货周期为成品7个工作日 / 定做20个工作日，请从支付时间起开始计算（遇节假日顺延）</p>
+                <p>生效前订单中的商品可能会被其他客户选购，请于下单后24小时内完成支付，若超时未付，则订单自动失效。</p>
+                <p>如您在收到取货通知后30天内未完成结单，我们将视为您放弃定金。如有疑问，请拨打：400-838-0068</p>
+            </div>
+
+        </div>
+    </div>
+    <!-- /main-right -->
+</section>
+<script type="text/javascript">
+    //取消订单
+    function cancel_order(id){
+        if(!confirm("确定取消订单?"))
+            return false;
+        location.href = "/index.php?m=Home&c=User&a=cancel_order&id="+id;
+    }
+</script>
+<include file="Public/footer" />

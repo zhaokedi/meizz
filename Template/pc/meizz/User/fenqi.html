@@ -1,0 +1,55 @@
+<include file="Public/header" />
+<include file="User/navigate" />
+<section class="main">
+  <!-- main-left -->
+  <include file="User/menu" />
+  <!-- /main-left -->
+  <!-- main-right -->
+
+  <div class="main-right">
+    <h2>我的分期申请</h2>
+    <div class="page17">
+      <div class="title">
+        <span class="sp1">姓名</span>
+        <span class="sp2">产品名称</span>
+        <span class="sp3">手机</span>
+        <span class="sp4">期数</span>
+        <span class="sp5">申请日期</span>
+        <span class="sp6">状 态</span>
+        <span class="sp7">操 作</span>
+      </div>
+      <volist name="list" id="item">
+        <div class="item">
+          <div class="item-hd">
+            <span class="sp1">{$item.username}</span>
+            <span class="sp2" style="line-height: 16px;overflow: hidden">{$item.goods_name}</span>
+            <span class="sp3">{$item.mobile}</span>
+            <span class="sp4"><a href="">{$item.num}</a></span>
+            <span class="sp5">{$item.addtime|date="Y-m-d",###}</span>
+            <span class="sp6">
+            {$item.statusname}
+            </span>
+            <!--<span class="sp7"><a href="{:U('Home/User/return_goods_info',array('id'=>$item[id]))}" class="btn-detail">查看详情</a></span>-->
+            <span class="sp7"><a href="#" class="btn-detail">查看详情</a></span>
+          </div>
+         <div class="item-bd">
+            <a href="" class="close"></a>
+            <ul>
+              <li><em>客服回复</em>{$item.mremark}</li>
+              <!--<li><em>宝贝状态</em>新款宝贝在 <time>2016-06-23 14:30</time>已发货</li>-->
+              <li><em><i class="e2">备</i>注</em>{$item.remark}</li>
+              <li><em>宝贝状态</em>{$user.mobile} </li>
+
+            </ul>
+            <div class="btm">你的专属售后客服 {$item.service}</div>
+          </div>
+        </div>
+      </volist>
+      <!--<div class="operate">-->
+        <!--<a href="{:U('Home/User/return_goods_submit')}" class="btn">申请售后</a>-->
+      <!--</div>-->
+    </div>
+  </div>
+  <!-- /main-right -->
+</section>
+<include file="Public/footer" />

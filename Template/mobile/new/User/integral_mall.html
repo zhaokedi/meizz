@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html style="font-size: 58.5938px;">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta charset="utf-8">
+<title></title>
+<link rel="stylesheet" href="__STATIC__/css/main.css">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=0">
+<meta name="imagemode" content="force">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<meta name="keywords" content="">
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="shortcut icon" type="image/x-icon" href="">
+<link rel="apple-touch-icon-precomposed" href="">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="-1">
+<script src="__STATIC__/js/jquery.min.js"></script>
+	<script src="__PUBLIC__/js/global.js"></script>
+	<style>
+		.page41 h3 span{
+			float: left;
+		}
+	</style>
+</head>
+<body class="bgf">
+
+<header>
+	<a href="javascript:history.back(-1)" class="back"></a>
+	<h3>积分商城</h3>
+</header>
+<div class="h50"></div>
+
+
+<div class="page41-part1">
+	<a href="{:U('User/points')}"><img src="__STATIC__/images/new/icon411.png" alt="">积分 <i>{$User['pay_points']}</i></a><a href="{:U('exchange_record')}"><img src="__STATIC__/images/new/icon412.png" alt="">兑换记录</a>
+	<div style="clear: both"></div>
+</div>
+
+<div id="banner" class="banner banner2">
+	<div class="hd">
+		<ul></ul>
+	</div>
+	<div class="bd">
+		<ul>
+		<volist name="banner" id="v">
+			<li><a href="{$v.ad_link}" <if condition="$v['target'] eq 1">target="_blank"</if> ><img src="{$v[ad_code]}" /></a></li>
+		</volist>
+			<!--<li><a href="#"><img src="__STATIC__/images/new/banner2.png"/></a></li>-->
+			<!--<li><a href="#"><img src="__STATIC__/images/new/banner2.png"/></a></li>-->
+		</ul>
+	</div>
+</div>
+
+
+<div class="page41">
+	<div class="title">
+		<span>大家都在兑</span> <em>HOT</em>
+	</div>
+	<ul>
+		<volist name="integral_goods" id="vo">
+		<li>
+			<h3 ><span style="width: 70%;overflow-x: hidden;white-space: nowrap;">{$vo.goods_name}</span><span style="float: right">{$vo.integral_price}积分</span></h3>
+			<p><del>￥{$vo.shop_price}</del><em>0元兑换</em></p>
+			<a href="{:U('integral_mall_detail',array('id'=>$vo[goods_id]))}"><img src="{$vo.original_img}" alt="{$vo.goods_name}"></a>
+		</li>
+		</volist>
+		<!--<li>-->
+			<!--<h3>甜心宝贝[美之钻原创]<span>3999积分</span></h3>-->
+			<!--<p><del>￥399</del><em>0元兑换</em></p>-->
+			<!--<a href=""><img src="__STATIC__/images/new/img322.jpg" alt=""></a>-->
+		<!--</li>-->
+		<!--<li>-->
+			<!--<h3>甜心宝贝[美之钻原创]<span>3999积分</span></h3>-->
+			<!--<p><del>￥399</del><em>0元兑换</em></p>-->
+			<!--<a href=""><img src="__STATIC__/images/new/img323.jpg" alt=""></a>-->
+		<!--</li>-->
+		<!--<li>-->
+			<!--<h3>甜心宝贝[美之钻原创]<span>3999积分</span></h3>-->
+			<!--<p><del>￥399</del><em>0元兑换</em></p>-->
+			<!--<a href=""><img src="__STATIC__/images/new/img324.jpg" alt=""></a>-->
+		<!--</li>-->
+		<!---->
+	</ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="__STATIC__/js/slide.js"></script>
+<script src="__STATIC__/js/main.js"></script>
+</body>
+</html>

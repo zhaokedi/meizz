@@ -1,0 +1,91 @@
+<include file="Public/header" />
+<section class="main">
+    <div class="page53">
+        <h3>找回密码</h3>
+        <div class="step2">
+            <div class="title">
+                <span>填写账户名</span>
+                <span>验证身份</span>
+                <span>设置新密码</span>
+                <span>完成</span>
+            </div>
+            <ul>
+               <!--  <li>
+                    验证方式：
+                    <select id="verify-type-selector">
+                        <option value="phone" selected alias-value="1">手机验证</option>
+                    </select>
+                </li> -->
+                <li class="yzm">
+                    {$userinfo.mobile}<button class="btn-yzm" id="sendSms" onclick="sendcode()">免费获取手机验证码</button>
+                    <input type="hidden" id="username" value="{$userinfo.username}">
+                </li>
+                <li><input type="text" id="tpcode" name="tpcode" placeholder="请输入手机验证码"></li>
+                <li><input type="button" onclick="checkcode()" value="下一步"></li>
+            </ul>
+        </div>
+    </div>
+</section>
+<script type="text/javascript">
+$(document).ready(function($) {
+    if({$wait}){
+        $("#sendSms").addClass("disabled").attr("disabled",true);
+        jsInnerTimeout("sendSms",{$wait});
+    }
+});
+function sendcode(){
+    $.ajax({
+        url:'/index.php?m=Home&c=User&a=send_validate_code&t='+Math.random(),
+        type:'post',
+        dataType:'json',
+        data:{type:$('#verify-type-selector').val(),send:$('#username').val()},
+        success:function(res){
+            if(res.status==1){
+                $("#sendSms").addClass("disabled").attr("disabled",true);
+                jsInnerTimeout("sendSms",{$sms_time_out});
+                layer.alert(res.msg,{icon: 1,time:2000});
+            }else{
+                showErrorMsg(res.msg);
+            }
+        }
+    })
+}
+
+function jsInnerTimeout(id,intAs)
+{
+    var codeObj=$("#"+id);
+    intAs--;
+    if(intAs<=-1)
+    {
+        codeObj.removeAttr("disabled").removeClass('disabled');
+        codeObj.text("发送验证码");
+        return true;
+    }
+    codeObj.text(intAs+'秒');
+    setTimeout("jsInnerTimeout('"+id+"',"+intAs+")",1000);
+};
+var is_check = false;
+function checkcode(){
+    var tpcode = $('#tpcode').val();
+    if(tpcode == ''){
+        showErrorMsg('验证码不能为空');
+        return;
+    }
+    $.ajax({
+        url:'/index.php?m=Home&c=User&a=check_validate_code&t='+Math.random(),
+        type:'post',
+        dataType:'json',
+        data:{code:tpcode,send:$('#username').val()},
+        success:function(res){
+            if(res.status==1){
+                is_check = true;
+                window.location.href='{:U("/Home/User/set_pwd/t/'+Math.random()+'")}';
+            }else{
+                showErrorMsg(res.msg);
+                return false;
+            }
+        }
+    })
+}
+</script>
+<include file="Public/footer" />

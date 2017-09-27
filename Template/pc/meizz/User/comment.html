@@ -1,0 +1,47 @@
+<include file="Public/header" />
+<include file="User/navigate" />
+<section class="main">
+    <!-- main-left -->
+    <include file="User/menu" />
+    <!-- /main-left -->
+    <!-- main-right -->
+    <div class="main-right">
+        <h2>我的评价</h2>
+        <div class="page6">
+            <div class="title">
+                <!-- <a href="" class="on">全部评价<i></i></a> -->
+                 <a class="<if condition="$_GET['status'] eq '' OR $_GET['status'] eq '0'">on</if>" href="{:U('/Home/User/comment',array('status'=>0))}">待评价<i></i></a>
+                 | <a class="last <if condition="$_GET['status'] eq '1'">on</if>" href="{:U('/Home/User/comment',array('status'=>1))}">已评价<i></i></a>
+                 | &nbsp;
+                 <!-- <div class="r">
+                    您可以对已成功购买的 <i>{$count_comment}</i> 件商品进行评论,和大家说说您的切身感受吧
+                 </div> -->
+            </div>
+            <ul class="page6-list-title">
+                <li class="li1">订单号</li >
+                <li class="li2">宝贝</li>
+                <li class="li3">购买时间</li>
+                <li class="li4">操作</li>
+            </ul>
+            <volist name="comment_list" id="list">
+            <ul class="page6-item">
+                <li class="li1">{$list.order_sn}</li>
+                <li class="li2">{$list.goods_name} <i><if condition="$list['is_comment'] eq 1">已点评<else/>未点评</if></i> <a href="{:U('Home/Goods/goodsInfo',array('id'=>$list['goods_id']))}"><img src="{$list.goods_id|goods_thum_images=42,42}" alt=""></a></li>
+                <li class="li3">{$list.add_time|date='Y-m-d H:i:s',###}</li>
+                <li class="li4">
+                    <if condition="$list['is_comment'] eq 0">
+                        <!-- <a class="btn-02" href="{:U('Home/User/add_comment',array('id'=>$list['goods_id']))}" onClick="comment({$list.order_id},{$list.goods_id})">写评价</a> -->
+                    </if>
+                    <if condition="$list['is_comment'] eq 1">
+                    <!--<a href="#">编辑</a>-->
+                    <a class="btn-02" href="{:U('Home/Goods/goodsInfo',array('id'=>$list['goods_id']))}">查看详情</a>
+                    </if>
+                </li>
+            </ul>
+            </volist>
+            <div class="prv-nxt">{$page}</div>
+        </div>
+    </div>
+    <!-- /main-right -->
+</section>
+<include file="Public/footer" />

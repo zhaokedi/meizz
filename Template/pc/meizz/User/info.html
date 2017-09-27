@@ -1,0 +1,112 @@
+<include file="Public/header" />
+<include file="User/navigate" />
+<section class="main">
+    <!-- main-left -->
+    <include file="User/menu" />
+    <!-- /main-left -->
+    <!-- main-right -->
+    <div class="main-right">
+        <h2>个人信息</h2>
+        <div class="page22">
+            <ul>
+                <li class="li1">
+                    <span>用户头像</span>
+                    <div class="face">
+                        <img src="{$User.head_pic|default='__STATIC__/images/face22.png'}" alt="">
+                    </div>
+                </li>
+
+                <li>
+                    <span>邀请码</span>{$User['user_id']|sprintf="%06d",###}
+                </li>
+                <li>
+                    <span>邀请链接</span>{$inviteurl}
+                </li>
+                <li>
+                    <span>用户昵称</span>{$User['nickname']}
+                </li>
+                <li>
+                    <span>真实姓名</span>
+                    <if condition="$User['name']">
+                        {$User['name']}
+                    <else/>
+                        <i>- 未填写 -</i>
+                    </if>
+                </li>
+                <li>
+                    <span>性别</span>
+                    <if condition="$User['sex'] eq 0">保密<elseif condition="$User['sex'] eq 1"/>男<else/>女</if>
+                </li>
+                <li>
+                    <span>出生日期</span>
+                    <if condition="$User['birthday']">
+                        {$User['birthday']|date="Y-m-d",###}
+                    <else/>
+                        <i>- 未填写 -</i>
+                    </if>
+                </li>
+                <li>
+                    <span>地区</span>
+                    <if condition="$User['province']">
+                        {$User['province']}{$User['city']}{$User['district']}
+                    <else/>
+                        <i>- 未填写 -</i>
+                    </if>
+                </li>
+                <li>
+                    <span>详细地址</span>
+                    <if condition="$User['address']">
+                        {$User['address']}
+                    <else/>
+                        <i>- 未填写 -</i>
+                    </if>
+                </li>
+                <li>
+                    <span>手机</span>{$User['mobile']}
+                </li>
+                <li>
+                    <span>邮箱</span>
+                    <if condition="$User['email']">
+                        {$User['email']}
+                    <else/>
+                        <i>- 未填写 -</i>
+                    </if>
+                </li>
+                <li>
+                    <span>QQ号码</span>
+                    <if condition="$User['qq']">
+                        {$User['qq']}
+                    <else/>
+                        <i>- 未填写 -</i>
+                    </if>
+                </li>
+                <li>
+                    <span>微信号码</span>
+                    <if condition="$User['weixin']">
+                        {$User['weixin']}
+                    <else/>
+                        <i>- 未填写 -</i>
+                    </if>
+                </li>
+                <li>
+                    <span>新浪微博</span>
+                    <if condition="$User['weibo']">
+                        {$User['weibo']}
+                    <else/>
+                        <i>- 未填写 -</i>
+                    </if>
+                </li>
+                <li>
+                    <span>结婚纪念日</span>{$User['marry']}
+                </li>
+            </ul>
+            <p class="tips">
+                为了可以给您提供个性化服务，请完善您的基本资料 <a href="{:U('/Home/User/info_edit')}">编辑资料</a>
+            </p>
+        </div>
+    </div>
+    <!-- /main-right -->
+</section>
+
+
+<include file="Public/footer" />

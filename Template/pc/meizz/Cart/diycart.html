@@ -1,0 +1,97 @@
+<include file="Public/header" />
+<section class="main">
+    <!-- main-right -->
+    <div style="padding: 50px 0px;">
+        <h2>我的购物车</h2>
+        <form name="cart_form" id="cart_form" action="{:U('/Home/Cart/ajaxCartList')}">
+            <div id="ajax_return"></div>
+        </form>
+    </div>
+    <!-- /main-right -->
+</section>
+<script type="text/javascript">
+$(document).ready(function(){
+    ajax_cart_list(); // ajax 请求获取购物车列表
+});
+// ajax 提交购物车
+var before_request = 1; // 上一次请求是否已经有返回来, 有才可以进行下一次请求
+function ajax_cart_list(){
+    if(before_request == 0) // 上一次请求没回来 不进行下一次请求
+        return false;
+    before_request = 0;
+    $.ajax({
+        type : "POST",
+        url:"{:U('Home/Cart/ajaxDiyCartList')}",//+tab,
+        data : $('#cart_form').serialize(),// 你的formid
+        success: function(data){
+            $("#ajax_return").empty().append(data);
+            before_request = 1;
+        }
+    });
+}
+/**
+* 购买商品数量加加减减
+* 购买数量 , 购物车id , 库存数量
+*/
+function switch_num(num,cart_id,store_count)
+{
+    var num2 = parseInt($("input[name='goods_num["+cart_id+"]']").val());
+    num2 += num;
+    if(num2 < 1) num2 = 1; // 保证购买数量不能少于 1
+    if(num2 > store_count)
+    {   alert("库存只有 "+store_count+" 件, 你只能买 "+store_count+" 件");
+        num2 = store_count; // 保证购买数量不能多余库存数量
+    }
+
+    $("input[name='goods_num["+cart_id+"]']").val(num2);
+    ajax_cart_list(); // ajax 更新商品价格 和数量
+}
+/**  全选 反选 **/
+function check_all(obj)
+{
+    var vt = $(obj).is(':checked');
+    $("#select_all,#select_all2").prop('checked',vt);
+    $("input[name^='cart_select']").prop('checked',vt);
+     ajax_cart_list(); // ajax 更新商品价格 和数量
+}
+
+var isdel=1;
+// ajax 删除购物车的商品
+function ajax_del_cart(ids)
+{
+    $.ajax({
+        type : "POST",
+        url:"{:U('Home/Cart/ajaxDelCart')}",//+tab,
+        data:{ids:ids}, //
+        dataType:'json',
+        success: function(data){
+           if(data.status == 1){
+               $('.fn-delete-alert').show();
+               $('.fn-delete-alert').find('.ng-binding').html(isdel);
+               isdel++;
+               ajax_cart_list(); // ajax 请求获取购物车列表
+           }else{
+               alert(data.msg);
+           }
+        }
+    });
+}
+
+// 批量删除购物车的商品
+function del_cart_more()
+{
+    if(!confirm('确定要删除选择的商品吗?'))
+      return false;
+    // 循环获取复选框选中的值
+    var chk_value = [];
+    $('input[name^="cart_select"]:checked').each(function(){
+        var s_name = $(this).attr('name');
+        var id = s_name.replace('cart_select[','').replace(']','');
+        chk_value.push(id);
+    });
+    // ajax  调用删除
+    if(chk_value.length > 0)
+        ajax_del_cart(chk_value.join(','));
+}
+</script>
+<include file="Public/footer" />

@@ -1,0 +1,19 @@
+<include file="Public/header" />
+<section class="crumb">
+    <a href="{:U('/Home')}">首页</a> &gt;  专题详情
+</section>
+<section class="main">
+    <!-- main-right -->
+    <div class="main-right" style="width:100%;float: none;">
+        <h2>{$topic.topic_title}</h2>
+        <div class="page43" style="padding: 40px;">
+            <if condition="$topic.topic_state eq 1">
+            <p style="text-align: center;font-size: 19px;font-weight: bold;">专题暂未发布</p>
+            <else/>
+            {$topic.topic_content|htmlspecialchars_decode}
+            </if>
+        </div>
+    </div>
+    <!-- /main-right -->
+</section>
+<include file="Public/footer" />

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta charset="utf-8">
+<title>所有分类-{$tpshop_config['shop_info_store_title']}</title>
+<link rel="stylesheet" type="text/css" href="__STATIC__/css/public.css"/>
+<link rel="stylesheet" href="__STATIC__/css/main.css">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=0">
+<meta name="imagemode" content="force">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<meta name="keywords" content="">
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="shortcut icon" type="image/x-icon" href="">
+<link rel="apple-touch-icon-precomposed" href="">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="-1">
+<script type="text/javascript" src="__STATIC__/js/flexible.js"></script>
+<script src="__STATIC__/js/jquery.min.js"></script>
+<script src="__PUBLIC__/js/global.js"></script>
+<script src="__PUBLIC__/js/mobile_common.js"></script>
+</head>
+<body>
+
+<header>
+	<a href="javascript:history.back(-1)" class="back"></a>
+	<h3>分类</h3>
+</header>
+<div class="h50"></div>
+
+
+
+
+<div class="classification">
+	<ul class="classification-left">
+		<volist name="cat_lists" id="vo">
+			<li date-id="{$vo.id}" class="<if condition='$vo.id eq $firstid '>on</if>">{$vo.mobile_name}</li>
+		</volist>
+		<!--<li class="on">钻饰</li>-->
+		<!--<li>裸钻定制</li>-->
+		<!--<li>K金</li>-->
+		<!--<li>黄金</li>-->
+		<!--<li>精品</li>-->
+		<!--<li>美钻礼品</li>-->
+	</ul>
+	<div class="classification-right">
+		<div class="classification-right">
+			<volist name="cat_lists" id="vo">
+			<div class="classification-box <if condition='$vo.id eq $firstid '>on</if>">
+				<volist name="vo.son" id="vo1">
+				<a href="{:U('Goods/goodsList',array('id'=>$vo1['id']))}" class="item"><img src="{$vo1.image}" alt="">{$vo1.mobile_name}</a>
+				</volist>
+				<!--<a href="" class="item"><img src="__STATIC__/images/new/img402.png" alt="">结婚钻戒</a>-->
+				<!--<a href="" class="item"><img src="__STATIC__/images/new/img403.png" alt="">吊坠</a>-->
+				<!--<a href="" class="item"><img src="__STATIC__/images/new/img404.png" alt="">腕链</a>-->
+				<!--<a href="" class="item"><img src="__STATIC__/images/new/img405.png" alt="">耳钉</a>-->
+			</div>
+			</volist>
+			<!--<div class="classification-box">2</div>-->
+			<!--<div class="classification-box">3</div>-->
+			<!--<div class="classification-box">4</div>-->
+			<!--<div class="classification-box">5</div>-->
+			<!--<div class="classification-box">6</div>-->
+		</div>
+	</div>
+</div>
+
+
+
+
+
+<script>
+	$(".classification-left li").click(function () {
+		$(this).siblings().removeClass("on"), $(this).addClass("on"), $(".classification-right>div").removeClass("on");
+		var e = $(this).index();
+		return $(".classification-right .classification-box").eq(e).addClass("on"), !1
+	});
+</script>
+
+
+
+
+
+
+
+
+<!-- <div class="h50"></div> -->
+<!-- 页底 -->
+<!--<ul class="bnav">-->
+	<!--<li><a href=""><img src="images/ft331.png" alt="">首页</a></li>-->
+	<!--<li><a href=""><img src="images/ft332.png" alt="">分类</a></li>-->
+	<!--<li><a href=""><img src="images/ft333.png" alt="">发现</a></li>-->
+	<!--<li><a href=""><img src="images/ft334.png" alt="">购物车</a></li>-->
+	<!--<li><a href=""><img src="images/ft335.png" alt="">我</a></li>-->
+<!--</ul>-->
+<include file="Public/footer_nav"/>
+
+<script src="__STATIC__/js/slide.js"></script>
+<script src="__STATIC__/js/main.js"></script>
+</body>
+</html>

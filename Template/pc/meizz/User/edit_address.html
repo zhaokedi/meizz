@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="__STATIC__/css/main.css">
+<script src="__STATIC__/js/jquery.min.js"></script>
+<script src="__PUBLIC__/js/layer/layer-min.js"></script>
+<script src="__PUBLIC__/js/common.js"></script>
+</head>
+<body>
+<section class="main" style="width:100%;">
+    <div class="main-right" style="float: none;width:100%;">
+        <form action="" method="post" onSubmit="return checkForm()">
+            <div class="page21" style="padding: 0 30px;">
+                <div class="part2">
+                    <h3>收货人信息</h3>
+                    <ul>
+                        <li><i>*</i><span>收货人</span><input type="text" name="consignee" id="consignee" value="{$address.consignee}" maxlength="12"></li>
+                        <li><i>*</i><span>选择地区</span>
+                            <select class="di-bl fl seauii" name="province" id="province" onChange="get_city(this)">
+                                <option value="0">请选择</option>
+                                <volist name="province" id="p">
+                                    <option <if condition="$address['province'] eq $p['id']">selected</if>  value="{$p.id}">{$p.name}</option>
+                                </volist>
+                            </select>
+
+                            <select class="di-bl fl seauii" name="city" id="city" onChange="get_area(this)">
+                                <option  value="0">请选择</option>
+                                <volist name="city" id="p">
+                                    <option <if condition="$address['city'] eq $p['id']">selected</if>  value="{$p.id}">{$p.name}</option>
+                                </volist>
+                            </select>
+
+                            <select class="di-bl fl seauii" name="district" id="district" onChange="get_twon(this)">
+                                <option  value="0">请选择</option>
+                                <volist name="district" id="p">
+                                    <option <if condition="$address['district'] eq $p['id']">selected</if>  value="{$p.id}">{$p.name}</option>
+                                </volist>
+                            </select>
+                        </li>
+                        <li><i>*</i><span>详细地址</span><input type="text" name="address" id="address" placeholder="详细地址" maxlength="100" value="{$address.address}" style="width:337px;"></li>
+                        <li><i>*</i><span>手机号码</span><input type="text" name="mobile" id="mobile" value="{$address.mobile}" onpaste="this.value=this.value.replace(/[^\d-]/g,'')" onKeyUp="this.value=this.value.replace(/[^\d-]/g,'')" maxlength="15"></li>
+                        <li><span>邮政编码</span><input type="text" name="zipcode" id="zipcode" value="{$address.zipcode}" onpaste="this.value=this.value.replace(/[^\d]/g,'')" onKeyUp="this.value=this.value.replace(/[^\d]/g,'')" maxlength="10"></li>
+                        <li>
+                            <label for="default_addr"><input type="checkbox" name="is_default" id="default_addr" <if condition="$address['is_default'] eq 1">checked="checked"</if> value="1">设为默认地址</label>
+                        </li>
+                    </ul>
+                    <h3>收货时间</h3>
+                    <div class="con">
+                        <p><label for="time1"><input type="radio" name="receiving" <if condition="$address['receiving'] eq '周一至周日'"> checked="checked"</if> value="周一至周日" id="time1">周一至周日均可。我们会尽快送达，若错过送货，请与快递小哥另约送货时间哦。</label></p>
+                        <p><label for="time2"><input type="radio" name="receiving" <if condition="$address['receiving'] eq '周一至周五'"> checked="checked"</if> value="周一至周五" id="time2">周一至周五。收货地址为公司/学校，以及周末无人收货时，推荐选择。</label></p>
+                        <p><label for="time3"><input type="radio" name="receiving" <if condition="$address['receiving'] eq '周六至周日'"> checked="checked"</if> value="周六至周日" id="time3">周六至周日均可。收货地址为家庭时，推荐选择。</label></p>
+                    </div>
+                </div>
+                <div class="operate2" style="text-align: center;">
+                    <input type="submit" value="保  存">
+                    <!-- <a href="" class="btn-cancle">取  消</a> -->
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+<script>
+    function checkForm(){
+        var consignee = $('input[name="consignee"]').val();
+        var province = $('select[name="province"]').val();
+        var city = $('select[name="city"]').val();
+        var district = $('select[name="district"]').val();
+        var address = $('input[name="address"]').val();
+        var mobile = $('input[name="mobile"]').val();
+        var error = '';
+        if(consignee == ''){
+            error += '收货人不能为空 <br/>';
+        }
+        if(province==0 || province == ''){
+            error += '请选择省份 <br/>';
+        }
+        if(city==0 || city == ''){
+            error += '请选择城市 <br/>';
+        }
+        if(district==0 || district == ''){
+            error += '请选择区域 <br/>';
+        }
+        if(address == ''){
+            error += '请填写地址 <br/>';
+        }
+        if(!checkMobile(mobile))
+            error += '手机号码格式有误 <br/>';
+        if(error){
+            showErrorMsg(error);
+            // layer.alert(error, {icon: 2});
+            return false;
+        }
+        return true;
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,148 @@
+<include file="Public/header" />
+
+
+
+
+
+<section class="crumb">
+	<a href="{:U('/Home')}">首页</a> &gt;  <a href="">吊坠定制</a>
+</section>
+
+
+<section class="main">
+
+	<img src="__STATIC__/images/step.png" alt="" class="step37">
+
+	<!-- 挑选戒托 -->
+	<div class="page37-2">
+
+
+		<!-- 条件筛选 -->
+		<!-- 条件筛选 -->
+    <div class="product-filter">
+        <if condition="!empty($filter_spec) or !empty($filter_price)">
+            <ul>
+                <!-- 价格 -->
+                <if condition="!empty($filter_price)">
+                    <li data-num="pre1">
+                        <span><em class="e2">价</em>格</span><!-- <a href="" class="any">不限</a> -->
+                        <foreach name="filter_price" item="v" key="k">
+                            <a href="{$v['href']}" data-attr-desc=''><i>{$v['value']}</i></a>
+                        </foreach>
+                    </li>
+                </if>
+                <!--筛选规格-->
+                <if condition="!empty($filter_spec)">
+                    <foreach name="filter_spec" item="v" key="k">
+                        <li data-num="pre2">
+                            <span>{$v.name}</span><!-- <a href="" class="any">不限</a> -->
+                            <foreach name="v['item']" item="v2" key="k2">
+                                <a data-href="" href="{$v2['href']}" data-key="{$v2['key']}" data-val="{$v2['val']}"><i>{$v2['item']}</i></a>
+                            </foreach>
+                        </li>
+                    </foreach>
+                </if>
+            </ul>
+        </if>
+        <!--筛选属性-->
+        <if condition="!empty($filter_attr)">
+            <ul class="ul2">
+                <foreach name="filter_attr" item="v" key="k">
+                    <li>
+                        <span>{$v.attr_name}</span><!-- <a href="" class="any">不限</a> -->
+                        <foreach name="v['attr_value']" item="v2" key="k2">
+                            <a data-href="{$v2['href']}" href="{$v2['href']}" data-key="{$v2['key']}" data-val="{$v2['val']}"><i>{$v2['attr_value']}</i></a>
+                        </foreach>
+                    </li>
+                </foreach>
+            </ul>
+            <div class="operate"><a href="javascript:void(0);" class="btn1">展开高级搜索</a><a href="javascript:void(0);" class="btn2">收起高级搜索</a></div>
+        </if>
+        <div class="result">
+            <if condition="!empty($filter_menu)">
+                <span>已选条件</span>
+                <foreach name="filter_menu" item="v" key="k">
+                    <a title="{$v['text']}" href="{$v['href']}"><em>{$v['text']}<i class="close"></i></em></a>
+                </foreach>
+                <if condition="ACTION_NAME eq 'search'">
+                    <a href="{:U('__ACTION__',array('q'=>$filter_param['q']))}" class="clear-all">清空条件</a>
+                <else/>
+                    <a href="{:U('__ACTION__',array('id'=>$cat_id))}" class="clear-all">清空条件</a>
+                </if>
+            </if>
+        </div>
+    </div>
+
+
+
+
+		<!-- 筛选产品结果排序 -->
+    <div class="product-result-title">
+        <div class="order">
+            <a href="<?php echo urldecode(U("__ACTION__",$filter_param,''));?>" style="cursor:pointer;" <if condition="$_GET[sort] eq ''">class="on"</if>>默认<i></i></a>
+            <a href="<?php echo urldecode(U("__ACTION__",array_merge($filter_param,array('sort'=>'sales_sum')),''));?>" <if condition="$_GET['sort'] eq 'sales_sum'">class="on"</if>>销量<i></i></a>
+            <a href="<?php echo urldecode(U("__ACTION__",array_merge($filter_param,array('sort'=>'is_new')),''));?>" <if condition="$_GET['sort'] eq 'is_new'">class="on"</if>>新品<i></i></a>
+            <a href="<?php echo urldecode(U("__ACTION__",array_merge($filter_param,array('sort'=>'comment_count')),''));?>" <if condition="$_GET[sort] eq 'comment_count'">class="on"</if>>评论<i></i></a>
+            <if condition="$_GET['sort_asc'] eq 'desc'">
+                <a href="<?php echo urldecode(U("__ACTION__",array_merge($filter_param,array('sort'=>'shop_price','sort_asc'=>'asc')),''));?>" <if condition="$_GET[sort] eq 'shop_price'">class="on"</if>>价格<i></i></a>
+            <else />
+                <a href="<?php echo urldecode(U("__ACTION__",array_merge($filter_param,array('sort'=>'shop_price','sort_asc'=>'desc')),''));?>" <if condition="$_GET[sort] eq 'shop_price'">class="on"</if>>价格<i></i></a>
+            </if>
+        </div>
+        <div class="r">
+        <?php
+            $totalPages = ceil($count/$pageNum);    //总页数
+            if(empty($_GET['p'])){
+                $current = 1;
+                $prev = null;
+                if($totalPages >= 2){
+                    $next = 2;
+                }else{
+                    $next = null;
+                }
+            }else{
+                $current = $_GET['p'];  //当前页
+                $prev = $_GET['p']-1;
+                if($_GET['p'] >= $totalPages){
+                    $next = null;
+                }else{
+                    $next = $_GET['p']+1;
+                }
+            }
+        ?>
+            共<b>{$count}</b>件宝贝&nbsp; |  <if condition="$prev neq null"><a href="{:U('__ACTION__',array_merge($filter_param,array('p'=>$prev)))}" class="prev">&lt;</a></if> <span>{$current}/{$totalPages}</span><if condition="$next neq null"><a href="{:U('__ACTION__',array_merge($filter_param,array('p'=>$next)))}" class="next">&gt;</a></if>
+        </div>
+    </div>
+
+
+
+		<!-- 产品筛选结果 -->
+		<ul class="product-result">
+         <volist name="goods_list" id="goods">
+			<li style="hanging:430px;">
+				<a href="/Home/Goods/diygoodsInfo/id/{$goods['goods_id']}/diytype/3" class="img"><img src="{$goods.goods_id|goods_thum_images=300,300}" alt="{$goods['goods_name']}"></a>
+				<p>{$goods['goods_name']|getSubstr=0,15}<b>￥{$goods['shop_price']}</b></p>
+            <p class="p2">已售 {$goods['sales_sum']}<span>评价{$goods['comment_count']}</span></p>
+				<div class="operate">
+					<a href="" class="kf">客服</a>
+					<a href="/Home/Goods/diygoodsInfo/id/{$goods['goods_id']}/diytype/3" class="cart">选中吊坠</a>
+				</div>
+			</li>
+          </volist>
+		</ul>
+
+
+		<div class="prv-nxt2">
+			{$page->show()}
+		</div>
+
+
+
+	</div>
+	<!-- /挑选戒托 -->
+
+
+</section>
+
+<include file="Public/footer" />
+

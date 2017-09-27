@@ -1,0 +1,117 @@
+<include file="Public/header" />
+<include file="User/navigate" />
+<section class="main">
+    <!-- main-left -->
+    <include file="User/menu" />
+    <!-- /main-left -->
+    <!-- main-right -->
+    <div class="main-right">
+        <h2>绑定手机</h2>
+        <div class="page50">
+            <div class="step1 yzm">
+                <div class="title">
+                    <span>输入绑定手机号码</span>
+                    <span>手机绑定成功</span>
+                </div>
+                <form action="{:U('/Home/User/mobile_validate')}" method="post" onSubmit="return check_form();">
+                <ul>
+                    <li><span>原手机</span><input type="text" id="old_mobile" name="old_mobile" placeholder="没有请留空"></li>
+                    <li><span>新手机</span><input type="text" id="new_mobile" value="" name="mobile" onpaste="this.value=this.value.replace(/[^\d]/g,'')" onkeyup="this.value=this.value.replace(/[^\d]/g,'')"></li>
+                    <li><span>验证码</span><input type="text" id="new_code" style="width:100px;" maxlength="4" class="imput_text" name="code"><input type="button" class="btn-yzm" value="获取验证码" id="sendSms" onClick="sendCode(this,'new_mobile')" />
+                    </li>
+                    <li><input type="submit" value="提 交"></li>
+                </ul>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- /main-right -->
+</section>
+<script type="text/javascript">
+$(document).ready(function($) {
+    if({$wait}){
+        $("#sendSms").addClass("disabled").attr("disabled",true);
+        jsInnerTimeout("sendSms",{$wait});
+    }
+});
+// 表单提交验证
+function check_form()
+{
+    var old_mobile = $('#old_mobile').val();
+    var new_mobile = $('#new_mobile').val();
+    //原邮箱不为空的情况下 验证格式
+    if(old_mobile != ''){
+        if(!checkMobile(old_mobile)){
+            showErrorMsg('原手机格式错误');// alert('原手机格式错误');
+            return false;
+        }
+    }
+    if(!checkMobile(new_mobile)){
+        showErrorMsg('新手机格式错误');//alert('新手机格式错误');
+        return false;
+    }
+
+    if($.trim($('#new_code').val()) == '')
+    {
+        showErrorMsg('验证码不能为空');//alert('验证码不能为空');
+        return false;
+    }
+    return true;
+}
+
+function sendCode(obj,input_id){
+    var id = $(obj).attr('id');
+    var input = $('#'+input_id).val();
+    var old_mobile = $('#old_mobile').val();
+    //原邮箱不为空的情况下 验证格式
+    if(old_mobile != ''){
+        if(!checkMobile(old_mobile)){
+            showErrorMsg('原手机格式错误');//alert('原手机格式错误');
+            return false;
+        }
+    }
+    if(!checkMobile(input)){
+        showErrorMsg('手机号码格式错误');//alert('手机号码格式错误');
+        return false;
+    }
+    if(input_id == 'old_mobile')
+        var url = "/index.php?m=Home&c=User&a=send_validate_code&step=1&type=mobile&send="+input;
+    if(input_id == 'new_mobile')
+        var url = "/index.php?m=Home&c=User&a=send_validate_code&step=2&type=mobile&send="+input;
+    //发送验证码
+    $.ajax({
+        type : "GET",
+        url  : url,
+        dataType : 'json',
+        error: function(request) {
+            showErrorMsg('服务器繁忙, 请联系管理员!');//alert("服务器繁忙, 请联系管理员!");
+            return;
+        },
+        success: function(res) {
+            if(res.status == 1){
+                $("#sendSms").addClass("disabled").attr("disabled",true);
+                jsInnerTimeout("sendSms",{$time});
+                layer.alert(res.msg,{icon: 1,time:2000});
+            }else{
+                showErrorMsg(res.msg);//alert('发送失败');
+            }
+        }
+    });
+}
+
+//倒计时函数
+function jsInnerTimeout(id,intAs)
+{
+    var codeObj=$("#"+id);
+    intAs--;
+    if(intAs<=-1)
+    {
+        codeObj.removeAttr("disabled").removeClass('disabled');
+        codeObj.val("发送验证码");
+        return true;
+    }
+    codeObj.val(intAs+'秒');
+    setTimeout("jsInnerTimeout('"+id+"',"+intAs+")",1000);
+};
+</script>
+<include file="Public/footer" />

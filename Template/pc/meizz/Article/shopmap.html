@@ -1,0 +1,73 @@
+<include file="Public/header" />
+
+<style type="text/css">
+
+	#allmap1 {height: 600px;width:100%;overflow: hidden;}
+	#map input[type=text] {  height: 25px;  }
+	#map .iw_bt{  text-align: center;  }
+	#map .page9 td{  height: 25px;  border-bottom:none;  }
+</style>
+
+	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=Vss6Up7UwHme6idruedFeTu3tnz258T0"></script>
+<link rel="stylesheet" href="http://api.map.baidu.com/library/SearchInfoWindow/1.5/src/SearchInfoWindow_min.css" />
+	<script type="text/javascript" src="http://api.map.baidu.com/library/SearchInfoWindow/1.5/src/SearchInfoWindow_min.js"></script>
+
+
+<section class="main">
+		<div   id="map">
+			<div class="page9">
+				<h2>体验店列表>{$store.name}</h2>
+				<div id="allmap1">
+
+
+
+				</div>
+			</div>
+		</div>
+</section>
+
+<script type="text/javascript">
+	$(function(){
+
+	var name="{$store['name']}";
+	var address="{$store['address']}";
+	var tel="{$store['tel']}";
+    // 百度地图API功能
+    var map1 = new BMap.Map('allmap1');
+    var poi = new BMap.Point({$lnt},{$lat});
+    map1.centerAndZoom(poi, 16);
+    map1.enableScrollWheelZoom();
+
+    var content = '<div style="margin:0;line-height:20px;padding:2px;">' +
+        '地址：'+address+'<br/>电话：'+tel+
+        '</div>';
+
+    //创建检索信息窗口对象
+    var searchInfoWindow = null;
+    searchInfoWindow = new BMapLib.SearchInfoWindow(map1, content, {
+        title  : name,      //标题
+        width  : 290,             //宽度
+        height : 105,              //高度
+        panel  : "panel",         //检索结果面板
+        enableAutoPan : true,     //自动平移
+        searchTypes   :[
+            BMAPLIB_TAB_SEARCH,   //周边检索
+            BMAPLIB_TAB_TO_HERE,  //到这里去
+            BMAPLIB_TAB_FROM_HERE //从这里出发
+        ]
+    });
+    var marker = new BMap.Marker(poi); //创建marker对象
+    marker.enableDragging(); //marker可拖拽
+    marker.addEventListener("click", function(e){
+        searchInfoWindow.open(marker);
+    })
+    map1.addOverlay(marker); //在地图中添加marker
+
+    searchInfoWindow.open(marker);
+
+	})
+
+</script>
+
+<include file="Public/footer" />
+

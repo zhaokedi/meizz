@@ -1,0 +1,55 @@
+
+<notempty name="advaward['order']" >
+    <div class="part3" >
+        <h3><img src="__STATIC__/images/new/icon502.png" alt="">连续签到有礼 <i>连续签到即可领取</i></h3>
+
+                    <ul>
+                    <volist name="advaward['order']" id="item">
+                        <php>if( !empty($item['credit']) && !empty($item['day']) && $item['credit']>0) { </php>
+                            <li class="on">
+                                <div class="box">+{$item['credit']}<br>积分</div>
+                                <div class="iconn ">
+                                    <i class="<if condition="!empty($item['candraw'])">candraw</if>"></i>
+                                </div>
+                                <div class="day <if condition="!empty($item['candraw'])">candraw</if>">{$item['day']}天
+                                    <if condition="!empty($item['drawed'])">
+                                        <div class="text" style=" width: .7rem;">已领取</div>
+                                        <elseif condition="!empty($item['candraw'])"/>
+                                        <div class="text candraw advaward" data-type="1" data-day="{$item['day']}">领取</div>
+                                        <else/>
+                                        <div class="text">领取</div>
+                                    </if>
+                                </div>
+                            </li>
+                        <php>}</php>
+                    </volist>
+                    </ul>
+    </div>
+</notempty>
+
+<notempty name="advaward['sum']">
+    <div class="part3">
+        <h3><img src="__STATIC__/images/new/icon502.png" alt="">签到有礼 <i>签到次数满足即可领取</i></h3>
+        <ul>
+            <volist name="advaward['sum']" id="item">
+                <php>if( !empty($item['credit']) && !empty($item['day']) && $item['credit']>0) {</php>
+                <li class="on">
+                    <div class="box">+{$item['credit']}<br>积分</div>
+                    <div class="iconn ">
+                        <i class="<if condition=" !empty($item['candraw'])">candraw</if>"></i>
+                    </div>
+                    <div class="day <if condition=" !empty($item['candraw'])">candraw</if>">{$item['day']}天
+                    <if condition="!empty($item['drawed'])">
+                        <div class="text" style=" width: .7rem;">已领取</div>
+                        <elseif condition="!empty($item['candraw'])"/>
+                        <div class="text candraw advaward" data-type="1" data-day="{$item['day']}">领取</div>
+                        <else/>
+                        <div class="text">领取</div>
+                    </if>
+    </div>
+                </li>
+                <php>}</php>
+            </volist>
+         </ul>
+     </div>
+</notempty>

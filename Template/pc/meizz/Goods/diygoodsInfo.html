@@ -1,0 +1,254 @@
+<include file="Public/header" />
+<section class="crumb">
+    <a href="{:U('/Home')}">首页</a>&nbsp;&gt;&nbsp;&nbsp;<a href="{:U('/Home/Goods/divgoodsList')}">裸钻定制</a>
+</section>
+
+<!-- 产品页头部 -->
+<div class="product-detail">
+	<!-- 左侧图片展示 -->
+	<div class="product-detail-left">
+		<div id="banner" class="banner2">
+			<div class="bd">
+				<ul>
+					 <foreach name="goods_images_list" item="v" >
+                        <li><img src="{$v|get_sub_images=$v['goods_id'],800,800}" /></li>
+                    </foreach>
+				</ul>
+			</div>
+
+			<div class="hd">
+				<ul>
+					<foreach name="goods_images_list" item="v2" key="k2" >
+                        <li <if condition="$k2 eq 0">class="on"</if>><img src="{$v2|get_sub_images=$v2['goods_id'],78,78}" /></li>
+                    </foreach>
+				</ul>
+			</div>
+			<a class="prev" href="javascript:void(0)"></a>
+			<a class="next" href="javascript:void(0)"></a>
+		</div>
+	</div>
+	<!-- /左侧图片展示 -->
+	<!-- 右侧 -->
+	<div class="product-detail-right">
+        <if condition="$diyname neq ''">
+        <h1>{$diyname}</h1>
+        <else />
+		<h1>{$goods.goods_name}</h1>
+        </if>
+		<div class="price">
+			<span>现货</span>
+            <if condition="$diyname neq ''">
+            定制总价 <sub>￥</sub><b id="goods_price">{$diytotal_price}</b>
+            <else />
+            网络特惠价 <sub>￥</sub><b id="goods_price">{$goods.shop_price}</b>
+            </if>
+
+			<del style="display:none">专柜<sub>￥</sub>16700</del>
+		</div>
+		<div class="info3">
+			<p><span>编号</span>{$goods.goods_sn}</p>
+			<p><span>证书</span>6221339393</p>
+			<img src="__STATIC__/images/cer_gia.png" alt="">
+		</div>
+
+         <ul class="ul2">
+           <foreach name="filter_spec" item="spec" key="k" >
+			<li data-num="pre2" class="li8"><span>{$k}</span>
+                <foreach name="spec" item="v2" key="k2" >
+                 <if condition="$v2['imgurl'] neq ''">
+                 <em><img src="{$v2['imgurl']}" alt=""></em>
+                 <else />
+				   <em class="on"><i></i>{$v2['item']}</em>
+                  </if>
+                </foreach>
+			</li>
+		  </foreach>
+		</ul>
+
+
+
+
+
+		<div class="operate">
+
+           <if condition="$diytotal_price neq '0'">
+            <h3>预付定金<sub>￥</sub>{$price_reat}</h3>
+            <a href="/Home/Cart/diycart.html" class="btn-pay">立即支付</a>
+           </if>
+            <a href="{:U('/Home/Goods/divgoodsList')}" class="btn3">更多定制</a>
+			<a href="{:U('/Home/Goods/divgoodsList2')}" class="btn3">选择戒托</a>
+			<a href="{:U('/Home/Goods/divgoodsList3')}" class="btn3">选择吊坠</a>
+			<a href="" class="btn-online">客服</a>
+		</div>
+		<div class="tips tips31">
+			配送：全国包邮（港澳台除外）；现货预计3个工作日发出,购买前，钻戒类指圈号请咨询客服或备注留言, 现货指圈号，约7个工作日左右发货，定制发货时间据款式而定.
+		</div>
+		<div class="share">
+            <span>分享</span>
+            <!-- JiaThis Button BEGIN 分享商品链接-->
+            <div class="bdsharebuttonbox"><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a><a href="#" class="bds_mail" data-cmd="mail" title="分享到邮件分享"></a><a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a><a href="#" class="bds_more" data-cmd="more"></a></div>
+            <script>
+                window._bd_share_config = {
+                    "common" : {
+                        "bdSnsKey" : {},
+                        "bdText" : "{$goods.goods_name}",
+                        "bdUrl" : "http://{$_SERVER['HTTP_HOST']}/index.php?m=Home&c=Goods&a=goodsInfo&id={$_GET['id']}",
+                        "bdMini" : "2",
+                        "bdMiniList" : ["qzone","renren","tqf","douban","meilishuo","mogujie","huaban","duitang"],
+                        "bdPic" : "http://{$_SERVER['HTTP_HOST']}{$goods['goods_id']|goods_thum_images=400,400}",
+                        "bdStyle" : "1",
+                        "bdSize" : "16"
+                    },
+                    "share" : {}
+                };
+                with(document)
+                0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];
+            </script>
+            <!-- JiaThis Button END 分享商品链接-->
+        </div>
+	</div>
+	<!-- /右侧 -->
+</div>
+
+
+
+<!-- 证书 -->
+<div class="certificate">
+	<img src="__STATIC__/images/img312.jpg" alt="">
+	<div class="con">
+		GIA（Gemological Institute of America） 是把钻石鉴定证书推广成为国际化的创始者。它是在公元1931年由Mr. Robert Shipley所创立，至今已有80多年的历史，GIA名誉上是非营利机构，经费由珠宝业界人士捐献，但其鉴定和教学的费用相当高昂。GIA鉴定书颇具公信力。它不仅是美国第一所宝石学校，同时也在全球珠宝业界广受推崇，被认同的珠宝钻石鉴定机构之一。
+	</div>
+</div>
+
+
+
+
+<!-- 产品页详情 -->
+<div class="main">
+	<!-- 侧边栏 -->
+	<div class="main-left2">
+
+
+		<form name="search_form2" id="search_form2" method="post" action="{:U('/Home/Goods/search')}">
+        <div class="side-search">
+            <h2>搜索宝贝</h2>
+            <ul>
+                <li class="li1"><span>关键字</span>
+                    <input type="text" placeholder="" name="q" id="q2">
+                </li>
+                <li class="li2"><span><i class="e1">价</i>格</span>
+                    <input type="text" name="start_price" placeholder="￥">-<input type="text" name="end_price" placeholder="￥">
+                </li>
+                <li class="li3"><input type="button" value="搜    索" onclick="if($.trim($('#q2').val()) != '') $('#search_form2').submit();"></li>
+            </ul>
+        </div>
+        </form>
+
+
+
+
+		<div class="side-hot">
+            <volist name="hot" id="vo2">
+                <div class="item">
+                    <img src="__STATIC__/images/icon341.png" alt="" class="icon">
+                    <a href="{:U('/Home/Goods/goodsInfo',array('id'=>$vo2['goods_id']))}" class="img" title="{$vo2['goods_name']}">
+                        <img src="{$vo2.goods_id|goods_thum_images=300,300}" alt="{$vo2['goods_name']}">
+                    </a>
+                    <p class="p1">
+                        {$vo2['goods_name']|getSubstr=0,15}
+                        <span>￥{$vo2['shop_price']}</span>
+                    </p>
+                    <p class="p2">已售{$vo2['sales_sum']}件<span>评价{$vo2['comment_count']}</span></p>
+                    <!-- <div class="operate">
+                        <a href="javascript:void(0);" class="btn-buy" onClick="javascript:AjaxAddCart({$vo2.goods_id},1,0,1);return false;">立即购买</a>
+                        <a href="javascript:void(0);" class="btn-cart" onClick="javascript:AjaxAddCart({$vo2.goods_id},1,0,0);return false;">加入购物车</a>
+                    </div> -->
+                </div>
+            </volist>
+        </div>
+
+
+
+
+	</div>
+	<!-- /侧边栏 -->
+
+	<!-- 详情主体 -->
+	<div class="main-right2">
+
+
+		<!-- tab -->
+		<div class="product-details-title">
+			<a href="" class="on">宝贝详情</a>
+			<a href="">累计评价({$commentStatistics['c0']})</a>
+		</div>
+
+
+		<!-- 宝贝详情 -->
+		<div class="product-details-1 on">
+            {$goods.goods_content|htmlspecialchars_decode}
+            <div class="tips">
+                <span class="tt">声明</span>
+                <p>本站所有图片为美之钻实拍图，图片版权归美之钻所有，请勿侵权盗用本站图片用于商业用途</p>
+            </div>
+        </div>
+		<!-- /宝贝详情 -->
+		<!-- 累计评价 -->
+		<div class="product-details-2">
+            <div class="product-discuss">
+                <h3>累计评价({$commentStatistics['c0']})</h3>
+                <div id="ajax_comment_return">
+                    <!-- ajax 然后分页数据 -->
+                </div>
+            </div>
+            <script>
+                $(document).ready(function(){
+                  commentType = 1; // 评论类型
+                  ajaxComment(1,1);// ajax 加载评价列表
+                });
+                // 好评差评 切换
+                /*$(".eval-cen-le a").click(function(){
+                  $(".eval-cen-le li").removeClass('curres');
+                  $(this).parent().addClass('curres');
+                  commentType = $(this).data('t');// 评价类型   好评 中评  差评
+                  ajaxComment(commentType,1);
+                });*/
+                // 用ajax分页显示评论
+                function ajaxComment(commentType,page){
+                  $.ajax({
+                    type : "GET",
+                    url:"/index.php?m=Home&c=Goods&a=ajaxComment&goods_id={$goods['goods_id']}&commentType="+commentType+"&p="+page,//+tab,
+                    success: function(data){
+                      $("#ajax_comment_return").html('');
+                      $("#ajax_comment_return").append(data);
+                    }
+                  });
+                }
+            </script>
+            <!-- 店长推荐 -->
+            <div class="shopkeeper-recommend">
+                <div class="title">店长推荐 <a href="{:U('Home/Goods/goodsList',array('id'=>$goods['cat_id']))}" class="more">更多</a>
+                </div>
+                <div class="con">
+                    <volist name="recommend" id="v">
+                        <div class="item">
+                            <a href="{:U('Home/Goods/goodsInfo',array('id'=>$v['goods_id']))}" title="{$v.goods_name}"><img src="{$v.goods_id|goods_thum_images=210,210}" alt="{$v.goods_name}"></a>
+                            <p>{$v.goods_name|getSubstr=0,15}</p>
+                            <p>￥{$v.shop_price}<span>评价{$v.comment_count}</span></p>
+                        </div>
+                    </volist>
+                </div>
+            </div>
+        </div>
+		<!-- /累计评价 -->
+
+
+
+	</div>
+	<!-- /详情主体 -->
+
+
+
+</div>
+
+<include file="Public/footer" />

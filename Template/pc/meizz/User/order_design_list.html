@@ -1,0 +1,79 @@
+<include file="Public/header" />
+<include file="User/navigate" />
+<section class="main">
+    <!-- main-left -->
+    <include file="User/menu" />
+    <!-- /main-left -->
+    <!-- main-right -->
+    <div class="main-right">
+        <h2>我的订单</h2>
+        <div class="page4">
+            <!--<div class="title">-->
+                <!--<a href="{:U('/Home/User/order_list')}" class="<if condition="$_GET['type'] eq ''">on</if>">所有订单<i></i></a>-->
+                 <!--| <a href="{:U('/Home/User/order_list',array('type'=>'WAITPAY'))}" class="<if condition="$_GET['type'] eq 'WAITPAY'">on</if>">待支付<i></i></a>-->
+                 <!--&lt;!&ndash; | <a href="">待付尾款<i></i></a> &ndash;&gt;-->
+                 <!--| <a href="{:U('/Home/User/order_list',array('type'=>'WAITSEND'))}" class="<if condition="$_GET['type'] eq 'WAITSEND'">on</if>">待发货<i></i></a>-->
+                 <!--| <a href="{:U('/Home/User/order_list',array('type'=>'WAITRECEIVE'))}" class="<if condition="$_GET['type'] eq 'WAITRECEIVE'">on</if>">待收货<i></i></a>-->
+                 <!--| <a href="{:U('/Home/User/order_list',array('type'=>'WAITCCOMMENT'))}" class="<if condition="$_GET['type'] eq 'WAITCCOMMENT'">on</if>">待评价<i></i></a>-->
+                 <!--| <a href="{:U('/Home/User/order_list',array('type'=>'FINISH'))}" class="<if condition="$_GET['type'] eq 'FINISH'">on</if>">已完成<i></i></a>-->
+                 <!--| <a href="{:U('/Home/User/order_list',array('type'=>'CANCEL'))}" class="<if condition="$_GET['type'] eq 'CANCEL'">on</if>">已取消<i></i></a>-->
+                 <!-- <a href="" class="recycling">订单回收站</a> -->
+            <!--</div>-->
+
+            <ul class="page4-list-title">
+                <li class="li1">设计师</li>
+                <li class="li2">数量</li>
+                <li class="li3">实付款（元）</li>
+                <li class="li4">订单状态</li>
+                <li class="li5">操作</li>
+            </ul>
+            <volist name="lists" id="list">
+                <div class="page4-item">
+                    <div class="hd"><time>{$list.addtime|date='Y-m-d H:i:s',###}</time>
+                        <if condition="$list.cancel_btn eq 1">
+                            <a href="javascript:void(0);" onClick="cancel_order({$list.order_id})" title="取消订单" class="btn-recycling"></a>
+                        </if>
+                    </div>
+                    <ul>
+                        <li class="li1">
+
+                        <a href="{:U('/Home/Index/designer_detail',array('id'=>$design['id']))}"><img src="{$design.headurl}" alt="{$design.name}">{$design.name}</a>
+
+                        </li>
+                        <li class="li2">x1</li>
+                        <li class="li3">
+                            <b>{$list['money']}</b>
+
+                            <!-- <p>(含保险：9.00)</p> -->
+                        </li>
+                        <li class="li4">
+                            <span>{$list['order_status_desc']}</span>
+
+                        </li>
+                        <li class="li5">
+                            <if condition="($list['status'] eq 3) and ($list['is_comment'] eq 0)">
+                                <a href="{:U('/Home/Index/add_comment',array('id'=>$list['id']))}">去评论</a>
+                            </if>
+                            <if condition="$list.pay_status eq 0">
+                               <a href="{:U('/Home/Cart/designcart4',array('appo_id'=>$list[id]))}" target="_blank">立即支付</a>
+                            </if>
+
+
+                        </li>
+                    </ul>
+                </div>
+            </volist>
+            <div class="prv-nxt">{$page}</div>
+        </div>
+    </div>
+    <!-- /main-right -->
+</section>
+<script>
+    //取消订单
+    function cancel_order(id){
+        if(!confirm("确定取消订单?"))
+            return false;
+        location.href = "/index.php?m=Home&c=User&a=cancel_design_order&id="+id;
+    }
+</script>
+<include file="Public/footer" />

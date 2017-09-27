@@ -1,0 +1,45 @@
+<include file="Public/header" />
+<if condition="isset($message)">
+    <div class="login-success" style="height: 300px;padding-top: 60px;">
+        <h3 style="line-height: 40px;font-size: 15px;">{$message}<span><a href="javascript:void(0);">页面自动 <a id="href" href="{$jumpUrl}">跳转</a> 等待时间： <b id="wait">{$waitSecond}</b></a></span></h3>
+        <div class="con">
+            <img src="__STATIC__/images/img31.png" alt="">
+            <a href="{:U('/Home/Cart')}" class="btn-buy">购物车</a>
+            <p>
+                <a href="/">返回首页</a>
+                <a href="{:U('/Home/Article')}">帮助中心</a>
+                <a href="{:U('/Home/User')}">用户中心</a>
+            </p>
+        </div>
+    </div>
+<else/>
+    <div class="login-success" style="height: 300px;padding-top: 60px;">
+        <h3 style="line-height: 40px;font-size: 15px;">{$error}<span><a href="javascript:void(0);">页面自动 <a id="href" href="{$jumpUrl}">跳转</a> 等待时间： <b id="wait">{$waitSecond}</b></a></span></h3>
+        <div class="con">
+            <img src="__STATIC__/images/img31.png" alt="">
+            <a href="{:U('/Home/Cart')}" class="btn-buy">购物车</a>
+            <p>
+                <a href="/">返回首页</a>
+                <a href="{:U('/Home/Article')}">帮助中心</a>
+                <a href="{:U('/Home/User')}">用户中心</a>
+            </p>
+        </div>
+    </div>
+</if>
+</div>
+<include file="Public/footer" />
+<script type="text/javascript">
+(function(){
+    var wait = document.getElementById('wait'),href = document.getElementById('href').href;
+    var interval = setInterval(function(){
+    	var time = --wait.innerHTML;
+    	if(time <= 0) {
+    		location.href = href;
+    		clearInterval(interval);
+    	};
+    }, 1000);
+})();
+</script>
+</div>
+</body>
+</html>

@@ -1,0 +1,202 @@
+<include file="Public/header" />
+<section class="main">
+    <form name="cart2_form" id="cart2_form" method="post">
+        <input type="hidden" value="{$goods['integral_price']*$_GET[num]}" name="pay_points" />
+        <input type="hidden" value="{$_GET[id]}" name="goods_id" />
+        <input type="hidden" value="{$_GET[num]}" name="num" />
+        <input type="hidden" value="{$spec_key}" name="spec_key" id="spec_key"/>
+        <input type="hidden" value="{$spec_key_name}" name="spec_key_name" id="spec_key_name"/>
+    <div class="page45">
+        <h2>确认订单</h2>
+        <div class="part1">
+            <h3>配送方式</h3>
+            <foreach name="shippingList" item="v"  key="k">
+                <input type="radio" name="shipping_code" value="{$v.code}" id="{$v.code}" onClick="ajax_order_price();" <if condition="$k eq 0"> checked="checked" </if> />
+                <label for="{$v.code}">{$v.name}</label>
+            </foreach>
+        </div>
+        <div class="part2">
+            <h3>收货人信息<b>&nbsp;&nbsp;&nbsp;[<a href="javascript:void(0);" onClick="add_edit_address(0);">使用新地址</a>]</b></h3>
+        </div>
+        <div id="ajax_address"><!--ajax 返回收货地址--></div>
+        <!--<div class="part5">-->
+            <!--<h3>发票信息</h3>-->
+            <!--<div>-->
+                <!--<span>发票抬头</span><input type="text" name="invoice_title" placeholder="请填写个人或单位地址 ，默认为个人">-->
+            <!--</div>-->
+            <!--<p>* 我们的每件产品都附发票，为保护您的消费权益，请认真填写您的发票抬头并妥善保管!</p>-->
+        <!--</div>-->
+        <div class="part6">
+            <table>
+                <tr>
+                    <th class="th1" colspan="2">商品</th>
+                    <!-- <th class="th2">定制内容</th> -->
+                    <th class="th3">手寸</th>
+                    <th class="th4">原价</th>
+                    <th class="th5">数量</th>
+                    <th class="th6">小计</th>
+                </tr>
+
+
+                        <tr>
+                            <td class="td1">
+                                <a href="{:U('Home/Goods/goodsInfo',array('id'=>$goods[goods_id]))}" title="{$goods.goods_name}" class="img" target="_blank"><img src="{$goods.goods_id|goods_thum_images=70,70}" alt=""></a>
+                            </td>
+                            <td class="td2">
+                                <a href="{:U('Home/Goods/goodsInfo',array('id'=>$goods[goods_id]))}" title="{$goods.goods_name}" class="txt" target="_blank">{$goods.goods_name}</a>
+                            </td>
+                            <!-- <td class="td2">&nbsp;</td> -->
+                            <td class="td3">{$_GET[spec_key_name]}</td>
+                            <td class="td4"><del>￥{$goods.shop_price}</del></td>
+                            <td class="td5">{$_GET[num]}</td>
+                            <td class="td6">积分{$goods['integral_price']*$_GET[num]}</td>
+                        </tr>
+
+
+            </table>
+            <!--<div class="tips">-->
+                <!--<span>优惠券使用</span><input type="text" name="couponCode" placeholder="输入优惠券码"><input type="button" onClick="ajax_order_price();" value="使  用">-->
+                <!--<em>会员折扣&nbsp;-￥<b id="couponFee">0.00</b></em>-->
+            <!--</div>-->
+            <div class="tips">
+                <span>订单备注</span><input type="text" name="user_note" placeholder="请告诉我们您的特殊要求，限50字哦～" value="{$v.user_note}"><input type="button" onClick="ajax_order_price();" value="保  存">
+                <em>商品总额&nbsp;<b id="payables">{$goods['integral_price']*$_GET[num]} 积分</b></em>
+            </div>
+            <div class="operate">
+                <input type="button" onClick="submit_order();" value="提交订单">
+            </div>
+        </div>
+    </div>
+    </form>
+</section>
+<script>
+$(document).ready(function(){
+    ajax_address(); // 获取用户收货地址列表
+});
+/**
+* 新增修改收货地址
+* id 为零 则为新增, 否则是修改
+*  使用 公共的 layer 弹窗插件  参考官方手册 http://layer.layui.com/
+*/
+function add_edit_address(id)
+{
+    if(id > 0)
+        var url = "/index.php?m=Home&c=User&a=edit_address&scene=1&call_back=call_back_fun&id="+id; // 修改地址  '{:U('Home/User/add_address',array('scene'=>'1','call_back'=>'call_back_fun','id'=>id))}' //iframe的url /index.php/Home/User/add_address
+    else
+        var url = "/index.php?m=Home&c=User&a=add_address&scene=1&call_back=call_back_fun"; // 新增地址
+    layer.open({
+        type: 2,
+        title: '添加收货地址',
+        shadeClose: true,
+        shade: 0.8,
+        area: ['880px', '580px'],
+        content: url,
+    });
+}
+// 添加修改收货地址回调函数
+function call_back_fun(v){
+    layer.closeAll(); // 关闭窗口
+    ajax_address(); // 刷新收货地址
+}
+/*
+* ajax 获取当前用户的收货地址列表
+*/
+function ajax_address(){
+    $.ajax({
+        url:"{:U('Home/Cart/ajaxAddress')}",//+tab,
+        success: function(data){
+            $("#ajax_address").html('');
+            $("#ajax_address").append(data);
+
+
+        }
+    });
+}
+// 删除收货地址
+function del_address(id)
+{
+    if(!confirm("确定要删除吗?"))
+      return false;
+
+      $.ajax({
+             url:"/index.php?m=Home&c=User&a=del_address&id="+id,
+             success: function(data){
+                ajax_address(); // 刷新收货地址
+             }
+      });
+}
+// 切换收货地址
+function swidth_address(obj)
+{
+    $(obj).parent().prev('td').append($(".default").clone());
+    $(".address_current td").eq(0).html("&nbsp;");
+    $(".address_current").removeClass('address_current');
+    $(obj).parents("table").addClass('address_current');
+    ajax_order_price(); // 计算订单价格
+}
+
+// 获取订单价格
+function ajax_order_price()
+{
+    $.ajax({
+        type : "POST",
+        url:"{:U('Home/Cart/cart3')}",//+tab,
+        data : $('#cart2_form').serialize()+"&act=order_price",// 你的formid
+        dataType: "json",
+        success: function(data){
+            if(data.status != 1)
+            {
+                layer.alert(data.msg, {icon: 2});
+                // 登录超时
+                if(data.status == -100)
+                    location.href ="{:U('Home/User/login')}";
+
+                return false;
+            }
+            // console.log(data);
+            // $("#postFee").text(data.result.postFee); // 物流费
+//            $("#couponFee").text(data.result.couponFee);// 优惠券
+            // $("#balance").text(data.result.balance);// 余额
+            // $("#pointsFee").text(data.result.pointsFee);// 积分支付
+//            $("#payables").text(data.result.payables);// 应付
+            // $("#order_prom_amount").text(data.result.order_prom_amount);// 订单 优惠活动
+        }
+    });
+}
+// 提交订单
+function submit_order()
+{
+    $.ajax({
+        type : "POST",
+        url:"{:U('Home/Goods/integral_submit1')}",//+tab,
+        data : $('#cart2_form').serialize()+"&act=submit_order",// 你的formid
+        dataType: "json",
+        success: function(data){
+            if(data.status != '1')
+            {
+                // alert(data.msg); //执行有误
+                layer.alert(data.msg, {icon: 2});
+                // 登录超时
+                if(data.status == -100)
+                    location.href ="{:U('Home/User/login')}";
+                return false;
+            }
+            // console.log(data);
+            // $("#postFee").text(data.result.postFee); // 物流费
+//            $("#couponFee").text(data.result.couponFee);// 优惠券
+            // $("#balance").text(data.result.balance);// 余额
+            // $("#pointsFee").text(data.result.pointsFee);// 积分支付
+            $("#payables").text(data.result.payables);// 应付
+            // $("#order_prom_amount").text(data.result.order_prom_amount);// 订单 优惠活动
+            //layer.alert('订单提交成功，跳转支付页面!', {icon: 1}); //alert('订单提交成功，跳转支付页面!');
+            layer.msg('订单提交成功，跳转结算页!', {
+              icon: 1,   // 成功图标
+              time: 2000 //2秒关闭（如果不配置，默认是3秒）
+            }, function(){ // 关闭后执行的函数
+                    location.href = "/index.php?m=Home&c=Cart&a=cart4&order_id="+data.result; // 跳转到结算页
+            });
+        }
+    });
+}
+</script>
+<include file="Public/footer" />

@@ -1,0 +1,30 @@
+  <!-- 筛选产品结果排序 -->
+            <div class="product-result-title371">
+                <div class="order">
+                    <a href="" class="on">销量<i></i></a>
+                    <a href="">新品<i></i></a>
+                    <a href="">评论<i></i></a>
+                    <a href="">价格<i></i></a>
+                </div>
+                <div class="r">
+                    共<b>235</b>件宝贝&nbsp; |  <a href="" class="prev">&lt;</a> <span>1/25</span><a href="" class="next">&gt;</a>
+                </div>
+            </div>
+ <div class="product-result2">
+<volist name="goods_list" id="goods">
+               <div class="item">
+				<div class="left">
+					 {$goods['showtype']}
+				</div>
+				<div class="right">
+					<a href="{:U('/Home/Goods/divgoodsList2')}" class="btn2"><img src="__STATIC__/images/icon371.png" alt="">配托</a>
+					<a href="/Home/Goods/diygoodsInfo/id/{$goods['goods_id']}/diytype/1">选择</a>
+					<a href="">咨询客服</a>
+				</div>
+			</div>
+</volist>
+</div>
+
+<div class="prv-nxt2">
+                {$page->show()}
+            </div>

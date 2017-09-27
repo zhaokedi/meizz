@@ -1,0 +1,727 @@
+<!DOCTYPE html >
+<html style="font-size: 58.5938px;">
+<head>
+<meta name="Generator" content="tpshop" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<title>{$goods.goods_name}_{$tpshop_config.shop_info_store_title}</title>
+<meta http-equiv="keywords" content="{$tpshop_config['shop_info_store_keyword']}" />
+<meta name="description" content="{$tpshop_config['shop_info_store_desc']}" />
+<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+<link rel="stylesheet" type="text/css" href="__STATIC__/css/public.css"/>
+<link rel="stylesheet" type="text/css" href="__STATIC__/css/goods.css"/>
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/main.css">
+<script type="text/javascript" src="__STATIC__/js/jquery.js"></script>
+<script type="text/javascript" src="__STATIC__/js/touchslider.dev.js"></script>
+<script src="__PUBLIC__/js/layer/layer-min.js"></script>
+<!--<script src="__STATIC__/js/layer.js"></script>-->
+<script src="__PUBLIC__/js/global.js"></script>
+<script src="__PUBLIC__/js/mobile_common.js"></script>
+<script src="__STATIC__/js/common.js"></script>
+    <style type="text/css">
+        .alert-size .li1 a {  display: block;  width: 1.5rem;  height: .5rem;  margin-right: .05rem;  float: left;  background-color: #f6f6f6;  border: #dfdfdf 1px solid;  cursor: pointer;  text-align: center;  line-height: .5rem;
+            font-size: .18rem;  margin-bottom: .1rem;  color: #8f7958;  }
+        .alert-size .li1 a.hover {  background: url("__STATIC__/images/new/checked.png") right bottom no-repeat #f6f6f6;
+            background-size: .14rem .14rem;  border-color: #8f7958;  }
+        .alert-size1 .li1 a {  display: block;  width: 1.5rem;  height: .5rem;  margin-right: .05rem;  float: left;  background-color: #f6f6f6;  border: #dfdfdf 1px solid;  cursor: pointer;  text-align: center;  line-height: .5rem;
+            font-size: .18rem;  margin-bottom: .1rem;  color: #8f7958;  }
+        .alert-size1 .li1 a.hover {  background: url("__STATIC__/images/new/checked.png") right bottom no-repeat #f6f6f6;
+            background-size: .14rem .14rem;  border-color: #8f7958;  }
+
+
+        .alert-size1 { display: none; position: fixed; width: 100%; height: 100%; z-index: 99; background-color: rgba(0, 0, 0, 0.3); left: 0; top: 0; }
+        .alert-size1 .box { width: 100%; background-color: #fff; position: absolute; bottom: 0; left: 0; padding-top: .4rem; }
+        .alert-size1 .close { display: block; width: .6rem; height: .6rem; background: url("__STATIC__/images/new/close3.png") center center no-repeat; background-size: .3rem .3rem; position: absolute; right: 0; top: 0; }
+        .alert-size1 .btn-submit { display: block; width: 100%; line-height: .8rem; text-align: center; background-color: #8f7958; height: .8rem; border-radius: 0; margin-top: .3rem; }
+        .alert-size1 li { width: 100%; padding: 0 .2rem 0rem 1.4rem; position: relative; margin-bottom: .2rem; line-height: .6rem; }
+        .alert-size1 li span { position: absolute; left: .2rem; line-height: .6rem; color: #8f7958; }
+        .alert-size1 .li1 em { display: block; width: 1.5rem; height: .5rem; margin-right: .05rem; float: left; background-color: #f6f6f6; border: #dfdfdf 1px solid; cursor: pointer; text-align: center; line-height: .5rem; font-size: .18rem; margin-bottom: .1rem; color: #8f7958; }
+        .alert-size1 .li1 em.on { background: url("__STATIC__/images/new/checked.png") right bottom no-repeat #f6f6f6; background-size: .14rem .14rem; border-color: #8f7958; }
+        .alert-size1 select { width: 2.3rem; height: .55rem; line-height: .55rem; border-radius: 0; border: #dfdfdf 1px solid; }
+        .alert-size1 .li2 a { color: #999; margin-left: 2em; }
+        .alert-size1 .li3 input[type=text] { width: 4.33rem; height: .55rem; line-height: .55rem; border-radius: 0; border: #dfdfdf 1px solid; }
+        .alert-size1 .li3 .add { display: block; width: 1.6rem; line-height: .55rem; background-color: #f0f0f0; border-radius: 0; margin-top: .2rem; margin-bottom: .6rem; border: none; color: #8f7958; }
+
+        .product-details-1 .btn-size1, .product-details-1 .btn-discuss {
+            width: 100%;
+            border-bottom: #f0f0f0 1px solid;
+            line-height: .8rem;
+            padding: 0 .2rem;
+            display: block;
+            background: url(__STATIC__/images/new/arrow-right.png) 96% center no-repeat;
+            background-size: .1rem .17rem;
+        }
+        .gift{background-color: #fff;  margin-bottom: 10px;  padding: 0.2rem;  overflow: scroll;  height: 170px;  }
+        .gift div{  display: block;  float: left;  }
+        .line{  line-height: 70px;  }
+        .ttt{  background-color:#8f7958;height: 30px;width: 1.2rem ;text-align: center;  margin-left: 3rem;  }
+        .ttt .btn-buy{  width: 1.7rem;  color: #fff;  }
+        .li1 img{width: 0.6rem;height: 0.6rem;margin: 0 0.2rem;}
+    </style>
+</head>
+<body>
+<script type="text/javascript">
+var process_request = "正在处理您的请求...";
+</script>
+<!--<div class="main">-->
+    <header>
+        <a href="javascript:history.back(-1)" class="back"></a>
+        <div class="product-details-filter">
+            <a href="javascript:;" class="on"  id="goods_ka1" onClick="setGoodsTab('goods_ka',1,3)">商品</a>
+            <a href="javascript:;"  id="goods_ka2" onClick="setGoodsTab('goods_ka',2,3)">详情</a>
+            <a href="javascript:;"  id="goods_ka3" onClick="setGoodsTab('goods_ka',3,3)">评价</a>
+        </div>
+        <a href="" class="menu"></a>
+    </header>
+  <!--<div class="tab_nav">-->
+    <!--<div class="header">-->
+      <!--<div class="h-left"><a class="sb-back" href="javascript:history.back(-1)" title="返回"></a></div>-->
+      <!--<div class="h-mid">-->
+        <!--<ul>-->
+          <!--<li><a href="javascript:;" class="tab_head on"   id="goods_ka1" onClick="setGoodsTab('goods_ka',1,3)">商品</a></li>-->
+          <!--<li><a href="javascript:;" class="tab_head" id="goods_ka2" onClick="setGoodsTab('goods_ka',2,3)">详情</a></li>-->
+          <!--<li><a href="javascript:;" class="tab_head" id="goods_ka3" onClick="setGoodsTab('goods_ka',3,3)">评价</a></li>-->
+        <!--</ul>-->
+      <!--</div>-->
+      <!--<div class="h-right">-->
+        <!--<aside class="top_bar">-->
+          <!--<div onClick="show_menu();$('#close_btn').addClass('hid');" id="show_more"><a href="javascript:;"></a> </div>-->
+          <!--<a href="{:U('Mobile/Cart/cart')}" class="show_cart"><em class="global-nav__nav-shop-cart-num" id="tp_cart_info"></em></a>-->
+         <!--</aside>-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</div>-->
+<div class="h50"></div>
+<include file="Public/menu"/>
+<form name="buy_goods_form" method="post" id="buy_goods_form" >
+    <!-- 商品 -->
+    <div class="product-details-1" id="user_goods_ka_1">
+        <div id="banner" class="banner">
+            <div class="hd" id="hd">
+                <ul></ul>
+                <span class="pageState" id="pageState"></span>
+            </div>
+            <div class="bd" id="bd">
+                <ul>
+                    <if condition="empty($goods_images_list)">
+                    <li><a href="#"><img src="{$goods['goods_id']|goods_thum_images=700,700}"/></a></li>
+                    <else/>
+                    <foreach name="goods_images_list" item="pic">
+                        <li><a href="javascript:void(0)"><img src="{$pic|get_sub_images=$pic['goods_id'],700,700}"/></a></li>
+                    </foreach>
+                    </if>
+                    <!--<li><a href="#"><img src="__STATIC__/images/new/img251.jpg"/></a></li>-->
+                    <!--<li><a href="#"><img src="__STATIC__/images/new/img251.jpg"/></a></li>-->
+                    <!--<li><a href="#"><img src="__STATIC__/images/new/img251.jpg"/></a></li>-->
+                </ul>
+            </div>
+        </div>
+        <div class="part1">
+            <h1>{$goods.goods_name}</h1>
+            <div class="price"><i id="goods_price">￥ {$goods.shop_price}</i>&nbsp;<del>￥ {$goods.market_price}</del></div>
+            <div class="tips">配送：全国包邮（港澳台除外）；现货预计3个工作日内发货；</div>
+        </div>
+        <!--<volist name="gift_pack" id="vo">-->
+            <!--<div class="gift ">-->
+                <!--{$vo.title}-->
+                <!--<br>-->
+                <!--<volist name="vo.goods_name" id="vo1">-->
+                    <!--<div style="overflow: hidden; width: 100%">{$vo1}</div>-->
+                    <!--<br>-->
+                <!--</volist>-->
+                <!--<volist name="vo.goods_id" id="vo2">-->
+                <!--<input type="hidden" name="gift_id[]" value="{$vo2}">-->
+                <!--</volist>-->
+             <!--<div>=￥<i style="color: red">{$vo.price}</i></div>-->
+                <!--<div class="ttt" >-->
+                <!--<a href="javascript:void(0);" class="btn-buy"  onclick="ajax_gift({$vo['id']});">立即购买</a>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</volist>-->
+        <style>
+            .product-details-1 .fenqi{
+                width: 100%;
+                border-bottom: #f0f0f0 1px solid;
+                line-height: .8rem;
+                padding: 0 .2rem;
+                display: block;
+                background: url(__STATIC__/images/new/arrow-right.png) 96% center no-repeat;
+                background-size: .1rem .17rem;
+            }
+
+        </style>
+        <div class="part2">
+            <p><a href="javascript:;" class="btn-size"> <if condition="$goods.is_gift eq 0" >  <strong><font color="#8f7958">款式选择</font></strong> <else/>礼包商品详情 </if> </a> </p>
+            <if condition="$goods.prepay gt 0"> <p><a href="javascript:;" class="btn-size1">   <strong><font color="#8f7958">付款选择</font></strong></a> </p></if>
+            <!--<p><a  class="fenqi" id="fenqi">分期付款</a></p>-->
+            <div class="is_scroll">
+            <section id="search_ka">
+                <div class="ui-sx bian1">
+                    <div class="subNavBox">
+                        <div class="subNav on"><strong>购买数量</strong></div>
+                        <ul class="navContent" style="display: block;">
+                            <li style=" border-bottom:1px solid #eeeeee">
+                                <div class="item1">
+                  <span class="ui-number">
+                  <button type="button" class="decrease" onClick="goods_cut();">-</button>
+                    <input type="text" class="num" id="number" name="goods_num" value="1" min="1" max="1000"/>
+                    <input type="hidden" name="goods_id" value="{$goods.goods_id}"/>
+                  <button type="button" class="increase" onClick="goods_add();">+</button>
+                  </span> </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+                </div>
+            <p><a href="javascript:;"  onClick="setGoodsTab('goods_ka',3,3)" class="btn-discuss">评价（{$commentStatistics.c0}）</a></p>
+            <div class="discuss-one">
+                <h3><img alt="" src="{$usercomment['head_pic']|default="__STATIC__/images/user68.jpg"}" >{$onecomment['username']}</h3>
+                <p>{$onecomment['content']|htmlspecialchars_decode}</p>
+            </div>
+            <a href="javascript:;"  onClick="setGoodsTab('goods_ka',3,3)" class="discuss-more">查看更多评价</a>
+        </div>
+
+        <notempty name="goods_linked">
+        <div class="page44-hd">
+            <a href="javascript:;" class="on" style="width: 100%;">关联商品</a><!-- <a href="javascript:;">关联文章</a> -->
+        </div>
+        <div class="page44-bd">
+            <!-- 关联商品 -->
+            <div class="con1">
+                <div id="banner44" class="banner44">
+                    <div class="bd" id="bd2">
+                        <volist name="goods_linked" id="item">
+                        <if condition="($key+1)%3==1"><ul></if>
+                            <li>
+                                <div class="item">
+                                    <a href="{:U('goodsInfo',array('id'=>$item[goods_id]))}" title="{$item.goods_name}"><img src="{$item['goods_id']|goods_thum_images=230,230}" alt="{$item.goods_name}"></a>
+                                    <h3 style="overflow-x:hidden; height: .48rem;line-height: .23rem;margin: .06rem 0;">{$item.goods_name}</h3>
+                                    <p class="price">￥{$item.shop_price}</p>
+                                </div>
+                            </li>
+                        <if condition="($key+1)%3==0"></ul></if>
+                        </volist>
+                    </div>
+                    <div class="hd" id="hd2">
+                        <ul></ul>
+                    </div>
+                </div>
+            </div>
+            <!-- /关联商品 -->
+            <!-- 关联文章 -->
+            <!-- <div class="con2">
+                <ul>
+                    <volist name="article_linked" id="vo">
+                    <li><a href="">{$key+1}.{$vo.title}</a></li>
+                    </volist> -->
+                    <!--<li><a href="">2.优良的钻石加工工艺—“中国工”</a></li>-->
+                    <!--<li><a href="">3.关于钻石产地你需要知道的</a></li>-->
+                <!-- </ul>
+            </div> -->
+            <!-- /关联文章 -->
+        </div>
+        </notempty>
+        <!-- <div class="img-more2"><a href="">图文详情</a></div> -->
+        <!-- <div class="img-more"><span>继续拖动查看图文详情</span></div> -->
+        <div class="h50"></div>
+    </div>
+    <!-- /商品 -->
+    <!-- 详情 -->
+    <div class="product-details-2">
+        <!--<img src="__STATIC__/images/new/img25_02.jpg" alt="">-->
+        <!--<img src="__STATIC__/images/new/img25_03.jpg" alt="">-->
+        <!--<img src="__STATIC__/images/new/img25_04.jpg" alt="">-->
+
+    </div>
+    <!-- /详情 -->
+    <!-- 评价 -->
+    <div class="product-details-3" id="user_goods_ka_3">
+
+        <!--<div class="item">-->
+            <!--<h3><a href=""><img src="__STATIC__/images/new/face51.png" alt="">pengpengpeng</a></h3>-->
+            <!--<p>很nice~</p>-->
+            <!--<p class="btm">2016-08-16  17:54:43  材质:白18k金;</p>-->
+        <!--</div>-->
+
+    </div>
+    <!-- /评价 -->
+    <!--付款选择-->
+    <input type="hidden" name="prepay_type" value="0" id="prepay_type">
+    <if condition="$goods.prepay gt 0">
+        <div class="alert-size1" >
+            <div class="box">
+
+                <a href="javascript:;" class="close" id="close2"></a>
+                    <ul>
+
+                            <li class="li1" style="height: 2em">
+                                <span>付款</span>
+                                <em onClick="yufu(0,{$goods['shop_price']})">全额购买</em>
+                                <em onClick="yufu(1,{$goods['prepay_price']})">支付订金</em>
+                            </li>
+
+                    </ul>
+                    <script>
+                        function yufu(type,money){
+                            $("#prepay_type").val(type);
+                            $("#goods_price").text(money);
+                        }
+                    </script>
+                    <div class="operate" id="operate2">
+                        <a href="javascript:void(0);" class="btn-submit">确认</a>
+                    </div>
+            </div>
+        </div>
+    </if>
+    <!-- 材质选择 -->
+    <div class="alert-size">
+        <div class="box">
+
+            <a href="" class="close"></a>
+            <if condition="$goods.is_gift eq 0" >
+            <ul>
+
+                <foreach item="spec" key="key" name="filter_spec">
+                <li class="li1">
+                    <span>{$key}</span>
+                    <foreach name="spec" item="v2" key="k2">
+                        <a href="javascript:;" onclick="switch_spec(this);" title="{$v2[item]}" <if condition="$k2 eq 0">class="hover"</if>>
+                        <input type="radio" style="display:none;" name="goods_spec[{$key}]" value="{$v2[item_id]}" <if condition="$k2 eq 0 ">checked="checked"</if>/>
+                    {$v2[item]}
+                        </a>
+                    </foreach>
+                    <!--<em>白18K金</em><em>PT950</em>-->
+                </li>
+                </foreach>
+            </ul>
+                <script>
+                    function yufu(type,money){
+                        $("#prepay_type").val(type);
+                        $("#goods_price").text(money);
+                    }
+
+                </script>
+            <div class="operate">
+                <a href="javascript:void(0);" class="btn-submit">确认</a>
+            </div>
+            <else/>
+                <ul>
+                    <li class="li1" > <span>活动时间：</span><p style="color: #999"> {$goods.on_time|date="Y年m月d日",###}-{$goods.down_time|date="Y年m月d日",###}</p></li>
+                    <li class="li1" > <span>包含商品：</span>
+                        <volist name="goods.gift_link" key="key" id="vo">
+                        <img src="{$key|goods_thum_images=100,100}" >X1
+                        </volist>
+                    </li>
+                </ul>
+            </if>
+                <!--<li class="li2">-->
+                    <!--<span>手寸</span>-->
+                    <!--<select name="" id="">-->
+                        <!--<option value="">- 请选择 -</option>-->
+                        <!--<option value="">- 1 -</option>-->
+                        <!--<option value="">- 2 -</option>-->
+                    <!--</select>-->
+                    <!--<a href="">如何测手寸</a>-->
+                <!--</li>-->
+                <!--<li class="li3"><span>刻字</span><input type="text" placeholder="5个汉字或10个字母"><a href="" class="add">添加符号</a></li>-->
+        </div>
+    </div>
+
+    <!-- /材质选择结束 -->
+
+        <input type="hidden" name="goods_id" value="{$goods.goods_id}"/>
+    </form>
+
+<div class="alert-fq" >
+    <form action="" method="post" id="fenqiform">
+        <div class="box">
+            <a  class="close" id="fqclose"></a>
+            <ul>
+
+                <li class="li3"><span>姓名</span><input type="text" name="username" placeholder="姓名"></li>
+                <li class="li3"><span>手机</span><input type="text" name="mobile" placeholder="手机"></li>
+                <li>
+                    <span>手机</span>
+                        <select name="num">
+
+                            <option value="1">1期</option>
+                            <option value="2">2期</option>
+                            <option value="3">3期</option>
+                        </select>
+
+                </li>
+                <li class="li3"><span>备注</span>
+                    <textarea name="remark" class="textac" ></textarea>
+                </li>
+                </li>
+
+            </ul>
+            <div class="operate">
+                <input type="hidden" value="{$goods.goods_id}" name="goods_id" />
+                <button type="button" class="btn-submit " id="submitBtn">确认</button>
+            </div>
+        </div>
+    </form>
+</div>
+<script type="text/javascript">
+    //分期
+    $(".alert-size1 .li1 em").click(function () {
+        $(this).siblings().removeClass("on"), $(this).addClass("on")
+    })
+    $(".btn-size1").click(function () {
+        $(".alert-size1").fadeIn(300);
+    })
+    $("#close2").click(function () {
+        $(".alert-size1").fadeOut(300);
+    })
+    $("#operate2").click(function(){
+        $(".alert-size1").fadeOut(500);
+    })
+    $("#fenqi").click(function () {
+        $(".alert-fq").show();
+    })
+    $("#fqclose").click(function () {
+        $(".alert-fq").hide();
+    })
+    $('#submitBtn').click(function() {
+
+        var EmailReg = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/; //邮件正则
+        var PhoneReg = /^0{0,1}(13[0-9]|15[0-9]|153|156|18[7-9])[0-9]{8}$/ ; //手机正则
+        var $nickname = $('[name="username"]');
+        var $email = $('.email');
+        var $phone = $('[name="mobile"]');
+        if($nickname.val() == ''){
+
+            layer.msg('姓名还没填呢...'); $nickname.focus();
+        }else if($phone.val() == ''){
+            layer.msg('手机还没填呢...'); $phone.focus();
+        }else if(!PhoneReg.test($phone.val())){
+            layer.msg('手机格式错咯...'); $phone.focus();
+        }else{
+            $.ajax({
+                type : "POST",
+                url:"/index.php?m=Home&c=Goods&a=addfenqi",
+                data : $('#fenqiform').serialize(),// 你的formid 搜索表单 序列化提交
+                dataType:'json',
+                success: function(data){
+                    if(data.status == 1)
+                    {
+                        layer.msg('提交成功，等待客服联系',{time:3000});
+                        setTimeout(function(){
+                            $(".alert-fq").hide();
+                        },2000);
+                    }else {
+                        layer.msg('提交失败',{time:2000});
+                    }
+
+
+                }
+            });
+
+
+        }
+    });
+    $(".operate").click(function(){
+        $(".alert-size").fadeOut(500);
+    })
+</script>
+
+<script type="text/javascript">
+    $(function(){
+	    $("div.module_special .wrap .major ul.list li:last-child").addClass("remove_bottom_line");
+    });
+
+</script>
+	  <!--<form name="buy_goods_form" method="post" id="buy_goods_form" >-->
+      <!--<div class="product_info">-->
+        <!--<div class="info_dottm">-->
+          <!--<h3 class="name">{$goods.goods_name}</h3>-->
+          <!-- <div class="right">
+
+          <!--JiaThis Button BEGIN-->
+          <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt" target="_blank">
+            <div id="pro_share" class="share"></div>
+          </a>
+
+
+
+
+<script type="text/javascript">
+$(function(){
+	$(".subNav").click(function(){
+		$(this).next(".navContent").slideToggle(300).siblings(".navContent").slideUp(500);
+		$(this).toggleClass("on").siblings(".subNav").removeClass("on");
+		if($(".is_scroll").length <= 0)
+		{
+			$('html,body').animate({'scrollTop':$('body')[0].scrollHeight},600);
+		}
+	});
+	commentType = 1; // 评论类型
+    ajaxComment(1,1);// ajax 加载评价列表
+})
+</script>
+<script type="text/javascript">
+
+function click_search (){
+  var search_ka = document.getElementById("search_ka");
+  	if (search_ka.className == "s-buy open ui-section-box"){
+	  	search_ka.className = "s-buy ui-section-box";
+	}else {
+		search_ka.className = "s-buy open ui-section-box";
+	}
+}
+
+function changeAtt(t) {
+	t.lastChild.checked='checked';
+	for (var i = 0; i<t.parentNode.childNodes.length;i++) {
+	    if (t.parentNode.childNodes[i].className == 'hover') {
+	        t.parentNode.childNodes[i].className = '';
+			t.childNodes[0].checked="checked";
+		}
+	}
+	t.className = "hover";
+	changePrice();
+}
+
+function changeAtt1(t) {
+	t.lastChild.checked='checked';
+	for (var i = 0; i<t.parentNode.childNodes.length;i++) {
+	    if (t.className == 'hover') {
+	           t.className = '';
+			t.childNodes[0].checked = false;
+		}
+		else{
+			t.className="hover";
+			t.childNodes[0].checked = true;
+		}
+	}
+	changePrice();
+}
+
+	function goods_cut(){
+  		var num_val=document.getElementById('number');
+  		var new_num=num_val.value;
+  		var Num = parseInt(new_num);
+  		if(Num>1)Num=Num-1;
+  		num_val.value=Num;
+  	}
+  	function goods_add(){
+  		var num_val=document.getElementById('number');
+  		var new_num=num_val.value;
+  		var Num = parseInt(new_num);
+  		Num=Num+1;  num_val.value=Num;
+  	}
+</script>
+      <div style=" height:8px; background:#eeeeee; margin-top:-1px;"></div>
+      <!--
+      <div class="is_scroll">
+        <section id="search_ka">
+          <div class="ui-sx bian1">
+            <div class="subNavBox" >
+              <div class="subNav" style=" border:0;"><a href="pocking.php?id=22" style=" border:0px;"><strong>自提点</strong></a></div>
+            </div>
+          </div>
+        </section>
+      </div>
+      -->
+      <!--
+      <div class="is_scroll">
+        <input type="hidden" id="chat_supp_id" value="1" />
+        <div style=" height:8px; background:#eeeeee; margin-top:-1px;"></div>
+        <section class="rzs_info">
+          <div class="top_info">
+            <dl>
+              <dt><a href="supplier.php?suppId=1">
+                <div style="background-image:url(./..//data/supplier/logo/logo_supplier1.jpg)"></div>
+                </a></dt>
+              <dd><strong>卖家: <a href="supplier.php?suppId=1" style="color:#333; font-size:18px;">天天果园旗舰店</a></strong><em>初级店铺</em></dd>
+            </dl>
+            <ul>
+              <li><span>宝贝描述</span><strong>:5.0</strong><em>高</em></li>
+              <li><span>卖家服务</span><strong>:5.0</strong><em>高</em></li>
+              <li><span>物流服务</span><strong>:5.0</strong><em>高</em></li>
+            </ul>
+          </div>
+          <div class="s_dianpu"> <span><a href="tel:03350785268" style=" margin-left:7%;"><em class="bg1"></em>联系客服</a></span> <span><a href="supplier.php?suppId=1" style=" margin-left:3%;"><em class="bg2"></em>进入店铺</a></span> </div>
+        </section>
+      </div>
+      -->
+    </form>
+  </div>
+  <div class="main" id="user_goods_ka_2" style="display:none">
+	<section class="index_floor">
+      <h2 style=" border-bottom:1px solid #ddd "> <span></span> 商品信息 </h2>
+      <ul class="xiangq">
+           <foreach name="goods_attr_list" item="v" key="k" >
+           <li style="float:left;width:50%;"><p>{$goods_attribute[$v[attr_id]]}:</p><span>{$v[attr_value]}</span></li>
+           </foreach>
+		   <!--
+           <li><p>上架时间：</p><span>{$goods.on_time|date='Y-m-d H:i',###}</span></li>
+           <li></li>
+		   -->
+      </ul>
+    </section>
+    <div class="product_main" style=" margin-top:40px;"> <!-- 产品图片 -->
+         <div class="product_images product_desc" id="product_desc"> {$goods.goods_content|htmlspecialchars_decode} </div>
+    </div>
+  </div>
+  <!--<div class="tab_attrs tab_item hide" id="user_goods_ka_3" style="display:none;">-->
+
+<!--<div id="ECS_COMMENT">-->
+<!--<link href="__STATIC__/css/photoswipe.css" rel="stylesheet" type="text/css">-->
+<!--<script src="__STATIC__/js/klass.min.js"></script>-->
+<!--<script src="__STATIC__/js/photoswipe.js"></script>-->
+<!--<div class="my_comment_list" id="ECS_MYCOMMENTS"> </div>-->
+
+<!--</div>-->
+ 	</div>
+<!--</div>-->
+
+<div class="footer-details">
+    <a href="tel:{$tpshop_config['shop_info_phone']}" class="btn-online">客服</a>
+    <a href="{:U('Mobile/Cart/cart')}" class="btn-cart">购物车<i id="catr_count">{$cart_total_price}</i></a>
+  <a href="javascript:void(0);" onClick="collect_goods({$goods.goods_id});" id="favorite_add" class="btn-follow">收藏</a>
+    <a href="javascript:void(0);" class="btn-add-cart" onClick="AjaxAddCart({$goods.goods_id},1,0);">加入购物车</a>
+    <a href="javascript:void(0);" class="btn-buy"  onclick="AjaxAddCart({$goods.goods_id},1,1);">立即购买</a>
+</div>
+
+<a href="javascript:void(0);" class="gotop"><img src="__STATIC__/images/topup.png"></a>
+<!--<div style=" height:60px;"></div>-->
+<!--<div class="footer_nav">-->
+  <!--<ul>-->
+    <!--<li class="bian"><a href="{:U('Index/index')}"><em class="goods_nav1"></em><span>首页</span></a> </li>-->
+    <!--<li class="bian"><a href="tel:{$tpshop_config['shop_info_phone']}"><em class="goods_nav2"></em><span>客服</span></a> </li>-->
+    <!--<li><a href="javascript:collect_goods({$goods.goods_id})" id="favorite_add"><em class="goods_nav3"></em><span>收藏</span></a></li>-->
+  <!--</ul>-->
+  <!--<dl>-->
+    <!--<dd class="flow"><a class="button active_button" href="javascript:void(0);" onClick="AjaxAddCart({$goods.goods_id},1,0);">加入购物车</a> </dd>-->
+    <!--<dd class="goumai"><a style="display:block;" href="javascript:void(0);"  onclick="AjaxAddCart({$goods.goods_id},1,1);">立即购买</a> </dd>-->
+  <!--</dl>-->
+<!--</div>-->
+<script type="text/javascript">
+function switch_spec(spec)
+{
+    $(spec).siblings().removeClass('hover');
+    $(spec).addClass('hover');
+	$(spec).siblings().children('input').prop('checked',false);
+	$(spec).children('input').prop('checked',true);
+    //更新商品价格
+    get_goods_price();
+}
+
+function get_goods_price()
+{
+	var goods_price = {$goods.shop_price}; // 商品起始价
+	var store_count = {$goods.store_count}; // 商品起始库存
+	var spec_goods_price = {$spec_goods_price};  // 规格 对应 价格 库存表   //alert(spec_goods_price['28_100']['price']);
+	// 如果有属性选择项
+	if(spec_goods_price != null)
+	{
+		goods_spec_arr = new Array();
+		$("input[name^='goods_spec']:checked").each(function(){
+			 goods_spec_arr.push($(this).val());
+		});
+		var spec_key = goods_spec_arr.sort(sortNumber).join('_');  //排序后组合成 key
+		goods_price = spec_goods_price[spec_key]['price']; // 找到对应规格的价格
+		store_count = spec_goods_price[spec_key]['store_count']; // 找到对应规格的库存
+	}
+	var goods_num = parseInt($("#goods_num").val());
+	// 库存不足的情况
+	if(goods_num > store_count)
+	{
+	   goods_num = store_count;
+	   alert('库存仅剩 '+store_count+' 件');
+	   $("#goods_num").val(goods_num);
+	}
+	$("#goods_price").html('￥'+goods_price+'元'); // 变动价格显示
+
+}
+
+function sortNumber(a,b)
+{
+	return a - b;
+}
+
+function ajaxComment(commentType,page){
+    $.ajax({
+        type : "GET",
+        url:"/index.php?m=Mobile&c=goods&a=ajaxComment&goods_id={$goods['goods_id']}&commentType="+commentType+"&p="+page,//+tab,
+        success: function(data){
+//            $(".my_comment_list").empty().append(data);
+            $(".product-details-3").empty().append(data);
+            /*var myPhotoSwipe = $("#gallery a").photoSwipe({
+        		enableMouseWheel: false,
+        		enableKeyboard: false,
+        		allowUserZoom: false,
+        		loop:false
+        	});*/
+        }
+    });
+}
+function ajax_gift(id){
+
+    $.ajax({
+        type : "POST",
+        url:" {:U('Cart/gift')}",
+        data : {'gift_id':id},// 你的formid 搜索表单 序列化提交
+        dataType:'json',
+        success: function(data){
+            // 加入购物车后再跳转到 购物车页面
+            if(data.status < 0)
+            {
+                //layer.open({content: data.msg,time: 2});
+                layer.msg( data.msg, {time: 2000});
+            }else {
+                var url=" {:U('Cart/gift_submit')}?gift_id="+id;
+                location.href=url;
+            }
+        }
+    });
+}
+$(document).ready(function(){
+        $(window).scroll(function() {
+            if ($(this).scrollTop() != 0) {
+                $('.gotop').fadeIn();
+            } else {
+                $('.gotop').fadeOut();
+            }
+        });
+        $('.gotop').click(function() {
+            $('body,html').animate({ scrollTop: 0 }, 800);
+        })
+	  var cart_cn = getCookie('cn');
+	  if(cart_cn == ''){
+		$.ajax({
+			type : "GET",
+			url:"/index.php?m=Home&c=Cart&a=header_cart_list",//+tab,
+			success: function(data){
+				cart_cn = getCookie('cn');
+			}
+		});
+	  }
+	  $('#tp_cart_info').html(cart_cn);
+});
+</script>
+<script src="__STATIC__/js/slide.js"></script>
+<script src="__STATIC__/js/main.js"></script>
+<script>
+//    $(window).scroll(function(){
+//        if ($(document).height() - $(this).scrollTop() - $(this).height()<10){
+//            $(".product-details-filter a").removeClass('on');
+//            $(".product-details-filter a").eq(1).addClass('on');
+//            $(".product-details-3").fadeOut('0');
+//            $(".product-details-2").fadeIn(300);
+//            return false;
+//        }
+//    });
+</script>
+<script src="__PUBLIC__/js/jqueryUrlGet.js"></script><!--获取get参数插件-->
+<script> set_first_leader(); //设置推荐人 </script>
+<!-- 微信浏览器 调用微信 分享js-->
+<if condition="$signPackage neq null">
+	<include file="Public/wx_share"/>
+</if>
+<!-- 微信浏览器 调用微信 分享js  end-->
+</body>
+</html>

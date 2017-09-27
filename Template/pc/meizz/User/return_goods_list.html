@@ -1,0 +1,63 @@
+<include file="Public/header" />
+<include file="User/navigate" />
+<section class="main">
+  <!-- main-left -->
+  <include file="User/menu" />
+  <!-- /main-left -->
+  <!-- main-right -->
+  <div class="main-right">
+    <h2>我的售后</h2>
+    <div class="page17">
+      <div class="title">
+        <span class="sp1">售后单号</span>
+        <span class="sp2">订单编号</span>
+        <span class="sp3">申请日期</span>
+        <span class="sp4">客服</span>
+        <span class="sp5">售后类型</span>
+        <span class="sp6">状 态</span>
+        <span class="sp7">操 作</span>
+      </div>
+      <volist name="list" id="item">
+        <div class="item">
+          <div class="item-hd">
+            <span class="sp1">{$item.id}</span>
+            <span class="sp2">{$item.order_sn}</span>
+            <span class="sp3">{$item.addtime|date="Y-m-d",###}</span>
+            <span class="sp4"><a href="">{$item.service}</a></span>
+            <span class="sp5">{$item.typename} <if condition="$item.is_money eq 1"><i>需要补差价</i></if></span>
+            <span class="sp6">
+              <if condition="$item['status'] eq 0">待客服处理</if>
+              <if condition="$item['status'] eq 1">客服处理中</if>
+              <if condition="$item['status'] eq 2">已完成</if>
+               <if condition="$item['status'] eq 3">已取消</if>
+            </span>
+            <!--<span class="sp7"><a href="{:U('Home/User/return_goods_info',array('id'=>$item[id]))}" class="btn-detail">查看详情</a></span>-->
+            <span class="sp7"><a href="#" class="btn-detail">查看详情</a></span>
+          </div>
+         <div class="item-bd">
+            <a href="" class="close"></a>
+            <ul>
+              <li><em>客服回复</em>{$item.remark}</li>
+              <!--<li><em>宝贝状态</em>新款宝贝在 <time>2016-06-23 14:30</time>已发货</li>-->
+              <li><em><i class="e2">备</i>注</em>{$item.reason}</li>
+              <li><em>联系电话</em>{$user.mobile} </li>
+              <li><em>售后记录</em>
+                <volist name="item.log" id="vo">
+                  <i class="record">{$vo.typename}{$vo.date}</i>
+                </volist>
+
+                <!--<i class="record">清洗2015-03-26</i><i class="record">更换款式2015-03-26</i>-->
+              </li>
+            </ul>
+            <div class="btm">你的专属售后客服 {$item.service}</div>
+          </div>
+        </div>
+      </volist>
+      <div class="operate">
+        <a href="{:U('Home/User/return_goods_submit')}" class="btn">申请售后</a>
+      </div>
+    </div>
+  </div>
+  <!-- /main-right -->
+</section>
+<include file="Public/footer" />

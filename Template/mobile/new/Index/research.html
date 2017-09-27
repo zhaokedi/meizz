@@ -1,0 +1,88 @@
+<include file="Public/header"/>
+<link href="__STATIC__/css/mobiscroll_002.css" rel="stylesheet" type="text/css">
+<link href="__STATIC__/css/mobiscroll.css" rel="stylesheet" type="text/css">
+<link href="__STATIC__/css/mobiscroll_003.css" rel="stylesheet" type="text/css">
+<style type="text/css">
+	.my-bespoke select {
+		border: none;
+		width: 100%;
+
+	}
+</style>
+<body>
+
+<header>
+	<a href="javascript:history.back(-1)" class="back"></a>
+	<h3>在线调查</h3>
+	<a href="" class="menu"></a>
+</header>
+<include file="Public/menu"/>
+<div class="h50"></div>
+
+
+<div class="page63">
+	<form method="post" action="" id="researchform">
+		<volist name="question" id="vo" key="k1">
+	<h3>{$k1}、{$vo.title}</h3>
+
+	<ul class="con">
+		<input type="hidden" name="ids[]" value="{$vo.id}">
+		<input type="hidden" name="sort[]">
+		<volist name="vo.option" id="vo1">
+		<li>
+			<label for="" class="radio63"  data-sort="{$vo1.sort}">{$vo1.que}</label>({:percent($vo1[count],$vo[sum])}%)</li>
+		</volist>
+		<!--<li><label for="" class="radio63">否</label>(30%)</li>-->
+	</ul>
+	</volist>
+
+
+	</form>
+
+	<input type="submit" value="提交" onclick="ajax_research()">
+</div>
+
+<script src="__STATIC__/js/slide.js"></script>
+<script src="__STATIC__/js/main.js"></script>
+<script>
+	$("body").delegate(".radio63", "click", function () {
+		$(this).parent().siblings().children(".radio63").removeClass("on"), $(this).addClass("on");
+		$(this).parent().parent().find("input[name='sort[]']").val($(this).data('sort'));
+	});
+
+
+	function ajax_research(){
+		var sort=$("input[name='sort[]']");
+		flag=true;
+		$(sort).each(function(i){
+			var val=$(sort[i]).val();
+			if(val ==''){
+				flag=false
+			}
+
+		})
+		if(flag==false){
+			layer.msg("有选项未选择");
+			return
+		}
+		$.ajax({
+			url:"{:U('research')}",
+			data:$("#researchform").serialize(),
+			type:"POST",
+			dataType:"json",
+			success:function(rdata){
+				if(rdata.status==1){
+					layer.msg("提交成功",{time:1500},function(){
+						location.reload();
+					})
+				}else {
+					layer.msg(rdata.msg);
+				}
+
+			}
+		})
+
+	}
+</script>
+</body>
+</html>

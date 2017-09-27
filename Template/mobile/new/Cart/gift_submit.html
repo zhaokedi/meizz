@@ -1,0 +1,224 @@
+<!DOCTYPE html >
+<html style="font-size: 58.5938px;">
+<head>
+<meta name="Generator" content="tpshop" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<title>购物流程-{$tpshop_config['shop_info_store_title']}</title>
+<meta http-equiv="keywords" content="{$tpshop_config['shop_info_store_keyword']}" />
+<meta name="description" content="{$tpshop_config['shop_info_store_desc']}" />
+<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+<link rel="stylesheet" href="__STATIC__/css/public.css">
+<link rel="stylesheet" href="__STATIC__/css/flow.css">
+<link rel="stylesheet" href="__STATIC__/css/style_jm.css">
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/main.css">
+<script type="text/javascript" src="__STATIC__/js/jquery.js"></script>
+<script src="__PUBLIC__/js/global.js"></script>
+<script src="__PUBLIC__/js/mobile_common.js"></script>
+<script src="__STATIC__/js/common.js"></script>
+</head>
+<body style="background: rgb(235, 236, 237);position:relative;">
+<!--<div class="tab_nav">-->
+  <!--<div class="header">-->
+    <!--<div class="h-left"> <a class="sb-back" href="javascript:history.back(-1)" title="返回"></a> </div>-->
+    <!--<div class="h-mid"> 确认订单 </div>-->
+  <!--</div>-->
+<!--</div>-->
+
+<header>
+    <a href="javascript:history.back(-1)" class="back"></a>
+    <h3>订单确认</h3>
+</header>
+<div class="h50"></div>
+
+
+
+
+<div class="page2" >
+
+    <form name="cart2_form" id="cart2_form" method="post">
+        <input type="hidden" value=" {$goods.price}" name="price" />
+        <input type="hidden" value="{$_GET[gift_id]}" name="gift_id" />
+        <input type="hidden" value="{$_GET[num]}" name="num" />
+        <input type="hidden" value="{$spec_key}" name="spec_key" id="spec_key"/>
+        <input type="hidden" value="{$spec_key_name}" name="spec_key_name" id="spec_key_name"/>
+            <div class="part1">
+                <p>收货人：{$address.consignee}<span class="tel">{$address.mobile}</span></p>
+                <p>收货地址：{$address.address}</p>
+                <a href="{:U('User/address_list',array('source'=>'gift','gift_id'=>$_GET['gift_id'],'num'=>$_GET['num']))}" class="btn-edit"></a>
+                <input type="hidden" value="{$address.address_id}" name="address_id" />
+            </div>
+            <div class="part2">
+
+
+
+                        <div class="item">
+                            <div class="title">
+                                <!--<a href="" class="btn-edit">编辑</a>-->
+                            </div>
+                            <div class="con">
+                                <!--<i class="checkbox"></i>-->
+
+                                    <a href="" class="img"><img src="{$goods['goods_id']['0']|goods_thum_images=50,50}" alt=""></a>
+
+                                <!--<a href="" class="img"><img src="{$goods.goods_ids|goods_thum_images=200,200}" alt=""></a>-->
+                                <h3>{$goods.title}</h3>
+                                <!--<p>{$v.spec_key_name}</p>-->
+                                <div class="price">
+                                    <i>￥ {$goods.price}</i>
+                                    <!--x{$_GET.num}-->
+                                    <!--<a href="" class="btn-info">定制信息</a>-->
+                                </div>
+                                <style type="text/css">
+                                    .plusimgs{}
+                                    .plusimgs a{ width:0.8rem !important; margin-left:0 !important; border-radius:0 !important; height:0.8rem !important; background-color:rgba(0,0,0,0) !important; padding:0 !important; margin-right:0.1rem;}
+                                </style>
+                                <div class="plusimgs">
+                                    <volist name="goods.goods_id" id="vo" offset="1">
+                                    <a href="#"><img src="{$vo|goods_thum_images=50,50}"></a>
+                                    </volist>
+                                        <!--<a href="#"><img src="34.jpg"></a><a href="#"><img src="34.jpg"></a>-->
+                                </div>
+                                <!--<div class="img" style="width: 50px;height: 50px">-->
+                                    <!--<a href="" class="img"><img src="{$goods.goods_id[0]|goods_thum_images=50,50}" alt=""></a>-->
+                                 <!--</div>-->
+                            </div>
+                         </div>
+
+                <div class="express" style="height: auto">
+                    配送方式
+                    <foreach name="shippingList" item="v"  key="k">
+                        <li class="clearfix" name="payment_name" style="height: 46px">
+                            <label>
+                                <input type="radio" id="{$v.code}" name="shipping_code" id="{$v.code}" value="{$v.code}"  <if condition="$k eq 0"> checked="checked" </if>  class="c_checkbox_t"/>
+                                <div class="fl shipping_title"> {$v.name} <em>({$v.desc})</em></div>
+                            </label>
+                        </li>
+                    </foreach>
+
+                    <!--<a href="">顺丰快递<i>免运费</i></a>-->
+                </div>
+                <!--<div class="ticket">-->
+                    <!--<a href="javascript:void(0);">-->
+                        <!--<input type="hidden" name="coupon_id" value="" id="coupon_id">-->
+                        <!--<span class="tsp">优惠券</span><b>无优惠券使用</b> <img  src="__STATIC__/images/new/arrow-right.png">-->
+                    <!--</a>-->
+                <!--</div>-->
+                <div class="msg" >
+                    留言：<input type="text" name="user_note" placeholder="建议填写内容已经与商家达成一致">
+                </div>
+                <div class="total">
+                    共1件商品<span>合计</span><i>￥ {$goods['price']*1}</i>
+                </div>
+            </div>
+            <div class="part3">
+                <h3>开具发票 <a href="" class="btn-switch"></a></h3>
+                <ul class="con">
+                    <li>发票类型：纸质发票</li>
+                    <li>发票内容：明细</li>
+                    <li>发票抬头：
+                        <input class="txt1" style='vertical-align:middle' type="text" name="invoice_title" placeholder="XXX单位 或 XX个人" />
+                        <!--<label for="" class="radio on">个人</label>-->
+                        <!--<label for="" class="radio">单位</label>-->
+                    </li>
+                </ul>
+            </div>
+            <div class="operate">
+                实付款  <i style="color: #f04c4c">￥</i><i id="payables">{$goods['price']*1}</i>
+                <input onClick="submit_order();" type="button" class="btn-pay" value="提交订单"/>
+                <!--<a href="" class="btn-pay">提交订单</a>-->
+            </div>
+        </form>
+</div>
+
+<div class="alert-info">
+    <div class="box">
+        <h3>定制信息</h3>
+        <p>材质:  白18K金</p>
+        <p>手寸:  9.0</p>
+        <p>刻字:  FOREVER LOVE</p>
+    </div>
+</div>
+
+
+
+
+
+<section class="f_mask" style="display: none;"></section>
+<include file="Public/footer"/>
+
+<script src="__STATIC__/js/slide.js"></script>
+<script src="__STATIC__/js/main.js"></script>
+
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+//        ajax_order_price(); // 计算订单价钱
+    });
+
+// 获取订单价格
+function ajax_order_price()
+{
+    $.ajax({
+        type : "POST",
+        url:'/index.php?m=Mobile&c=User&a=integral_submit1&act=order_price&t='+Math.random(),
+        data : $('#cart2_form').serialize(),
+        dataType: "json",
+        success: function(data){
+
+            if(data.status != 1)
+            {
+                alert(data.msg);
+                // 登录超时
+                if(data.status == -100)
+                    location.href ="{:U('Mobile/User/login')}";
+
+                return false;
+            }
+            // console.log(data);
+            $("#postFee").text(data.result.postFee); // 物流费
+            $("#couponFee").text(data.result.couponFee);// 优惠券
+            $("#balance").text(data.result.balance);// 余额
+            $("#pointsFee").text(data.result.pointsFee);// 积分支付
+            $("#payables").text(data.result.payables);// 应付
+			$("#order_prom_amount").text(data.result.order_prom_amount);// 订单 优惠活动 									
+        }
+    });
+}
+
+// 提交订单
+function submit_order()
+{
+//    console.log($('#cart2_form').serialize());return;
+    $.ajax({
+        type : "POST",
+        url:"{:U('Mobile/Cart/gift_submit1')}",//+tab,
+        data : $('#cart2_form').serialize()+"&act=submit_order",// 你的formid
+        dataType: "json",
+        success: function(data){
+
+            if(data.status != '1')
+            {
+                alert(data.msg); //执行有误
+                // 登录超时
+                if(data.status == -100)
+                    location.href ="{:U('Mobile/User/login')}";
+
+                return false;
+            }
+            // console.log(data);
+            $("#postFee").text(data.result.postFee); // 物流费
+//            $("#couponFee").text(data.result.couponFee);// 优惠券
+            $("#balance").text(data.result.balance);// 余额
+            $("#pointsFee").text(data.result.pointsFee);// 积分支付
+            $("#payables").text(data.result.payables);// 应付
+			$("#order_prom_amount").text(data.result.order_prom_amount);// 订单 优惠活动 									
+            alert('订单提交成功，跳转支付页面!');
+            location.href = "/index.php?m=Mobile&c=Cart&a=cart4&order_id="+data.result;
+        }
+    });
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta charset="utf-8">
+<title></title>
+<link rel="stylesheet" href="__STATIC__/css/main.css">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=0">
+<meta name="imagemode" content="force">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<meta name="keywords" content="">
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="shortcut icon" type="image/x-icon" href="">
+<link rel="apple-touch-icon-precomposed" href="">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="-1">
+<script src="__STATIC__/js/jquery.min.js"></script>
+	<script src="__PUBLIC__/js/global.js"></script>
+	<script src="__PUBLIC__/js/mobile_common.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/js/layer/layer.js" ></script>
+</head>
+<body>
+
+<header>
+	<a href="javascript:history.back(-1)" class="back"></a>
+	<h3>添加银行卡</h3>
+</header>
+<div class="h50"></div>
+
+
+
+<div class="page52">
+	<form action="{:U('Mobile/User/add_bankcard')}" method="post" onSubmit="return checkForm()">
+		<p>卡号<i>*</i></p>
+		<input type="text"  value="{$bank.bank_code}" placeholder="卡号" name="bank_code" onKeyUp="this.value=this.value.replace(/[^\d-]/g,'')" maxlength="20" onpaste="this.value=this.value.replace(/[^\d-]/g,'')">
+		<p class="tips">（同一张银行卡只能绑定一个账号）</p>
+		<p>开户行<i>*</i></p>
+		<input type="text" placeholder="开户行" name="bank_name" value="{$bank.bank_name}">
+		<p>开户名<i>*</i></p>
+		<input type="text" placeholder="开户名" name="account_name" value="{$bank.account_name}">
+		<input type="submit" value="添加">
+	</form>
+</div>
+
+
+
+
+
+
+<!--<div class="h50"></div>-->
+<!--&lt;!&ndash; 页底 &ndash;&gt;-->
+<!--<ul class="bnav">-->
+	<!--<li><a href=""><img src="images/ft331.png" alt="">首页</a></li>-->
+	<!--<li><a href=""><img src="images/ft332.png" alt="">分类</a></li>-->
+	<!--<li><a href=""><img src="images/ft333.png" alt="">发现</a></li>-->
+	<!--<li><a href=""><img src="images/ft334.png" alt="">购物车</a></li>-->
+	<!--<li><a href=""><img src="images/ft335.png" alt="">我</a></li>-->
+<!--</ul>-->
+
+
+<include file="Public/footer_nav"/>
+
+<script src="__STATIC__/js/slide.js"></script>
+<script src="__STATIC__/js/main.js"></script>
+<script>
+	function checkBankcode(tel) {
+		var reg = /^\d{16}|\d{19}$/;
+		if (reg.test(tel)) {
+			return true;
+		}else{
+			return false;
+		};
+	}
+	function checkForm(){
+
+		var bank_name = $('input[name="bank_name"]').val();
+		var account_name = $('input[name="account_name"]').val();
+
+		var bank_code = $('input[name="bank_code"]').val();
+		var error = '';
+//		if(bank_name == ''){
+//			error += '开户行不能为空 <br/>';
+//		}
+//		if(account_name == ''){
+//			error += '开户名不能为空 <br/>';
+//		}
+//		if(!checkBankcode(bank_code)){
+//			error += '银行卡号格式有误 <br/>';
+//		}
+
+		if(error){
+			layer.msg(error);
+			return false;
+		}
+
+		return true;
+	}
+</script>
+</body>
+</html>

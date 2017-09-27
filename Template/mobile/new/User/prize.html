@@ -1,0 +1,325 @@
+<include file="Public/header"/>
+
+    <script type="text/javascript" src="__STATIC__/js/awardRotate.js"></script>
+    <style type="text/css">
+        /* 大转盘样式 */
+        #zhb{
+            background-image: url("__STATIC__/images/new/zbg.jpg") ;
+            background-size: cover;
+        }
+        img {  width: auto;  }
+        .zp {  margin-top: 20px;  display: block;  margin-top: 35%;  width: 85%;  margin-left: auto;  margin-right: auto;  margin-bottom: 20px;  }
+        .zp .turnplate {  display: block;  width: 100%;  position: relative;  }
+        .zp .turnplate canvas.item {  width: 100%;  }
+        .zp .turnplate img.pointer {  position: absolute;  width: 40%;  left: 30%;  top: 22%;  }
+        #yuanjiao {  font-family: Arial;  border: 2px solid #379082;  border-radius: 20px;  padding: 30px 30px;  width: 90%;  margin-left: auto;  margin-right: auto;  border-style: dotted;  border-color: #ffe11b;  display: none;
+            background-color: #d16582;  }
+        #yuanjiao p {  color: #ffffff;  }
+        #yuanjiao .prizetitle {  background-image: url("__STATIC__/images/new/prizehr.png");  background-repeat: no-repeat;  background-size: 90%;  background-position: center center;  }
+        #yuanjiao .prizetitle {  text-align: center;  margin-bottom: 10px;  }
+        #yuanjiao .prizetitle h2 {  display: inline-block;  margin-left: auto;  margin-right: auto;  font-weight: bold;  color: #fff801;  background-color: #d16582;  }
+        #yuanjiao .prizetitle p {  font-weight: bold;  }
+        .prizelayer{  background-color: #ffde1c;  border-radius: 10px;  width: 80%;  margin-left: 10%;  margin-right: 10%;  padding: 5px;  position: absolute;  z-index: 100000;  display: none;  }
+        .prizelayer  .prizelayer_1 {  border-radius: 10px;  margin: 5px;  border: solid #fbac23 2px;  }
+        .prizelayer  .prizelayer_2 {  border: dotted #fbac23 2px;  }
+        .prizelayer  .prizelayer_2  h2{  -webkit-text-stroke:1px #ff0a01;text-stroke:1px #ff0a01;font-size:30px;  color: #ffffff;  text-align: center;  }
+        .prizelayer  .prizelayer_2 p{  color: #ae5b11;  background-color: #ffe569;  padding: 10px;  font-weight: bold;  }
+        .prizelayer  .prizelayer_2  .prizefoot {  text-align: center;  margin: 10px 0px;  }
+        .prizelayer  .prizelayer_2 button{  background-color: #ff5f55;  border-radius: 20px;  border: none;  padding: 5px 15px;  color: #ffffff;  font-weight: bold;  }
+        .layui-m-layershade {  display: none;  background-color: rgba(0,0,0,.7);  pointer-events: auto;  position: fixed;  left: 0;  top: 0;  width: 100%;  height: 100%;  }
+        .prizesome a{  color: #ffe319;  float: right;  margin-right: 10px;  text-decoration:underline  }
+    </style>
+
+    <script type="text/javascript">
+        var turnplate = {
+            restaraunts: [],				//大转盘奖品名称
+            colors: [],					//大转盘奖品区块对应背景颜色
+            outsideRadius: 192,			//大转盘外圆的半径
+            textRadius: 155,				//大转盘奖品位置距离圆心的距离
+            insideRadius: 68,			//大转盘内圆的半径
+            startAngle: 0,				//开始角度
+
+            bRotate: false				//false:停止;ture:旋转
+        };
+//        turnplate.restaraunts = ["50M免费流量包", "10闪币", "谢谢参与", "fdf", "cc", "dd"];
+        turnplate.restaraunts = {$names};
+//        turnplate.colors = ["#ff7f7e", "#ff5959", "#ff7f7e", "#ff5959", "#ff7f7e", "#ff5959"];
+        turnplate.colors ={$color};
+        turnplate.imgs ={$icons};
+
+        var objimg={};
+        var loadflag=false;
+        var t=0;
+
+       function loadsc() {
+
+           for(var i=0;i<turnplate.imgs.length;i++) {
+               var myobj = new Image();
+               myobj.src = turnplate.imgs[i];
+               myobj.title=i;
+               myobj.onload=function(i) {
+                   objimg[this.title]=this;
+                 t++;
+                   if(t==turnplate.imgs.length) {
+                       drawRouletteWheel();
+                   }
+               }
+           }
+       }
+
+        $(document).ready(function () {
+            loadsc()
+            //动态添加大转盘的奖品与奖品区域背景颜色
+
+//	turnplate.restaraunts = ["50M免费流量包", "10闪币", "谢谢参与", "5闪币", "10M免费流量包", "20M免费流量包", "20闪币 ", "30M免费流量包", "100M免费流量包", "2闪币"];
+//	turnplate.colors = ["#FFF4D6", "#FFFFFF", "#FFF4D6", "#FFFFFF","#FFF4D6", "#FFFFFF", "#FFF4D6", "#FFFFFF","#FFF4D6", "#FFFFFF"];
+
+
+            var rotateTimeOut = function () {
+                $('#wheelcanvas').rotate({
+                    angle: 0,
+                    animateTo: 2160,
+                    duration: 8000,
+                    callback: function () {
+                        alert('网络超时，请检查您的网络设置！');
+                    }
+                });
+            };
+
+            //旋转转盘 item:奖品位置; txt：提示语;
+            var rotateFn = function (item,title, txt) {
+                var angles = item * (360 / turnplate.restaraunts.length) - (360 / (turnplate.restaraunts.length * 2));
+                if (angles < 270) {
+                    angles = 270 - angles;
+                } else {
+                    angles = 360 - angles + 270;
+                }
+                $('#wheelcanvas').stopRotate();
+                $('#wheelcanvas').rotate({
+                    angle: 0,
+                    animateTo: angles + 1800,
+                    duration: 8000,
+                    callback: function () {
+                        zhujia(1,title,txt)
+                        turnplate.bRotate = !turnplate.bRotate;
+                    }
+                });
+            };
+            var pdid={$prizelist['id']};
+             $('.pointer').click(function () {
+                if (turnplate.bRotate)return;
+                turnplate.bRotate = !turnplate.bRotate;
+                //获取随机数(奖品个数范围内)
+                //** 后台 用异步获取item 代表中了那个奖**/
+
+                $.ajax({
+                    url:"{:U('prize_check')}",
+                    type:"POST",
+                    dataType : 'json',
+                    data:{
+                        'pdid' : pdid,
+                    },
+                    success: function(rdata){
+                        if(rdata['status']==1){
+                            rotateFn(rdata.item,rdata.title, rdata['msg']);
+
+                        }
+                        else {
+                            layer.msg(rdata['msg']);
+                        }
+                    },
+                })
+//                item = 1;
+
+
+                //奖品数量等于10,指针落在对应奖品区域的中心角度[252, 216, 180, 144, 108, 72, 36, 360, 324, 288]
+//                rotateFn(item, turnplate.restaraunts[item - 1]);
+//                console.log(item);
+            });
+        });
+
+
+        //页面所有元素加载完毕后执行drawRouletteWheel()方法对转盘进行渲染
+        window.onload = function () {
+           // drawRouletteWheel();
+        };
+
+        function drawRouletteWheel() {
+
+            console.log(objimg);
+            var canvas = document.getElementById("wheelcanvas");
+            if (canvas.getContext) {
+                //根据奖品个数计算圆周角度
+                var arc = Math.PI / (turnplate.restaraunts.length / 2);
+                var ctx = canvas.getContext("2d");
+                //在给定矩形内清空一个矩形
+                ctx.clearRect(0, 0, 422, 422);
+                //strokeStyle 属性设置或返回用于笔触的颜色、渐变或模式
+                ctx.strokeStyle = "#ff5959";
+                //font 属性设置或返回画布上文本内容的当前字体属性
+                ctx.font = '16px Microsoft YaHei';
+
+                for (var i = 0; i < turnplate.restaraunts.length; i++) {
+
+
+                    var angle = turnplate.startAngle + i * arc;
+                    ctx.fillStyle = turnplate.colors[i];
+                    ctx.beginPath();
+                    //arc(x,y,r,起始角,结束角,绘制方向) 方法创建弧/曲线（用于创建圆或部分圆）
+                    ctx.arc(211, 211, turnplate.outsideRadius, angle, angle + arc, false);
+                    ctx.arc(211, 211, turnplate.insideRadius, angle + arc, angle, true);
+                    ctx.stroke();
+                    ctx.fill();
+                    //锁画布(为了保存之前的画布状态)
+                    ctx.save();
+
+                    //----绘制奖品开始----
+                    ctx.fillStyle = "#fff";
+                    var text = turnplate.restaraunts[i];
+                    var line_height = 17;
+                    //translate方法重新映射画布上的 (0,0) 位置
+                    ctx.translate(211 + Math.cos(angle + arc / 2) * turnplate.textRadius, 211 + Math.sin(angle + arc / 2) * turnplate.textRadius);
+
+                    //rotate方法旋转当前的绘图
+                    ctx.rotate(angle + arc / 2 + Math.PI / 2);
+                    if (text.length > 6) {
+                        //奖品名称长度超过一定范围
+                        text = text.substring(0, 6) + "||" + text.substring(6);
+                        var texts = text.split("||");
+                        for (var j = 0; j < texts.length; j++) {
+                            ctx.fillText(texts[j], -ctx.measureText(texts[j]).width / 2, j * line_height);
+                        }
+                    }
+                    else {
+                        ctx.fillText(text, -ctx.measureText(text).width / 2, 0);
+                    }
+
+
+                    if (typeof(objimg[i]) != 'undefined') {
+                        ctx.drawImage(objimg[i], -15, 20);
+                    }
+
+
+                    ctx.restore();
+                    //----绘制奖品结束----
+                }
+            }
+        }
+
+    </script>
+
+
+</head>
+<body id="zhb">
+
+<header>
+    <a href="javascript:history.back(-1)" class="back"></a>
+    <h3>抽奖</h3>
+    <a href="" class="menu"></a>
+    <include file="Public/menu"/>
+</header>
+<div class="h50"></div>
+
+
+
+<!--<div class="page42">-->
+    <!--<div class="zp">-->
+        <!--<div class="turnplate" style="background-image:url(__STATIC__/images/new/turnplate-bg.png);background-size:100% 100%;">-->
+            <!--<canvas class="item" id="wheelcanvas" width="422px" height="422px"></canvas>-->
+            <!--<img class="pointer" src="__STATIC__/images/new/turnplate-pointer.png"/>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+
+<div class="page42">
+
+
+    <div class="prizelayer">
+        <div class="prizelayer_1">
+
+            <div class="prizelayer_2">
+                <div class="closed" style="position: absolute; margin-top: -30px; right: -10px"> <img src="__STATIC__/images/new/prizeclose.png"  style="width: 50px"></div>
+                <h2>中奖啦</h2>
+
+                <p class="contnets">
+
+                    恭喜您获得50元优惠券一张
+                    注册美之钻账号即可领奖励
+                </p>
+
+                <div class="prizefoot"><button type="button">查看奖品</button> </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="zp">
+        <div class="turnplate" style="background-image:url(__STATIC__/images/new/turnplate-bg.png);background-size:100% 100%;">
+            <canvas class="item" id="wheelcanvas" width="422px" height="422px"></canvas>
+            <img class="pointer" src="__STATIC__/images/new/turnplate-pointer.png"/>
+        </div>
+
+
+        <div class="prizesome"><a href="{:U('prize_list')}"> 我的奖品</a></div>
+
+
+
+        <div id="yuanjiao">
+            <div class="prizetitle"><h2>活动规则</h2></div>
+
+            <p>
+                活动时间设于9月10日-9月15日；<br>
+                参与用户必须是美之钻会员；<br>
+                每名会员每天可有三次机会抽奖机会。<br>
+            </p>
+        </div>
+
+    </div>
+
+
+
+
+</div>
+<div class="layui-m-layershade"></div>
+
+
+
+
+<script type="text/javascript">
+
+    $(function () {
+        $(".closed").click(function () {
+            zhujia(-1)
+        } )
+    })
+
+    function  zhujia(cid,$title,$counts) {
+
+        if(cid==1)
+        {
+
+            $(".prizelayer h2").html($title);
+            $(".prizelayer  .contnets").html($counts);
+
+            $(".layui-m-layershade").show();
+            $(".prizelayer").show();
+        }
+        else
+
+        {
+
+            $(".layui-m-layershade").hide();
+            $(".prizelayer").hide();
+        }
+
+
+
+    }
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta charset="utf-8">
+<title></title>
+<link rel="stylesheet" href="__STATIC__/css/main.css">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=0">
+<meta name="imagemode" content="force">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<meta name="keywords" content="">
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="shortcut icon" type="image/x-icon" href="">
+<link rel="apple-touch-icon-precomposed" href="">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="-1">
+<script src="__STATIC__/js/jquery.min.js"></script>
+	<script src="__PUBLIC__/js/global.js"></script>
+	<script src="__PUBLIC__/js/mobile_common.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/js/layer/layer.js" ></script>
+</head>
+<body>
+
+<header>
+	<a href="javascript:history.back(-1)" class="back"></a>
+	<h3>我的银行卡</h3>
+</header>
+<div class="h50"></div>
+
+
+
+
+<div class="page51">
+	<volist name="banklist" id="vo">
+		<div class="item">
+			<p>卡号：{$vo.bank_code}</p>
+			<p>开户行：{$vo.bank_name}</p>
+			<p>开户名：{$vo.account_name}</p>
+			<div class="btm">
+				<a href="{:U('add_bankcard',array('id'=>$vo['id']))}" class="btn1">编辑</a><a href="javascript:del_bank({$vo['id']});" class="btn2">删除</a>
+			</div>
+		</div>
+	</volist>
+	<div class="operate">
+		<a href="{:U('add_bankcard')}" class="btn">添加银行卡</a>
+	</div>
+</div>
+
+
+
+
+
+
+<!--<div class="h50"></div>-->
+<!--&lt;!&ndash; 页底 &ndash;&gt;-->
+<!--<ul class="bnav">-->
+	<!--<li><a href=""><img src="images/ft331.png" alt="">首页</a></li>-->
+	<!--<li><a href=""><img src="images/ft332.png" alt="">分类</a></li>-->
+	<!--<li><a href=""><img src="images/ft333.png" alt="">发现</a></li>-->
+	<!--<li><a href=""><img src="images/ft334.png" alt="">购物车</a></li>-->
+	<!--<li><a href=""><img src="images/ft335.png" alt="">我</a></li>-->
+<!--</ul>-->
+
+<include file="Public/footer_nav"/>
+
+
+<script src="__STATIC__/js/slide.js"></script>
+<script src="__STATIC__/js/main.js"></script>
+<script>
+	function del_bank(id){
+		layer.confirm('确定要删除绑定银行卡？', {
+			btn: ['确定','取消'] //按钮
+		}, function(){
+			var url= "{:U('withdraw_set',array('op'=>'del'))}?id="+id;
+			location.href=url;
+
+		}, function(){
+			layer.closeAll();
+		});
+
+	}
+</script>
+</body>
+</html>

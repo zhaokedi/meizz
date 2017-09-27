@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta charset="utf-8">
+<title></title>
+<link rel="stylesheet" type="text/css" href="__STATIC__/css/public.css"/>
+<link rel="stylesheet" href="__STATIC__/css/main.css">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=0">
+<meta name="imagemode" content="force">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<meta name="keywords" content="">
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="shortcut icon" type="image/x-icon" href="">
+<link rel="apple-touch-icon-precomposed" href="">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="-1">
+<script src="__STATIC__/js/jquery.js"></script>
+	<script src="__PUBLIC__/js/global.js"></script>
+	<script src="__PUBLIC__/js/mobile_common.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/js/layer/layer.js" ></script>
+	<style>
+
+		.page50 .part2 table td.today{
+			border:#ba9c6a solid 2px ;
+		}
+	</style>
+</head>
+<body>
+
+<header>
+	<a href="javascript:history.back(-1)" class="back"></a>
+	<h3>积分签到</h3>
+	<a href="" class="menu"></a>
+</header>
+<div class="h50"></div>
+
+
+<include file="Public/menu"/>
+
+<div class="page50">
+	<div class="part1">
+		<a href="{:U('User/integral_mall')}" class="shops">积分商城</a>
+		<div class="face">
+			<img alt="" class="img" src="{$User['head_pic']|default=" __STATIC__/images/user68.jpg"}" >
+			<p>{$User['nickname']}</p>
+			<h3>我的积分：<span id="credit">{$User['pay_points']}</span>积分</h3>
+			<a href="javascript:;" class="btn" id="btn-sign"><empty name="signinfo['signed']">签到<else/>已签</empty></a>
+		</div>
+		<div class="left">连续签到<i id="signorder">{$signinfo['orderday']}天</i></div>
+		<div class="right">总签到<i id="signsum">{$signinfo['sum']}天</i></div>
+	</div>
+	<div class="part2">
+		<h3><img src="__STATIC__/images/new/date.png" alt="">2016年10月</h3>
+
+		<table>
+		<include file="sign_calendar"/>
+
+
+		</table>
+	</div>
+	<include file="sign_advaward"/>
+
+
+	<!--<div class="part3">-->
+		<!--<h3><img src="__STATIC__/images/new/icon502.png" alt="">连续签到有礼 <i>连续签到即可领取</i></h3>-->
+		<!--<ul>-->
+
+			<!--<li class="on">-->
+				<!--<div class="box">+7<em>积分</em></div>-->
+				<!--<i></i>-->
+				<!--<div class="day">1天<em>领取</em></div>-->
+			<!--</li>-->
+			<!--<li class="on">-->
+				<!--<div class="box">+30<em>积分</em></div>-->
+				<!--<i></i>-->
+				<!--<div class="day">1天<em>领取</em></div>-->
+			<!--</li>-->
+			<!--<li class="on">-->
+				<!--<div class="box">+7<em>积分</em></div>-->
+				<!--<i></i>-->
+				<!--<div class="day">1天<em>领取</em></div>-->
+			<!--</li>-->
+		<!--</ul>-->
+	<!--</div>-->
+</div>
+
+<div class="h50" style="height: 1.98rem"></div>
+<include file="Public/footer_nav"/>
+<script src="__STATIC__/js/slide.js"></script>
+<script src="__STATIC__/js/main.js"></script>
+
+<script>
+	$("#btn-sign").click(function(){
+		$.ajax({
+			url:"{:U('User/dosign')}",
+			type:"post",
+			data:{is_ajax:1,data:null},
+			datatype:"JSON",
+			success:function(data){
+				if (data.status<0){
+					layer.msg(data.msg);
+				}else {
+					var result=data.msg;
+					layer.msg(result.message);
+					$("#credit").text(result.credit)
+					$("#signorder").text(result.signorder+'天');
+					$("#signsum").text(result.signsum+'天');
+				}
+			}
+		})
+	})
+	$(".part3 .advaward").click(function(){
+		var _this = $(this);
+		var day = _this.data('day');
+		var type = _this.data('type');
+
+		$.ajax({
+			url:"{:U('User/doreward')}",
+			type:"post",
+			data:{is_ajax:1,type: type, day: day},
+			datatype:"JSON",
+			success:function(data){
+				if (data.status<0){
+					layer.msg(data.msg);
+				}else {
+					var result=data.msg;
+					if (data.status && result.addcredit) {
+						layer.msg(result.message);
+						$("#credit").text(result.credit)
+						_this.html('已领取')
+					}
+				}
+			}
+		})
+	})
+</script>
+
+</body>
+</html>

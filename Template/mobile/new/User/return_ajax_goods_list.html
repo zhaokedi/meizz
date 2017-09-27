@@ -1,0 +1,44 @@
+
+
+
+
+<volist name="list" id="item">
+
+	<div class="item">
+		<div class="title">售后编号<span>{$item.id}</span></div>
+		<ul class="info">
+			<li><span>订单编号</span>{$item.order_sn}</li>
+			<li><span>申请时间</span>{$item.addtime|date="Y-m-d",###}</li>
+			<li><span>售后类型</span>{$item.typename}<if condition="$item.is_money eq 1"><i style="color: red">(需要补差价)</i></if>
+				<if condition="$item.is_money eq 1 and $item.is_pay eq 0">
+					<a href="{:U('cart/cart4',array('chajia'=>1,'return_id'=>$item['id']))}">去付款</a>
+				</if>
+			</li>
+			<li><span>售后状态</span>
+				<if condition="$item['status'] eq 0">待客服处理</if>
+				<if condition="$item['status'] eq 1">客服处理中</if>
+				<if condition="$item['status'] eq 2">已完成</if>
+				<if condition="$item['status'] eq 3">已取消</if>
+			</li>
+		</ul>
+		<p><a href="" class="more "><span class="sp1">展开详情</span><span class="sp2">收起详情</span></a></p>
+		<ul class="info2 on">
+			<!--<li><span>商品状态</span>已发货 <a href="">查看物流</a></li>-->
+			<li><span><em class="e2">备</em>注</span>{$item.reason}</li>
+			<!--<li><span>联系电话</span>15606955520 <a href="">更改</a></li>-->
+			<li><span>联系电话</span>{$User.mobile}</li>
+			<li>
+				<span>售后记录</span>
+				<volist name="item.log" id="vo">
+					<i class="mark">{$vo.typename}{$vo.date}</i>
+				</volist>
+				<!--<i class="mark">更改指圈2015-03-26</i><br>-->
+				<!--<i class="mark">清洗2015-03-26</i><br>-->
+				<!--<i class="mark">更换款式2015-03-26</i>-->
+			</li>
+		</ul>
+	</div>
+</volist>
+
+
+

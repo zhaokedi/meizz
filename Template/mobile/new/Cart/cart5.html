@@ -1,0 +1,210 @@
+<!DOCTYPE html >
+<html style="font-size: 58.5938px;">
+<head>
+	<meta name="Generator" content="tpshop" />
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width">
+	<title>购物流程-{$tpshop_config['shop_info_store_title']}</title>
+	<meta http-equiv="keywords" content="{$tpshop_config['shop_info_store_keyword']}" />
+	<meta name="description" content="{$tpshop_config['shop_info_store_desc']}" />
+	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+	<link rel="stylesheet" href="__STATIC__/css/public.css">
+	<link rel="stylesheet" href="__STATIC__/css/flow.css">
+	<link rel="stylesheet" href="__STATIC__/css/style_jm.css">
+	<link rel="stylesheet" type="text/css" href="__STATIC__/css/main.css">
+	<script type="text/javascript" src="__STATIC__/js/jquery.js"></script>
+	<script src="__PUBLIC__/js/global.js"></script>
+	<script src="__PUBLIC__/js/mobile_common.js"></script>
+	<script src="__STATIC__/js/common.js"></script>
+	<script src="__PUBLIC__/js/layer/layer.js"></script>
+	<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+	<script>
+		/*
+		 * 注意：
+		 * 1. 所有的JS接口只能在公众号绑定的域名下调用，公众号开发者需要先登录微信公众平台进入“公众号设置”的“功能设置”里填写“JS接口安全域名”。
+		 * 2. 如果发现在 Android 不能分享自定义内容，请到官网下载最新的包覆盖安装，Android 自定义分享接口需升级至 6.0.2.58 版本及以上。
+		 * 3. 常见问题及完整 JS-SDK 文档地址：http://mp.weixin.qq.com/wiki/7/aaa137b55fb2e0456bf8dd9148dd613f.html
+		 *
+		 * 开发中遇到问题详见文档“附录5-常见错误及解决办法”解决，如仍未能解决可通过以下渠道反馈：
+		 * 邮箱地址：weixin-open@qq.com
+		 * 邮件主题：【微信JS-SDK反馈】具体问题
+		 * 邮件内容说明：用简明的语言描述问题所在，并交代清楚遇到该问题的场景，可附上截屏图片，微信团队会尽快处理你的反馈。
+		 */
+		wx.config({
+			debug: false,
+			appId: '{$signPackage.appId}',
+			timestamp: '{$signPackage.timestamp}',
+			nonceStr: '{$signPackage.nonceStr}',
+			signature: '{$signPackage.signature}',
+			jsApiList: [
+				'checkJsApi',
+				'chooseWXPay',
+				'onMenuShareTimeline',
+				'onMenuShareAppMessage',
+				'onMenuShareQQ',
+				'onMenuShareWeibo',
+
+
+			]
+		});
+	</script>
+	<style>
+		.btn-fw {
+			color: #fff;!important;
+			border: none;
+			width: 100%;
+			height: .6rem;
+			line-height: .6rem;
+			display: block;
+			margin-bottom: .1rem;
+			border-radius: 0;
+			background-color: #8f7958;
+			text-align: center;
+		}
+		.w50 {  width: 48%;  margin-right: 1%;  }
+		.no{  background-color: silver;  }
+		.lf{  float: left;  }
+		.clear{  clear: both;;  }
+	</style>
+</head>
+<body>
+
+<header>
+	<a href="" class="back"></a>
+	<h3>在线支付</h3>
+</header>
+<div class="h50"></div>
+
+
+
+
+<div class="pay-online">
+	<form action="{:U('Mobile/Payment/getCode')}" method="post" name="cart4_form" id="cart4_form">
+		<div class="tips">
+			<img src="__STATIC__/images/new/ok.png" alt="" class="icon">
+			<h3> {$yuser.nickname}请你代付 </h3>
+			<p>{$data.content}</p>
+		</div>
+		<div class="info">
+			<p><span>应付金额：</span><i>￥{$order['order_amount']}</i></p>
+
+
+			<button type="button" class="btn-fw w50 lf no" style="width: 48%"><a href="{:U('Index/index')}">返回首页</a></button>
+			<button type="button" class="btn-fw w50 lf yes" style="width: 48%">果断付款</button>
+			<div class="clear"></div>
+
+		</div>
+		<if condition="$isweixin eq 1">
+			<a href="javascript:void(0);" onClick="paymoney(this)" class="pay-wx" style="display: none" data-paycode="pay_code=alipayMobile">
+				<img src="__STATIC__/images/new/wx.png" alt="" class="icon">
+				<b>微信支付</b>微信安全支付
+			</a>
+		</if>
+		<if condition="$isweixin eq 0">
+			<a href="javascript:void(0);" onClick="change_pay(this);" class="pay-wx" data-paycode="pay_code=alipayMobile" style="display: none">
+				<img src="__STATIC__/images/new/zfb.png" alt="" class="icon" >
+				<b>支付宝支付</b>支付宝安全支付
+			</a>
+		</if>
+		<input type="hidden" name="order_id" value="{$order['order_id']}" />
+		<input type="hidden"  value="pay_code=weixin" class="c_checkbox_t" name="pay_radio" id="pay_radio"/>
+
+	</form>
+</div>
+
+
+<script type="text/javascript">
+//	$(".no").click(function () {
+//		history.back();
+//
+//	})
+	$(".yes").click(function () {
+	    $(".pay-wx").show();
+	    $(".pay-zfb").show();
+
+    })
+	// 切换支付方式
+	function change_pay(obj)
+	{
+
+		$("#pay_radio").val($(obj).data("paycode"))
+	//        return;
+		$('#cart4_form').submit();
+		return;
+		$(obj).parent().siblings('input[name="pay_radio"]').trigger('click');
+	}
+
+	function paymoney(obj){
+		$("#pay_radio").val($(obj).data("paycode"))
+		var isweixin='{$isweixin}';
+//        alert(isweixin);return;
+		if(isweixin==0){
+			$('#cart4_form').submit();
+			return;
+		}else {
+			var order_id=$("input[name='order_id']").val();
+//        alert(order_id);
+			layer.load(2);
+			$.ajax({
+				url : "{:U('pay_info')}",
+				type : 'POST',
+				dataType : 'json',
+				data : {
+					'order_id' : order_id,
+				},
+				success : function(rdata){
+					layer.closeAll();
+					if(rdata['status'] == 1){
+						wx.chooseWXPay({
+							timestamp: rdata['timeStamp'],
+							nonceStr: rdata['nonceStr'],
+							package: rdata['package'],
+							signType: 'MD5', // 注意：新版支付接口使用 MD5 加密
+							paySign: rdata['paySign'],
+							success: function (res) {
+								$.ajax({
+									url:"{:U('paysuccess')}",
+									type:"POST",
+									dataType : 'json',
+									data:{
+										'order_id' : order_id,
+										'daifu':1,
+									},
+									success: function(rdata){
+										if(rdata['status']==1){
+//                                           window.location.href="{php echo $this->createMobileUrl('index3')}";
+											location.reload();
+										}
+										else if(rdata['status']==2){
+											layer.msg("支付失败！");
+										}
+									},
+									error: function(data){
+										layer.closeAll();
+										layer.msg("支付成功后跳转，操作失败！");
+									}
+								});
+							},
+							cancel: function () {
+								layer.msg("取消支付");
+							}
+						});
+					}else if(rdata['status'] == 2){
+						layer.closeAll();
+						layer.msg(rdata['msg']);
+					}
+
+				},
+				error : function(){
+					layer.msg('支付操作失败');
+				}
+			});
+		}
+	}
+</script>
+
+
+<script src="__STATIC__/js/slide.js"></script>
+<script src="__STATIC__/js/main.js"></script>
+</body>
+</html>

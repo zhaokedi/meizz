@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta charset="utf-8">
+<title>{$tpshop_config['shop_info_store_title']}</title>
+<meta name="keywords" content="{$tpshop_config['shop_info_store_keyword']}" />
+<meta name="description" content="{$tpshop_config['shop_info_store_desc']}" />
+<meta name="author" content="{$tpshop_config['shop_info_store_name']}">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="__STATIC__/css/main.css">
+<link rel="stylesheet" href="__PUBLIC__/css/indexad.css">
+    <link rel="stylesheet" href="__STATIC__/css/animate.min.css">
+
+<script src="__STATIC__/js/css.js"></script>
+<script src="__STATIC__/js/jquery.min.js"></script>
+<script src="__PUBLIC__/js/common.js"></script>
+<script src="__PUBLIC__/js/layer/layer-min.js"></script>
+<script src="__STATIC__/js/slide.min.js"></script>
+<script src="__STATIC__/js/selectivizr.min.js"></script>
+<script src="__PUBLIC__/js/indexad.js"></script>
+<script src="__STATIC__/js/jquery.hDialog.min.js"></script>
+<!--[if lt IE 9]>
+<script src="__STATIC__/js/html5shiv.min.js"></script>
+<![endif]-->
+<!-- <link rel="shortcut icon" href=""> -->
+<script type="text/javascript">
+    $(document).ready(function(){
+        get_cart_num();
+        /**
+        * 鼠标移动端到头部购物车上面 就ajax 加载
+        */
+        // 鼠标是否移动到了上方
+        $("#header_cart_list h4").hover(function(){
+            $("#load").show();
+            ajax_header_cart_list(0);
+            get_cart_num();
+        },function(){
+            (typeof(t) == "undefined") || clearTimeout(t);
+            t = setTimeout(function () {
+                header_cart_list_over = 0; /// 标识鼠标已经离开
+                $("#load").hide();
+            }, 1000);
+        });
+    });
+    var before_request = 1;
+    function ajax_header_cart_list(isdel){
+        if(before_request == 0) // 上一次请求没回来 不进行下一次请求
+            return false;
+        before_request = 0;
+        $.ajax({
+            type : "GET",
+            url:"/index.php?m=Home&c=Cart&a=header_cart_list",//+tab,
+            success: function(data){
+                $("#load").hide();
+                $("#cart_list").html(data);
+                if(isdel){
+                    get_cart_num();
+                }
+                before_request = 1;
+            }
+        });
+    }
+    function get_cart_num(){
+        cart_cn = getCookie('cart_anum');
+        if(cart_cn == ''){
+            $.ajax({
+                type : "GET",
+                url:"/index.php?m=Home&c=Cart&a=header_cart_list",//+tab,
+                success: function(data){
+                    cart_cn = getCookie('cart_anum');
+                    $('#cart_quantity').html(cart_cn);
+                }
+            });
+        }else{
+            $('#cart_quantity').html(cart_cn);
+        }
+    }
+
+    function ajax_del_cart(ids)
+    {
+        $.ajax({
+            type : "POST",
+            url:"{:U('Home/Cart/ajaxDelCart')}",//+tab,
+            data:{ids:ids}, //
+            dataType:'json',
+            success: function(data){
+                if(data.status == 1){
+                    ajax_header_cart_list(1);
+                }else{
+                    showErrorMsg(data.msg);
+                }
+            }
+        });
+    }
+</script>
+</head>
+<body>
+<header>
+    <div class="hd-top">
+        <div id="allmap" style="display: none" ></div>
+        <div class="content">
+            美之钻全国电商中心  | <img src="__STATIC__/images/icon11.png" alt="">离你最近的体验中心 - <span id="nearaddress"></span>
+            <ul class="right">
+                <if condition="$user">
+                    <li class="li1">
+                        <h4>欢迎 <i><if condition="empty($user['nickname'])">{$user['mobile']}<else/>{$user['nickname']}</if></i></h4>
+                        <div class="con">
+                            <a href="{:U('/Home/User')}">个人中心</a>
+                            <a href="{:U('/Home/User/order_list')}">我的订单</a>
+                            <a href="{:U('/Home/User/comment')}">晒单评价</a>
+                            <a href="{:U('/Home/User/goods_collect')}">我的收藏</a>
+                            <!--a href="">我的售后</a-->
+                            <a href="{:U('/Home/User/logout')}">退出登录</a>
+                        </div>
+                    </li>
+                    <!--li class="li2"><a href="">消息(2)</a></li-->
+                <else/>
+                    <li class="li1"><h4><a href="{:U('/Home/User/login')}">登录</a></h4></li>
+                    <li class="li1"><h4><a href="{:U('/Home/User/reg')}">加入会员</a></h4></li>
+                </if>
+                <li class="li3" id="header_cart_list">
+                    <h4>购物车<span id="cart_quantity">0</span>件</h4>
+                    <div class="con" id="load" style="height: 50px;line-height: 50px;">加载中...</div>
+                    <div id="cart_list">
+                        <!-- 购物车商品列表 -->
+                    </div>
+                </li>
+                <li class="li4">
+                    <h4>手机版</h4>
+                    <div class="con">
+                        <img src="__STATIC__/images/code2.png" alt="二维码">
+                        微信扫描进入手机商城
+                    </div>
+                </li>
+                <if condition="$user">
+                    <!--li class="li2"><a href="">帮助中心</a></li-->
+                </if>
+            </ul>
+        </div>
+    </div>
+    <div class="hd-center">
+        <a href="/" class="logo"><img src="{$tpshop_config['shop_info_store_logo']}" alt="{$tpshop_config['shop_info_store_title']}"></a>
+        <div class="search">
+            <form name="search_form" id="search_form" method="post" action="{:U('/Home/Goods/search')}">
+                <div class="search-box">
+                    <input type="text" name="q" id="q" value="<?php echo I('q'); ?>" placeholder="搜索关键字">
+                    <input type="button" class="button" value="" onClick="if($.trim($('#q').val()) != '') $('#search_form').submit();">
+                </div>
+            </form>
+            <p>
+                <foreach name="tpshop_config.hot_keywords" item="wd" key="k">
+                    <a target="_blank" href="{:U('Home/Goods/search',array('q'=>$wd))}" <if condition="$k eq 0">class="on"</if>>{$wd}</a>
+                </foreach>
+            </p>
+        </div>
+    </div>
+    <div class="hd-nav">
+        <div class="content">
+            <a href="/">首页</a>
+            <volist name="navigation" id="vo">
+                <a href="{$vo['url']}" <if condition="$vo['is_new'] eq 1">target="_blank" </if>>{$vo['name']}</a>
+            </volist>
+            <a href="javascript:void(0);" class="menu">菜单</a>
+        </div>
+    </div>
+</header>
+<div class="menu-alert">
+    <volist name="goods_category_tree" id="cate">
+        <div class="item">
+            <h3>{$cate['name']}</h3>
+            <ul>
+                <volist name="cate['tmenu']" id="subcate">
+                    <li><a href="{:U('/Home/Goods/goodsList',array('id'=>$subcate['id']))}">{$subcate['name']}</a></li>
+                </volist>
+            </ul>
+        </div>
+    </volist>
+</div>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=Vss6Up7UwHme6idruedFeTu3tnz258T0"></script>
+<script>
+    $(function () {
+        var currYear = (new Date()).getFullYear();
+        var opt = {};
+        opt.datetime = {preset: 'datetime'};
+        opt.default = {
+            theme: 'android-ics light', //皮肤样式
+            display: 'modal', //显示方式
+            mode: 'scroller', //日期选择模式
+            dateFormat: 'yyyy-mm-dd',
+            lang: 'zh',
+            showNow: true,
+            nowText: "今天",
+            startYear: currYear - 10, //开始年份
+            endYear: currYear + 10 //结束年份
+        };
+        var optDateTime = $.extend(opt['datetime'], opt['default']);
+
+//        $("#appDateTime").mobiscroll(optDateTime).datetime(optDateTime);
+
+
+        var storeid = "{$store_id}";
+
+
+        var map = new BMap.Map("allmap");
+        var point = new BMap.Point(116.331398, 39.897445);
+        map.centerAndZoom(point, 12);
+        var geoc = new BMap.Geocoder();
+        var geolocation = new BMap.Geolocation();
+        geolocation.getCurrentPosition(function (r) {
+            if (this.getStatus() == BMAP_STATUS_SUCCESS) {
+                var mk = new BMap.Marker(r.point);
+                map.addOverlay(mk);
+                map.panTo(r.point);
+                geoc.getLocation(r.point, function (rs) {
+                    var addComp = rs.addressComponents;
+//                    console.log( addComp.street + ", " + addComp.streetNumber);
+//                    console.log(addComp);
+                    $("#position").text(addComp.street + addComp.streetNumber);
+                    $.ajax({
+                        datetype: "json",
+                        type: "POST",
+                        url: "{:U('Home/Index/getstore')}",
+                        data: {lng: r.point.lng, lat: r.point.lat},// 你的formid 搜索表单 序列化提交
+                        success: function (data) {
+                            if (data.status == 1) {
+                                if (parseInt(storeid) == 0) {
+                                    $("#nearaddress").text(data.address);
+                                    $("#default").text(data.address);
+                                    $("input[name='store_id']").val(data.store_id);
+                                } else {
+                                    $("#nearaddress").text(data.address);
+                                }
+
+                            }
+
+                        }
+                    });
+                });
+            }
+            else {
+                alert('failed' + this.getStaus());
+
+            }
+        }, {enableHighAccuracy: true})
+
+
+    })
+
+
+</script>

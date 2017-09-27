@@ -1,0 +1,30 @@
+
+
+	<include file="Public/header"/>
+
+
+<header>
+	<a href="javascript:history.back(-1)" class="back"></a>
+	<h3>奖品列表</h3>
+</header>
+<div class="h50"></div>
+
+
+
+<div class="page39">
+	<volist name="prize_list" id="vo">
+		<div class="item">
+			<a href="#" class="img"><img src="{$vo.icon}" alt=""></a>
+			<h3>{$vo.name}</h3>
+			<p>{$vo.typename}</p>
+			<!--<a href="" class="detail"></a>-->
+		</div>
+	</volist>
+
+</div>
+
+
+	<script src="__STATIC__/js/slide.js"></script>
+	<script src="__STATIC__/js/main.js"></script>
+</body>
+</html>

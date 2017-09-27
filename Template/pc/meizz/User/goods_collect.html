@@ -1,0 +1,49 @@
+<include file="Public/header" />
+<include file="User/navigate" />
+<section class="main">
+    <!-- main-left -->
+    <include file="User/menu" />
+    <!-- /main-left -->
+    <!-- main-right -->
+    <div class="main-right">
+        <h2>我的收藏</h2>
+        <div class="page7">
+            <ul class="page7-list-title">
+                <li class="li1">宝贝</li >
+                <li class="li2">优惠</li>
+                <li class="li3">状态</li>
+                <li class="li4">价格</li>
+                <li class="li5">收藏时间</li>
+                <li class="li6">操作</li>
+            </ul>
+            <volist name="lists" id="list">
+            <ul class="page7-item">
+                <li class="li1">
+                    <a href="{:U('/Home/Goods/goodsInfo/',array('id'=>$list['goods_id']))}"><img src="{$list.goods_id|goods_thum_images=###,200,200,1}" alt=""></a>
+                    <a href="" class="txt">{$list['goods_name']|getSubstr=###,0,35}</a>
+                    <p>
+                    <volist name="list['goods_attr_list']" id="attr">
+                        <span>{$goods_attribute[$attr['attr_id']]}:{$attr['attr_value']}</span>
+                        <if condition="$key%2 eq 1">
+                            </p><p>
+                        </if>
+                    </volist>
+                    </p>
+                </li>
+                <li class="li2"><span>有<i>n</i>张优惠券可以使用</span></li>
+                <li class="li3"><if condition="$list['is_on_sale'] eq 1">正常<else/>已下架</if></li>
+                <li class="li4">{$list.shop_price}</li>
+                <li class="li5">{$list.add_time|date="Y-m-d H:i:s",###}</li>
+                <li class="li6">
+                    <a href="{:U('Home/Goods/goodsInfo',array('id'=>$list['goods_id']))}" target="_blank">查看详情</a>
+                    <!-- <a href="javascript:void(0);" onClick="javascript:AjaxAddCart({$list.goods_id},1,1);return false;">立即购买</a> -->
+                    <a href="{:U('Home/User/del_goods_collect',array('id'=>$list['collect_id']))}">删除收藏</a>
+                </li>
+            </ul>
+            </volist>
+            <div class="prv-nxt">{$page}</div>
+        </div>
+    </div>
+    <!-- /main-right -->
+</section>
+<include file="Public/footer" />

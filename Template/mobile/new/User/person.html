@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html style="font-size: 58.5938px;">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta charset="utf-8">
+<title></title>
+<link rel="stylesheet" href="__STATIC__/css/main.css">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=0">
+<meta name="imagemode" content="force">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<meta name="keywords" content="">
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="shortcut icon" type="image/x-icon" href="">
+<link rel="apple-touch-icon-precomposed" href="">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="-1">
+<script type="text/javascript" src="__STATIC__/js/jquery.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/layer/layer.js"></script>
+<script type="text/javascript" src="__STATIC__/js/processImg.js"></script>
+<script type="text/javascript" src="__STATIC__/js/exif.js"></script>
+
+<script  type="text/javascript">
+		function UpdateImages(title, imagesName) {
+
+
+			layer.confirm('请确认修改'+title+'!', function (e) {
+				if (e) {
+					var imagesNameValue = $("#" + imagesName).val();
+
+
+//						TipLoad.loading('正在提交,请稍后...');
+						$.ajax({
+							type: 'POST',
+							url: "{:U('changehead')}",
+							data: { action: 'customer_updateimagec', ImageDataName: imagesName, ImageData: imagesNameValue },
+							dataType: 'json',
+							timeout: 60000,
+							success: function (data) {
+//								TipLoad.close();
+								if (data.status == 1) {
+
+									layer.msg(data.messages);
+//                                        window.localStorage.info_head_img=data.path;
+								} else if (data.status == 2) {
+									layer.alert(data.messages, function () {
+
+									});
+
+								} else {
+
+									layer.alert(data.messages);
+								}
+
+
+							},
+							error: function (xhr, type) {
+//								TipLoad.close();
+								alert('超时,或服务错误');
+							}
+						});
+
+				} else {
+
+					//不修改  恢复原来的图片。
+					$("#show" + imagesName).attr("src", $("#show" + imagesName).data("rawsrc"));
+
+
+				}
+			});
+		}
+</script>
+</head>
+<body>
+
+<header>
+	<a href="javascript:history.back(-1)" class="back"></a>
+	<h3>个人资料</h3>
+</header>
+<div class="h50"></div>
+
+
+
+<div class="member-info">
+	<ul>
+		<!--<li><span>头像</span><a href="" class="btn1">-->
+			<!--<img src="__STATIC__/images/new/face51.png" alt="">-->
+			<!--<input type="file" name="" id="">-->
+		<!--</a></li>-->
+		<li>
+
+
+				<div class="imageFrame btn1">
+					<span>头像</span>
+					<!--<p id="textHeadData"  ><span></span>点击头像照片修改</p>-->
+					<input type="hidden" name="HeadData" id="HeadData"/>
+					<input name="upHeadData" id="upHeadData" type="file"  accept="image/*" capture="camera" >  <!-- 部分手机无法正确限制图片格式 -->
+					<img id="showHeadData" data-rawsrc="__STATIC__/images/new/face51.png" src="{$User['head_pic']|default=" __STATIC__/images/user68.jpg"}" onclick="upHeadData.click() " alt="">
+					<script type="text/javascript">
+
+						compressImg('upHeadData', 'showHeadData', 300, function (src) {
+							$("#HeadData").val(src);
+
+							UpdateImages("头像照片", "HeadData");
+
+						});
+					</script>
+				</div>
+
+
+		</li>
+		<!--<dd class="te-al po-re wi230 fl">-->
+			<!--<img class="headpic" src="{$user.head_pic|default='__STATIC__/images/headPic.jpg'}" />-->
+			<!--<input type="hidden" name="head_pic" id="head_pic" value="{$user.head_pic}">-->
+			<!--<div class="upload" onClick="GetUploadify(1,'head_pic','head_pic','add_img')">上传头像</div>-->
+		<!--</dd>-->
+		<li><span>昵称</span><a href="{:U('User/changenick')}" class="btn2">{$User.nickname}</a></li>
+		<li><span>姓名</span><a href="{:U('User/changename')}" class="btn2">{$User.name}</a></li>
+		<li><span>手机号</span><a href="{:U('User/changemobile')}" class="btn2">{$User.mobile}</a></li>
+		<li><span>收货地址</span><a href="{:U('User/address_list')}" class="btn3"></a></li>
+		<li><span>邀请码</span> <span style="display: block; float: right"> {$User['user_id']|sprintf="%06d",###}   </span> </li>
+		<li><span>邀请链接</span><span style="display: block; float: right">{$inviteurl}  </span></li>
+	</ul>
+</div>
+
+
+
+
+
+<script src="__STATIC__/js/slide.js"></script>
+<script src="__STATIC__/js/main.js"></script>
+<script language="javascript">
+	$(function(){
+		$('input[type=text],input[type=password]').bind({
+			focus:function(){
+				$(".global-nav").css("display",'none');
+			},
+			blur:function(){
+				$(".global-nav").css("display",'flex');
+			}
+		});
+	})
+
+	var email_empty = "请输入您的电子邮件地址！";
+	var email_error = "您输入的电子邮件地址格式不正确！";
+	var old_password_empty = "请输入您的原密码！";
+	var new_password_empty = "请输入6位以上新密码！";
+	var confirm_password_empty = "请输入6位以上确认密码！";
+	var both_password_error = "您现两次输入的密码不一致！";
+	/* 会员修改密码 */
+	function editPassword() {
+		var frm = document.forms['formPassword'];
+		var old_password = frm.elements['old_password'].value;
+		var new_password = frm.elements['new_password'].value;
+		var confirm_password = frm.elements['comfirm_password'].value;
+
+		var msg = '';
+		var reg = null;
+
+		if (old_password.length == 0) {
+			msg += old_password_empty + '\n';
+		}
+
+		if (new_password.length < 6) {
+			msg += new_password_empty + '\n';
+		}
+
+		if (confirm_password.length < 6) {
+			msg += confirm_password_empty + '\n';
+		}
+
+		if (new_password.length > 0 && confirm_password.length > 0) {
+			if (new_password != confirm_password) {
+				msg += both_password_error + '\n';
+			}
+		}
+
+		if (msg.length > 0) {
+			alert(msg);
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	function checkinfo(){
+		var nickname = $('#nickname').val();
+		var email = $('#email_ep').val();
+		var mobile = $('#mobile_ep').val();
+		if(nickname==''){
+			alert("昵称不能为空");
+			return false;
+		}
+
+		if(!checkEmail(email)){
+			alert("邮箱格式不正确");
+			return false;
+		}
+
+		if(!checkMobile(mobile)){
+			alert("手机格式不正确");
+			return false;
+		}
+		return true;
+	}
+
+</script>
+</body>
+</html>

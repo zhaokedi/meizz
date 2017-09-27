@@ -1,0 +1,73 @@
+<volist name="lists" id="list">
+    <div class="item">
+        <div class="title" style="margin: 0"><span style="float: left">{$list.order_status_desc}</span><time>{$list.add_time|date="Y-m-d",###}</time></div>
+        <a href="{:U('/Mobile/User/order_detail',array('id'=>$list['order_id']))}" >
+            <volist name="list.goods_list" id="good">
+                <div class="con">
+                    <img class="img" src="{$good.goods_id|goods_thum_images=200,200}" alt="">
+                    <dl style="position: relative">
+                        <!--<p>订单编号：{$list.order_sn}</p>-->
+                        <!--<p>订单金额：￥{$list.total_amount}</p>-->
+                        <!--<p>订单状态：<i>{$list.orderstatusname}</i></p>-->
+                        <dd class="name"><strong>{$good.goods_name}</strong>
+                            <span style="position: absolute;">{$good.spec_key_name} </span></dd>
+                        <dd class="pice">￥{$good['member_goods_price']}元<em>x{$good['goods_num']}</em></dd>
+                        <dd class="pice">
+                            <em>
+                                <if condition="($list[return_btn] eq 1) and ($good[is_send] eq 1)">
+                                    <a href="{:U('Mobile/User/return_goods',array('order_id'=>$list[order_id],'order_sn'=>$list[order_sn],'goods_id'=>$good[goods_id],'spec_key'=>$good['spec_key']))}" style="color:#999;">申请售后</a>
+                                </if>
+                            </em>
+                        </dd>
+                    </dl>
+                </div>
+            </volist>
+        </a>
+        <div class="pic">共{$list.goods_list|count}件商品<span>实付：</span><strong>￥{$list['order_amount']}元</strong></div>
+        <div class="btm">
+
+            <if condition="($list[return_btn] eq 1) and ($list[goods_list][0][is_send] eq 1)">
+                <a  href="{:U('Mobile/User/return_goods',array('order_id'=>$list[order_id],'order_sn'=>$list[order_sn],'goods_id'=>$good[goods_id],'spec_key'=>$good['spec_key']))}" style="color:#999;"><p style="">申请售后</p></a>
+                <a  href="{:U('Mobile/User/return_goods',array('order_id'=>$list[order_id],'order_sn'=>$list[order_sn],'goods_id'=>$good[goods_id],'spec_key'=>$good['spec_key']))}" style="color:#999;"><p style="">申请退款</p></a>
+            </if>
+            <if condition="$list.cancel_btn eq 1"><a href="javascript:;" class="btn-cancle" onClick="cancel_order({$list.order_id})">取消订单</a></if>
+            <if condition="$list.pay_btn eq 1"><a class="btn-pay" href="{:U('Mobile/Cart/cart4',array('order_id'=>$list['order_id']))}">去付款</a></if>
+            <if condition="$list.receive_btn eq 1"><a class="btn-sure" href="{:U('Mobile/User/order_confirm',array('id'=>$list['order_id']))}">收货确认</a></if>
+            <if condition="$list.comment_btn eq 1"><a class="btn-discuss"  href="{:U('/Mobile/User/comment')}">评价</a></if>
+            <if condition="$list.shipping_btn eq 1"><a class="btn-express" href="{:U('User/express',array('order_id'=>$list['order_id']))}">查看物流</a></if>
+            <!--<a href="" class="btn-pay">去付款</a>-->
+        </div>
+    </div>
+</volist>
+
+
+
+<!--<volist name="lists" id="list">-->
+       <!--<div class="order_list">-->
+          <!--<h2>-->
+              <!--<a href="javascript:void(0);">-->
+                  <!--<img src="__STATIC__/images/dianpu.png"><span>店铺名称:网站自营</span><strong>-->
+                  <!--<img src="__STATIC__/images/icojiantou1.png"></strong>-->
+              <!--</a>-->
+          <!--</h2>-->
+         	<!--<a href="{:U('/Mobile/User/order_detail',array('id'=>$list['order_id']))}">-->
+	          <!--<volist name="list.goods_list" id="good">-->
+		          <!--<dl>  -->
+		          <!--<dt><img src="{$good.goods_id|goods_thum_images=200,200}"></dt>-->
+		          <!--<dd class="name"><strong>{$good.goods_name}</strong>-->
+		          <!--<span>{$good.spec_key_name} </span></dd>-->
+		          <!--<dd class="pice">￥{$good['member_goods_price']}元<em>x{$good['goods_num']}</em></dd>-->
+		          <!--</dl>-->
+	          <!--</volist>-->
+          	<!--</a>-->
+          <!--<div class="pic">共{$list.goods_list|count}件商品<span>实付：</span><strong>￥{$list['order_amount']}元</strong></div>-->
+          <!--<div class="anniu" style="width:95%">-->
+                <!--<if condition="$list.cancel_btn eq 1"><span onClick="cancel_order({$list.order_id})">取消订单</span></if>-->
+                <!--<if condition="$list.pay_btn eq 1"><a href="{:U('Mobile/Cart/cart4',array('order_id'=>$list['order_id']))}">立即付款</a></if>-->
+                <!--<if condition="$list.receive_btn eq 1"><a href="{:U('Mobile/User/order_confirm',array('id'=>$list['order_id']))}">收货确认</a></if>-->
+                <!--<if condition="$list.comment_btn eq 1"><a href="{:U('/Mobile/User/comment')}">评价</a></if>                -->
+                <!--<if condition="$list.shipping_btn eq 1"><a href="{:U('User/express',array('order_id'=>$list['order_id']))}">查看物流</a></if>        -->
+               <!--&lt;!&ndash; <if condition="$list.return_btn eq 1"><a href="{:U('Mobile/Article/article',array('article_id'=>'22'))}" target="_blank">联系客服</a></if> &ndash;&gt;-->
+          <!--</div>-->
+       <!--</div>-->
+<!--</volist>-->

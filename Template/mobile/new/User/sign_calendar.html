@@ -1,0 +1,33 @@
+<volist name="calendar" id="week">
+<tr >
+    <volist name="week" id="day">
+
+    <td class='<notempty name="day[signed]">on</notempty> <notempty name="day[today]"> today</notempty>" data-day="{$day[day]}' data-date="{$day['date']}" data-signed="{$day['signed']}">
+        <notempty name="day['day']">
+            {$day['day']}
+
+        </notempty>
+    </td>
+
+    </volist>
+</tr>
+</volist>
+
+
+<!--<volist name="calendar" id="week">-->
+    <!--<div class="week">-->
+        <!--<volist name="week" id="day">-->
+            <!--<nav class="day {if !empty($day['today'])}today{/if}" data-day="{$day['day']}" data-date="{$day['date']}" data-signed="{$day['signed']}">-->
+                <!--<notempty name="day['day']">-->
+                    <!--<p class="num">{$day['day']}</p>-->
+                    <!--<notempty name="day['title']">-->
+                        <!--<p class="act" style="background: {$day['color']};">{$day['title']}</p>-->
+                    <!--</notempty>-->
+                    <!--<notempty name="day['signed']">-->
+                        <!--<i class="icon icon-check signed"></i>-->
+                    <!--</notempty>-->
+                <!--</notempty>-->
+            <!--</nav>-->
+        <!--</volist>-->
+    <!--</div>-->
+<!--</volist>-->

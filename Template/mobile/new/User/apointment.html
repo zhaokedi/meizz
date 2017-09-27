@@ -1,0 +1,108 @@
+<include file="Public/header"/>
+<link href="__STATIC__/css/mobiscroll_002.css" rel="stylesheet" type="text/css">
+<link href="__STATIC__/css/mobiscroll.css" rel="stylesheet" type="text/css">
+<link href="__STATIC__/css/mobiscroll_003.css" rel="stylesheet" type="text/css">
+<style type="text/css">
+	.my-bespoke select {
+		border: none;
+		width: 100%;
+
+	}
+</style>
+<body>
+
+<header>
+	<a href="javascript:history.back(-1)" class="back"></a>
+	<h3>我的预约</h3>
+	<a href="" class="menu"></a>
+</header>
+<include file="Public/menu"/>
+<div class="h50"></div>
+
+
+
+<div class="my-bespoke">
+	<form action="{:U('User/apointedit')}" id="pointForm" name="pointForm" method="post"  onsubmit="return check_submit()">
+		<input type="hidden" value="{$apoint.id}" name="id" >
+	<div class="tips">
+		尊敬的用户您好，为了给您更佳的购物体验，建议您填写预约申请，如果您不方便到店也可以填写门定制服务申请,上门定制服务仅提供钻饰类，并且目前只提供部分地区上门定制服务。
+		<a href="" class="close"></a>
+	</div>
+	<ul>
+		<li><span>姓名：</span><input type="text" value="{$apoint.username}" name="username" id="username"></li>
+		<li><span>预约电话：</span><input type="text" value="{$apoint.mobile}" name="mobile" id="mobile"></li>
+		<li><span>体验中心：</span><input type="text" value="{$apoint.address}" name="address"></li>
+	</ul>
+	<ul>
+		<li><span>预约类型：</span>
+			<!--<input type="text" value="{$apoint.type_name}" name="">-->
+		<select name="type_id" id="type">
+			<volist name="apointtypelist" id="vo">
+				<option value="{$vo.id}">{$vo.type_name}</option>
+			</volist>
+		</select>
+
+		</li>
+		<script type="text/javascript">
+			var type_id={$apoint.type_id};
+			$("#type option[value='"+type_id+"']").attr("selected",true);
+		</script>
+		<li><span>预约时间：</span>
+			<!-- <input type="text" value="2016-08-17    14:30"> -->
+			<input value="{$apoint.yuyue_time|date='Y-m-d H:i',###}" class="" readonly="readonly" name="yuyue_time" id="appDateTime" type="text">
+		</li>
+		<li><span>状态：</span><input type="text" value="{$apoint.statusname}" readonly></li>
+	</ul>
+	<div class="operate">
+		<a href="tel:{$tpshop_config['shop_info_phone']}" class="online"><img src="__STATIC__/images/new/tel.png" alt="">客服</a>
+		<input type="submit"  class="btn-bespoke" value="马上预约" style="border-radius: 0px">
+	</div>
+		</form>
+</div>
+
+
+<script src="__STATIC__/js/mobiscroll_002.js" type="text/javascript"></script>
+<script src="__STATIC__/js/mobiscroll_004.js" type="text/javascript"></script>
+<script src="__STATIC__/js/mobiscroll.js" type="text/javascript"></script>
+<script src="__STATIC__/js/mobiscroll_003.js" type="text/javascript"></script>
+<script src="__STATIC__/js/mobiscroll_005.js" type="text/javascript"></script>
+<script src="__STATIC__/js/slide.js" type="text/javascript"></script>
+<script src="__STATIC__/js/main.js" type="text/javascript"></script>
+
+<script>
+	function check_submit()
+	{
+		var username = $.trim($("#pointForm").find('#username').val());
+		var mobile = $("#pointForm").find('#mobile').val();
+
+		if(username.length >0 && mobile.length > 0 )
+		{
+			return true;
+		} else{
+			return false;
+		}
+
+	}
+	$(function() {
+				var currYear = (new Date()).getFullYear();
+				var opt = {};
+				opt.datetime = {preset: 'datetime'};
+				opt.default = {
+					theme: 'android-ics light', //皮肤样式
+					display: 'modal', //显示方式
+					mode: 'scroller', //日期选择模式
+					dateFormat: 'yyyy-mm-dd',
+					lang: 'zh',
+					showNow: true,
+					nowText: "今天",
+					startYear: currYear - 10, //开始年份
+					endYear: currYear + 10 //结束年份
+				};
+
+				var optDateTime = $.extend(opt['datetime'], opt['default']);
+
+				$("#appDateTime").mobiscroll(optDateTime).datetime(optDateTime);
+			});
+	</script>
+</body>
+</html>

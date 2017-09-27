@@ -1,0 +1,289 @@
+<!DOCTYPE html >
+<html style="font-size: 58.5938px;">
+<head>
+<meta name="Generator" content="tpshop" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<title>购物流程-{$tpshop_config['shop_info_store_title']}</title>
+<meta http-equiv="keywords" content="{$tpshop_config['shop_info_store_keyword']}" />
+<meta name="description" content="{$tpshop_config['shop_info_store_desc']}" />
+<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+<link rel="stylesheet" href="__STATIC__/css/public.css">
+<link rel="stylesheet" href="__STATIC__/css/flow.css">
+<link rel="stylesheet" href="__STATIC__/css/style_jm.css">
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/main.css">
+<script type="text/javascript" src="__STATIC__/js/jquery.js"></script>
+    <style>
+        .btn-fw {
+            color: #fff;!important;
+            border: none;
+            width: 100%;
+            height: .6rem;
+            line-height: .6rem;
+            display: block;
+            margin-bottom: .1rem;
+            border-radius: 0;
+            background-color: #8f7958;
+            text-align: center;
+        }
+    </style>
+<script src="__PUBLIC__/js/global.js"></script>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <script>
+        /*
+         * 注意：
+         * 1. 所有的JS接口只能在公众号绑定的域名下调用，公众号开发者需要先登录微信公众平台进入“公众号设置”的“功能设置”里填写“JS接口安全域名”。
+         * 2. 如果发现在 Android 不能分享自定义内容，请到官网下载最新的包覆盖安装，Android 自定义分享接口需升级至 6.0.2.58 版本及以上。
+         * 3. 常见问题及完整 JS-SDK 文档地址：http://mp.weixin.qq.com/wiki/7/aaa137b55fb2e0456bf8dd9148dd613f.html
+         *
+         * 开发中遇到问题详见文档“附录5-常见错误及解决办法”解决，如仍未能解决可通过以下渠道反馈：
+         * 邮箱地址：weixin-open@qq.com
+         * 邮件主题：【微信JS-SDK反馈】具体问题
+         * 邮件内容说明：用简明的语言描述问题所在，并交代清楚遇到该问题的场景，可附上截屏图片，微信团队会尽快处理你的反馈。
+         */
+        wx.config({
+            debug: false,
+            appId: '{$signPackage.appId}',
+            timestamp: '{$signPackage.timestamp}',
+            nonceStr: '{$signPackage.nonceStr}',
+            signature: '{$signPackage.signature}',
+            jsApiList: [
+                'checkJsApi',
+                'chooseWXPay',
+                'onMenuShareTimeline',
+                'onMenuShareAppMessage',
+                'onMenuShareQQ',
+                'onMenuShareWeibo',
+                'hideMenuItems',
+            ]
+        });
+    </script>
+<script src="__PUBLIC__/js/layer/layer.js"></script>
+    <script>
+        function loading(){
+            layer.load(2);
+        }
+        function hiding(){
+            layer.closeAll();
+        }
+    </script>
+</head>
+<body style="background: rgb(235, 236, 237);position:relative;">
+<!--<div class="tab_nav">-->
+    <!--<div class="header">-->
+      <!--<div class="h-left">-->
+        <!--<a class="sb-back" href="javascript:history.back(-1)" title="返回"></a>-->
+      <!--</div>-->
+      <!--<div class="h-mid"> 提交订单      </div>-->
+    <!--</div>-->
+<!--</div>-->
+
+<header>
+    <a href="{:U('Mobile/cart/cart')}" class="back"></a>
+    <h3>在线支付</h3>
+</header>
+<div class="h50"></div>
+
+
+
+<div class="pay-online">
+    <form action="{:U('Mobile/Payment/getCode')}" method="post" name="cart4_form" id="cart4_form">
+        <div class="tips">
+            <img src="__STATIC__/images/new/ok.png" alt="" class="icon">
+            <if condition="$ischajia eq 1">
+                <h3>您正在进行售后差价支付！</h3>
+                <else/>
+
+                <h3>订单提交成功，马上付款~</h3>
+                <p>请您在<span>{$pay_date}</span>前完成支付，否则订单将自动取消！</p>
+            </if>
+
+        </div>
+
+
+        <div class="info">
+            <if condition="$ischajia eq 1">
+                <p><span>差价金额：</span><i>￥{$return_goods['money']}</i></p>
+                <else/>
+                <p><span>应付金额：</span><i>￥{$order['order_amount']}</i></p>
+                <p><span>订单号：</span><i>{$order['order_sn']}</i></p>
+                <!--<p><span>收货信息：</span>{$address.consignee}     18123456789 <br>福建省 厦门市 思明区 观日路1号</p>-->
+                <p><span></span><a id="df">找人代付</a></p>
+            </if>
+
+        </div>
+        <div class="info minfo" style="display: none">
+            <p><span>留言：</span>
+                <textarea name="content" id="content" cols="30" rows="3"></textarea>
+            </p>
+            <a class="btn-fw" style="color:#fff; " onclick="daifu({$order['order_id']})">确认</a>
+
+        </div>
+        <!--<foreach name="paymentList" item="v"  key="k">-->
+            <!--<li class="clearfix" name="payment_name">-->
+                <!--<label>-->
+                    <!--<input type="radio"   value="pay_code={$v['code']}" class="c_checkbox_t"  />-->
+                    <!--<div class="fl shipping_title">-->
+                        <!--<img src="/plugins/{$v['type']}/{$v['code']}/{$v['icon']}" onClick="change_pay(this);" width="110" height="40" />-->
+                    <!--</div>-->
+                <!--</label>-->
+            <!--</li>-->
+        <!--</foreach>-->
+
+        <a href="javascript:void(0);" onClick="paymoney(this)" class="pay-wx" data-paycode="pay_code=weixin">
+            <img src="__STATIC__/images/new/wx.png" alt="" class="icon">
+            <b>微信支付</b>微信安全支付
+        </a>
+
+
+        <if condition="$isweixin eq 0">
+        <a href="javascript:void(0);" onClick="change_pay(this);" class="pay-wx" data-paycode="pay_code=alipayMobile">
+            <img src="__STATIC__/images/new/zfb.png" alt="" class="icon">
+            <b>支付宝支付</b>支付宝安全支付
+        </a>
+        </if>
+        <!--<a href="javascript:void(0);" onClick="paymoney()" class="pay-wx">-->
+            <!--<img src="__STATIC__/images/new/wx.png" alt="" class="icon">-->
+            <!--<b>微信支付</b>微信安全支付-->
+        <!--</a>-->
+        <input type="hidden" name="order_id" value="{$order['order_id']}" />
+        <input type="hidden" name="return_id" value="{$return_goods['id']}" />
+        <input type="hidden"  value="pay_code=weixin" class="c_checkbox_t" name="pay_radio" id="pay_radio"/>
+    </form>
+</div>
+
+
+<div class="screen-wrap fullscreen login">
+
+    <script src="__STATIC__/js/slide.js"></script>
+    <script src="__STATIC__/js/main.js"></script>
+<script>
+
+    function daifu(order_id){
+        var content=$("#content").val();
+//        console.log(content);
+        if(content ==''){
+            layer.msg('请填写留言');
+            return
+        }
+        var url="{:U('daifu')}?order_id="+order_id+"&content="+content;
+        location.href=url;
+//        $.ajax({
+//            url : "{:U('daifu')}",
+//            type : 'POST',
+//            dataType : 'json',
+//            data : {
+//                'order_id' : order_id,
+//            },
+//            success : function(rdata){
+//                if(rdata['status'] == 1){
+//                }else if(rdata['status'] == 2){
+//                    layer.msg(rdata['msg']);
+//                }
+//            },
+//        });
+
+    }
+    $("#df").click(function () {
+        $(".minfo").show();
+
+    })
+
+
+    $(document).ready(function(){
+        $("input[name='pay_radio']").first().trigger('click');
+    });
+    // 切换支付方式
+    function change_pay(obj)
+    {
+
+        $("#pay_radio").val($(obj).data("paycode"))
+//        return;
+        $('#cart4_form').submit();
+        return;
+        $(obj).parent().siblings('input[name="pay_radio"]').trigger('click');
+    }
+
+    function pay(){
+        $('#cart4_form').submit();
+        return;
+        //微信JS支付
+    }
+    function paymoney(obj){
+        $("#pay_radio").val($(obj).data("paycode"))
+//        $('#cart4_form').submit();
+//        return;
+
+        var isweixin='{$isweixin}';
+//        alert(isweixin);return;
+       if(isweixin==0){
+           $('#cart4_form').submit();
+           return;
+       }else {
+        var order_id=$("input[name='order_id']").val();
+        var return_id=$("input[name='return_id']").val();
+//        alert(order_id);
+           loading();
+        $.ajax({
+            url : "{:U('pay_info')}",
+            type : 'POST',
+            dataType : 'json',
+            data : {
+                'order_id' : order_id,
+                'return_id' : return_id,
+            },
+            success : function(rdata){
+                   hiding();
+                if(rdata['status'] == 1){
+                    wx.chooseWXPay({
+                        timestamp: rdata['timeStamp'],
+                        nonceStr: rdata['nonceStr'],
+                        package: rdata['package'],
+                        signType: 'MD5', // 注意：新版支付接口使用 MD5 加密
+                        paySign: rdata['paySign'],
+                        success: function (res) {
+                            $.ajax({
+                                   url:"{:U('paysuccess')}",
+                                type:"POST",
+                                dataType : 'json',
+                                data:{
+                                       'order_id' : order_id,
+                                       'return_id' : return_id,
+                                },
+                                success: function(rdata){
+                                       if(rdata['status']==1){
+//                                           window.location.href="{php echo $this->createMobileUrl('index3')}";
+                                           location.reload();
+                                    }
+                                       else if(rdata['status']==2){
+                                        layer.msg("支付失败！");
+                                    }
+                                },
+                                error: function(data){
+                                       hiding();
+                                    layer.msg("支付成功后跳转，操作失败！");
+                                }
+                            });
+                        },
+                        cancel: function () {
+                            layer.msg("取消支付");
+                        }
+                    });
+                   }else if(rdata['status'] == 2){
+                       hiding();
+                       layer.msg(rdata['msg']);
+                }
+
+            },
+            error : function(){
+                layer.msg('支付操作失败');
+            }
+        });
+       }
+    }
+</script> 
+
+</div>
+
+</body>
+</html>

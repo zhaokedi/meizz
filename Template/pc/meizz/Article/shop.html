@@ -1,0 +1,73 @@
+<include file="Public/header" />
+
+<style>
+	.tiyan {
+		/* border-top: #8f7958 2px solid; */
+		background: #f6f6f6;
+		background-size: 14px 14px;
+		padding-left: 10px;
+		font-size: 12px;
+		color: #8f7958;
+		height: 47px;
+		line-height: 47px;
+		margin-top: 10px;
+		margin-bottom: 10px;
+	}
+	a:hover{
+		color: #fff;
+	}
+	.mapbtn{
+		width: 100px;
+		height: 35px;
+		line-height: 35px;
+		padding-right: 10px;
+		border-radius: 3px;
+		border: #8f7958 1px solid;
+		background-color: #8f7958;
+		text-align: center;
+		color: #fff;
+		opacity: .9;
+		display: block;
+		background-image: url("__STATIC__/images/lico.png");
+		background-position: 90% center;
+		background-repeat: no-repeat;
+		margin-left: auto;
+		margin-right: auto;
+
+
+	}
+</style>
+<section class="main">
+
+	<!-- main-right -->
+		<div class="page9">
+			<h2>体验店列表</h2>
+
+
+			<h3 class="tiyan">
+			尊敬的用户您好，为了给您更佳的购物体验，建议您填写预约申请，如果您不方便到店也可以填写门定制服务申请,上门定制服务仅提供钻饰类，并且目前只提供部分地区上门定制服务。
+			</h3>
+				<table id="locattable">
+				<tr>
+					<th style="width: 25%">体验店</th>  　　　　　　　　　　　　　　　　　　　　　　　　　　　
+					<th style="width: 60%">体验地址</th>
+					<th style="width: 15%">地图导航</th>
+
+				</tr>
+					<volist name="storelist" id="vo">
+						<tr>
+							<td>{$vo.name}</td>
+							<td>{$vo.address}</td>
+							<td><a href="{:U('shopmap',array('id'=>$vo['id']))}" class="mapbtn">到这里去</a></td>
+						</tr>
+					</volist>
+
+
+			</table>
+			<div class="prv-nxt2">{$page->show()}</div>
+		</div>
+
+	<!-- /main-right -->
+</section>
+
+<include file="Public/footer" />

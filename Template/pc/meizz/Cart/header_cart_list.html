@@ -1,0 +1,21 @@
+<if condition="count($cartList) eq 0">
+    <div class="con" style="height: 50px;line-height: 50px;">购物车中没有商品哟！</div>
+<else/>
+    <div class="con">
+        <foreach name="cartList" item="v" key="k">
+            <div class="li3-list">
+                <div class="item">
+                    <a href="{:U('/Home/Goods/goodsInfo',array('id'=>$v['goods_id']))}" class="img"><img src="{$v.goods_id|goods_thum_images=65,65}" alt=""></a>
+                    <a href="" class="txt">{$v[goods_name]}</a>
+                    <b>{$v[goods_price]} x {$v[goods_num]}</b>
+                    <a href="javascript:void(0);" onclick="ajax_del_cart({$v['id']})" class="btn-delete"></a>
+                </div>
+            </div>
+        </foreach>
+        <div class="operate">
+            ￥<b class="total_fee">{$cart_total_price[total_fee]}</b>
+            <p>共<span class="total_num">{$cart_total_price[num]}</span>件商品</p>
+            <a href="{:U('/Home/Cart/cart')}" class="btn-pay">马上结算</a>
+        </div>
+    </div>
+</if>

@@ -1,0 +1,65 @@
+<include file="Public/header" />
+<include file="User/navigate" />
+<section class="main">
+    <!-- main-left -->
+    <include file="User/menu" />
+    <!-- /main-left -->
+    <!-- main-right -->
+    <div class="main-right">
+        <h2>地址管理</h2>
+        <div class="page21">
+            <table>
+                <tr>
+                    <th class="th1">收货人姓名</th>
+                    <th class="th2">详细地址</th>
+                    <th class="th3">邮政编码</th>
+                    <th class="th4">联系方式</th>
+                    <th class="th5">收货时间</th>
+                    <th class="th6">操作</th>
+                </tr>
+                <volist name="lists" id="list">
+                    <tr>
+                        <td><if condition="$list['is_default'] eq 1"><img src="__STATIC__/images/is_default.png" width="18" height="18" style="vertical-align: -3px;margin-right: 3px;" /></if>{$list.consignee}</td>
+                        <td>{$region_list[$list['province']]['name']}，{$region_list[$list['city']]['name']}，{$region_list[$list['district']]['name']}，{$list.address}</td>
+                        <td>{$list.zipcode}</td>
+                        <td>{$list.mobile}</td>
+                        <td>{$list.receiving}</td>
+                        <td><a href="javascript:address_edit({$list['address_id']})">编辑</a> <a href="{:U('Home/User/del_address',array('id'=>$list['address_id']))}">删除</a></td>
+                    </tr>
+                </volist>
+            </table>
+            <div class="operate1">
+                <a href="javascript:void(0);" onclick="address_edit()" class="btn-add-addr"><img src="__STATIC__/images/add.png" alt="">新增收货地址</a>
+            </div>
+        </div>
+    </div>
+    <!-- /main-right -->
+</section>
+<script>
+    /**
+     * 新增修改收货地址
+     * id 为零 则为新增, 否则是修改
+     *  使用 公共的 layer 弹窗插件  参考官方手册 http://layer.layui.com/
+     */
+    function address_edit(id)
+    {
+        if(id > 0)
+            var url = "/index.php?m=Home&c=User&a=edit_address&scene=1&call_back=call_back_fun&id="+id; // 修改地址  '/index.php/Home/User/add_address/scene/1/call_back/call_back_fun/id/id' //iframe的url /index.php/Home/User/add_address
+        else
+            var url = "/index.php?m=Home&c=User&a=add_address&scene=1&call_back=call_back_fun"; // 新增地址
+        layer.open({
+            type: 2,
+            title: '添加收货地址',
+            shadeClose: true,
+            shade: 0.8,
+            area: ['880px', '580px'],
+            content: url,
+        });
+    }
+    // 添加修改收货地址回调函数
+    function call_back_fun(v){
+        layer.closeAll(); // 关闭窗口
+        location.href = location.href;
+    }
+</script>
+<include file="Public/footer" />

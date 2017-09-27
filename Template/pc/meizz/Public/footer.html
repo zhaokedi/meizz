@@ -1,0 +1,77 @@
+<footer>
+    <div class="content">
+        <div class="ft1">
+            <a href="{$tpshop_config['shop_info_site_url']}" class="logo"><img src="__STATIC__/images/logo2.png" alt="{$tpshop_config['shop_info_store_title']}"></a>
+        </div>
+        <div class="ft2">
+            <div class="contact">
+                <p>全国统一服务电话</p>
+                <p><b>{$tpshop_config['shop_info_phone']}</b></p>
+                <p>服务时间 {$tpshop_config['shop_info_hours']}</p>
+                <p>传真 {$tpshop_config['shop_info_fax']}</p>
+                <p><a href="http://wpa.qq.com/msgrd?V=3&amp;uin=1538872260&amp;Site=美之钻珠宝&amp;Menu=yes" class="online"><img src="__STATIC__/images/contact.png" alt=""></a></p>
+            </div>
+            <ul>
+                <volist name="article_cat" id="cat">
+                <li>
+                    <h3>{$cat['cat_name']}</h3>
+                    <volist name="cat.article" id="article">
+                        <a href="{:U('Home/Article/detail',array('article_id'=>$article['article_id']))}">{$article['title']}</a>
+                    </volist>
+                </li>
+                </volist>
+            </ul>
+            <div class="code" id="code">
+                <img src="__STATIC__/images/wx-code.png" alt="">
+                <img src="__STATIC__/images/sina-code.png" alt="">
+            </div>
+        </div>
+        <div class="ft3">
+            <h3>友情链接  <a href="http://wpa.qq.com/msgrd?V=3&amp;uin=1538872260&amp;Site=美之钻珠宝&amp;Menu=yes" target="_blank">申请</a></h3>
+            <div class="con">
+                <volist name="link_list" id="vo">
+                    <a href="{$vo['link_url']}" <if condition="$vo['target']">target="_blank"</if>>{$vo['link_name']}</a>
+                </volist>
+            </div>
+        </div>
+        <div class="ft4">
+            <p>copyright © 1999-2016  <a href="{$tpshop_config['shop_info_site_url']}">{$tpshop_config['shop_info_store_name']}</a> All Rights Reserved.</p>
+            <p>备案号:<a href="http://www.miitbeian.gov.cn/publish/query/indexFirst.action" target="_blank">{$tpshop_config['shop_info_record_no']}</a> | <a href="http://www.kuaidi100.com/" target="_blank" rel="nofollow">快递查询</a> | <a href="http://tongji.baidu.com/web/22576749/homepage/index" target="_blank" rel="nofollow">百度统计</a> | <a href="https://web.umeng.com/main.php?c=site&a=frame&siteid=1260998395" target="_blank" rel="nofollow">CNZZ统计</a></p>
+        </div>
+    </div>
+    <div id="toTop" style="position: fixed;z-index: 1000;bottom:15px;right:15px;cursor: pointer;display: none;"></div>
+</footer>
+<script type="text/javascript">
+    $(function() {
+        $("#toTop").html('<img style src="__STATIC__/images/top.png" title="回到顶部">');
+        $(window).scroll(function() {
+            if ($(this).scrollTop() != 0) {
+                $('#toTop').fadeIn();
+            } else {
+                $('#toTop').fadeOut();
+            }
+        });
+        $('#toTop').click(function() {
+            $('body,html').animate({ scrollTop: 0 }, 800);
+        })
+    });
+</script>
+<script src="__STATIC__/js/main.js"></script>
+<script src="__STATIC__/js/WdatePicker.js"></script>
+<!--tongji.baidu.com-->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?eccacc468b4a2f6e4e43f575ba64efb2";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<!--CNZZ-->
+<div style="display:none">
+<script src="https://s11.cnzz.com/z_stat.php?id=1260998395&web_id=1260998395" language="JavaScript"></script>
+</div>
+<include file="Public/kefu" />
+</body>
+</html>

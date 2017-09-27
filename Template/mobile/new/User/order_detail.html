@@ -1,0 +1,230 @@
+<include file="Public/header"/>
+<style type="text/css">
+	.video{
+		padding: 0px;
+	}
+	.page24 .operate a{
+		width: auto;
+	}
+</style>
+<body>
+
+
+<header>
+	<a href="javascript:history.back(-1)" class="back"></a>
+	<h3>订单详情</h3>
+</header>
+<div class="h50"></div>
+
+<style>
+	.pice {
+		/*width: 30%;*/
+		float: left;
+		overflow: hidden;
+		font-weight: normal;
+		font-size: 14px;
+		line-height: 2;
+		text-align: right;
+
+		 color:#F60;
+	}
+	.pice em {
+
+		display: block;
+		/*float: left;*/
+		width: 100%;
+		font-size: 12px;
+		color: #666;
+		line-height: 20px;
+		font-style: normal;
+	}
+</style>
+<!--<header>-->
+<!--<div class="tab_nav">-->
+  <!--<div class="header">-->
+    <!--<div class="h-left"><a class="sb-back" href="javascript:history.back(-1)" title="返回"></a></div>-->
+    <!--<div class="h-mid">订单详情</div>-->
+    <!--<div class="h-right">-->
+      <!--<aside class="top_bar">-->
+        <!--<div onClick="show_menu();$('#close_btn').addClass('hid');" id="show_more"><a href="javascript:;"></a> </div>-->
+      <!--</aside>-->
+    <!--</div>-->
+  <!--</div>-->
+<!--</div>-->
+<!--</header>-->
+<div class="page24">
+	<div class="part1">
+		<p>收货人：{$order_info.consignee}<span class="tel">{$order_info.mobile}</span></p>
+		<p>收货地址：{$region_list[$order_info['province']]['name']},{$region_list[$order_info['city']]['name']},{$region_list[$order_info['district']]['name']},{$order_info.address}</p>
+		<a href="" class="btn-edit"></a>
+	</div>
+	<div class="part2">
+		<div class="item">
+			<div class="title" style="margin: 0px">{$order_info.order_status_desc}</div>
+			<volist name="order_info.goods_list" id="good">
+				<div class="con">
+					<!--<i class="checkbox"></i>-->
+					<!--<a href="" class="img">-->
+						<img class="img" src="{$good.goods_id|goods_thum_images=100,100}" alt="">
+					<!--</a>-->
+					<h3>{$good.goods_name}</h3>
+					<notempty name="$good[spec_key_name]">
+					<p>{$good.spec_key_name}</p>
+					</notempty>
+					<if condition="$order_info[is_integral] eq 1">
+						<div class="pice" >积分{$good['integral_price']}<em>x{$good['goods_num']}</em></div>
+						<else/>
+						<div class="pice" >￥{$good['member_goods_price']}<em>x{$good['goods_num']}</em></div>
+					</if>
+
+					<div class="btm">
+						<!--<a href="">退款</a>-->
+						<!--<a href="{:U('Mobile/User/return_goods',array('order_id'=>$order_info[order_id],'order_sn'=>$order_info[order_sn],'goods_id'=>$good[goods_id],'spec_key'=>$good['spec_key']))}">申请售后</a>-->
+					</div>
+				</div>
+			</volist>
+		</div>
+	</div>
+	<div class="order-info">
+		<ul>
+			<li><span>商品总价</span>￥{$order_info.goods_price}</li>
+			<li><span>运费（快递）</span>￥{$order_info.shipping_price}</li>
+			<li><span>优惠券</span>￥{$order_info.coupon_price}</li>
+			<li><span>订单总价</span>￥{$order_info.order_amount}</li>
+		</ul>
+		<div class="total">
+			实付款 <i>	<if condition="$order_info[is_integral] eq 1">积分 {$order_info.integral}	<else/>	￥{$order_info.order_amount}</if></i>
+		</div>
+	</div>
+	<ul class="order-info2">
+		<li>订单编号：{$order_info.order_sn}</li>
+		<li>创建时间：{$order_info.add_time|date="Y-m-d H:i",###}</li>
+		<if condition="$order_info[pay_status] eq 1">
+		<li>付款时间：{$order_info.pay_time|date="Y-m-d H:i",###}</li>
+
+		<if condition="$order_info[shipping_status] eq 1">
+		<li>发货时间：{$order_info.shipping_time|date="Y-m-d H:i",###}</li></if>
+	</ul>
+	<div class="operate">
+		<if condition="$order_info.cancel_btn eq 1"><a onClick="cancel_order({$order_info.order_id})" class="btn-express">取消订单</a></if>
+		<if condition="$order_info.pay_btn eq 1"><a href="{:U('Mobile/Cart/cart4',array('order_id'=>$order_info['order_id']))}" class="btn-sure">立即付款</a></if>
+		<if condition="$order_info.receive_btn eq 1"><a href="{:U('Mobile/User/order_confirm',array('id'=>$order_info['order_id']))}" class="btn-sure">收货确认</a></if>
+		<if condition="$order_info.shipping_btn eq 1"><a href="{:U('User/express',array('order_id'=>$order_info['order_id']))}" class="btn-express">查看物流</a></if>
+		<!--<a href="" class="btn-express">查看物流</a>-->
+		<!--<a href="" class="btn-sure">确认收货</a>-->
+	</div>
+</div>
+
+
+
+<!--<div id="tbh5v0">						-->
+	<!--<div class="order">-->
+	<!---->
+		<!--<div class="detail_top">-->
+			<!--<div class="lan">-->
+				<!--<dl>-->
+				<!--<dt class="dingdan_1"></dt>-->
+				<!--<dd><span>订单状态：&nbsp;&nbsp;&nbsp;&nbsp;{$order_info.order_status_desc}</span><br>-->
+				    <!--<span class="dingdanhao">订单号&nbsp;:&nbsp;{$order_info.order_sn}</span><br>-->
+				    <!--<span>配送费用&nbsp;:￥{$order_info.shipping_price}元</span>-->
+				<!--</dd>-->
+				<!--</dl>-->
+			<!--</div>-->
+		<!---->
+			<!--<dl style="border-bottom:1px solid #eeeeee">-->
+			<!--<dt style=" position:absolute;" class="dingdan_2"></dt>-->
+			<!--<dd style=" margin-left:30px;"><span class="zhif">所选支付方式&nbsp;:&nbsp;{$order_info.pay_name}</span>-->
+				<!--<span class="zhif">应付款金额&nbsp;:&nbsp;￥{$order_info.order_amount}元</span>			 			 -->
+                <!--<if condition="$order_info.pay_btn eq 1">-->
+	                <!--<a href="{:U('Mobile/Cart/cart4',array('order_id'=>$order_info['order_id']))}" class="zhifu" style=" color:#fff; font-size:16px;">去支付</a>-->
+                <!--</if>			    -->
+			<!--</dd>-->
+			<!--</dl>-->
+		<!---->
+			<!--<dl>-->
+			<!--<dt class="dingdan_3"></dt>-->
+			<!--<dd><h3>收货人姓名&nbsp;:&nbsp;{$order_info.consignee}<em>{$order_info.mobile}</em></h3>-->
+				<!--<div class="adss">详细地址&nbsp;:&nbsp;{$region_list[$order_info['province']]['name']},{$region_list[$order_info['city']]['name']},{$region_list[$order_info['district']]['name']},{$order_info.address}</div>-->
+			<!--</dd>-->
+			<!--</dl>-->
+		<!---->
+			<!--<if condition="$order_info[shipping_time] gt 0">-->
+			<!--<dl style="border-top:1px solid #eeeeee; margin-top:10px; height:70px; padding-bottom:0px;">-->
+			<!--<dt class="dingdan_4"><img src="__STATIC__/images/wuliuimg.png" width="30" height="70"></dt>-->
+			<!--<dd><h3>快递单号:{$order_info.invoice_no}</h3>-->
+			<!--<p><a href="{:U('User/express',array('order_id'=>$order_info['order_id']))}" target="_blank">查看物流</a></p>-->
+			<!--</dd>-->
+			<!--</dl>-->
+			<!--</if>-->
+		<!--</div>-->
+		<!---->
+		<!--<div class="ord_list1">-->
+			<!--<h2><img src="__STATIC__/images/dianpu.png">网站自营</h2>-->
+            <!---->
+	<!--&lt;!&ndash;商品列表&ndash;&gt;	-->
+    <!--<volist name="order_info.goods_list" id="good">            -->
+			<!--<div class="order_list">-->
+		        <!--<a href="{:U('/Mobile/Goods/goodsInfo',array('id'=>$good['goods_id']))}">-->
+		          <!--<dl>-->
+		          <!--<dt><img src="{$good.goods_id|goods_thum_images=100,100}"></dt>-->
+		          <!--<dd class="name" class="pice" style=" width:55%;">-->
+	                  <!--<strong>{$good.goods_name}</strong><span>{$good.spec_key_name}</span>-->
+                   <!--</dd>-->
+		          <!--<dd class="pice" style=" font-size:13px; color:#F60; width:25%;">￥{$good['member_goods_price']}元<em>x{$good['goods_num']}</em></dd>-->
+		          <!--<dd class="pice" style=" font-size:13px; color:#F60; width:25%;">                  -->
+                  	<!--<em>-->
+                          <!--<if condition="($order_info[return_btn] eq 1) and ($good[is_send] eq 1)">-->
+                          	<!--<a href="{:U('Mobile/User/return_goods',array('order_id'=>$order_info[order_id],'order_sn'=>$order_info[order_sn],'goods_id'=>$good[goods_id],'spec_key'=>$good['spec_key']))}" style="color:#999;">申请售后</a>-->
+                          <!--</if>-->
+                    <!--</em>-->
+                  <!--</dd>-->
+		          <!--</dl>-->
+		          <!--</a>-->
+		          <!--<div class="pic" style=" border:0;"><span>小计：</span><strong>￥{$good['member_goods_price'] * $good['goods_num']}元</strong></div>-->
+		    <!--</div>-->
+	<!--</volist>-->
+	<!--&lt;!&ndash; end 商品列表&ndash;&gt;										       -->
+			<!--<div class="jiage">-->
+				<!--<p>商品总价&nbsp;:&nbsp;<span class="price">￥{$order_info.goods_price}元</span></p>				-->
+				<!--<p>配送费用&nbsp;:&nbsp;<span class="price">￥{$order_info.shipping_price}元</span></p>-->
+                                <!--<p>优惠券&nbsp;:&nbsp;<span class="price">￥{$order_info.coupon_price}元</span></p>-->
+				<!--<p>积分&nbsp;:&nbsp;<span class="price">￥{$order_info.integral_money}元</span></p>	-->
+                                <!--<p>余额&nbsp;:&nbsp;<span class="price">￥{$order_info.user_money}元</span></p>	-->
+                                <!--<p>活动优惠&nbsp;:&nbsp;<span class="price">￥{$order_info.order_prom_amount}元</span></p>                                -->
+				<!--<p>应付款金额&nbsp;:&nbsp;<span class="price1">￥{$order_info.order_amount}元</span></p>						-->
+			<!--</div>-->
+		<!--</div>-->
+		  <!---->
+		<!--<section class="qita">-->
+		    <!--<div class="navContent"> -->
+		    <!--<ul>-->
+				<!--<li class="first">配送方式&nbsp;:&nbsp;{$order_info.shipping_name}</li>	-->
+				<!--<li>支付方式&nbsp;:&nbsp;{$order_info.pay_name}</li>-->
+			<!--</ul>-->
+		    <!--</div>      -->
+		<!--</section>-->
+		<!---->
+		<!--<div style=" height:50px;"></div> -->
+		<!---->
+		<!--<div class="detail_dowm">-->
+			<!--<div class="anniu1">-->
+                <!--<if condition="$order_info.cancel_btn eq 1"><a onClick="cancel_order({$order_info.order_id})" class="on_comment">取消订单</a></if>-->
+                <!--<if condition="$order_info.pay_btn eq 1"><a href="{:U('Mobile/Cart/cart4',array('order_id'=>$order_info['order_id']))}" class="on_comment">立即付款</a></if>-->
+                <!--<if condition="$order_info.receive_btn eq 1"><a href="{:U('Mobile/User/order_confirm',array('id'=>$order_info['order_id']))}" class="on_comment">收货确认</a></if>    -->
+                <!--<if condition="$order_info.shipping_btn eq 1"><a href="{:U('User/express',array('order_id'=>$order_info['order_id']))}" class="on_comment">查看物流</a></if>-->
+			<!--</div> -->
+		<!--</div>-->
+	<!--</div>		-->
+<!--</div>-->
+<script src="__STATIC__/js/slide.js"></script>
+<script src="__STATIC__/js/main.js"></script>
+<script> 
+    //取消订单
+    function cancel_order(id){
+        if(!confirm("确定取消订单?"))
+            return false;
+        location.href = "/index.php?m=Mobile&c=User&a=cancel_order&id="+id;
+    }
+</script>
+</body>
+</html>

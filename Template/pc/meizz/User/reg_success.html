@@ -1,0 +1,14 @@
+<include file="Public/header" />
+<div class="login-success">
+    <h3>恭喜<i>{$user['mobile']}</i>您已经成美之钻的终生会员！<span><a href="/">返回首页</a>&nbsp;&nbsp;<a href="#">帮助中心</a></span></h3>
+    <div class="con">
+        <img src="__STATIC__/images/img31.png" alt="">
+        <a href="{:U('/Home/Goods/goodsList')}" class="btn-buy">现在去选购宝贝</a>
+        <div class="txt">为保障您的账户安全，请验证手机和邮箱信息。验证通过<br>后可接受账户及订单状态变动信息 </div>
+        <p>
+            <a href="{:U('/Home/User/safety_settings')}">验证信息</a>
+            <a href="{:U('/Home/User/info')}">完善资料</a>
+        </p>
+    </div>
+</div>
+<include file="Public/footer" />

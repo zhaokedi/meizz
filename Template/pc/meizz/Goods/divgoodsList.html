@@ -1,0 +1,227 @@
+<include file="Public/header" />
+
+
+
+
+
+<section class="crumb">
+	<a href="{:U('/Home')}">首页</a> &gt;  <a href="">裸钻定制</a>
+</section>
+
+
+<section class="main">
+
+	<img src="__STATIC__/images/step.png" alt="" class="step37">
+
+
+	<!-- 挑选裸钻 -->
+	<div class="page37-1">
+
+
+		<!-- 条件筛选371 -->
+		<div class="product-filter371">
+         <link rel="stylesheet" type="text/css" media="screen" href="__STATIC__/css/diy.css" />
+
+    <div class="u_filt_wp" id="diy_border">
+         <!-- 钻重 -->
+         <div class="diam_slide_sel">
+
+            <span class="diam_sech_tit">钻重</span>
+            <div class="diam_slide" id="pri_move">
+                                <input type="text" class="s_diam_weig searchWeight_borderL zmin" style="border: #dadada 1px solid;height: 23px;line-height: 23px;padding: 0 5px;min-width: 90px;border-radius: 23px;color: #8f7958;display: inline-block;" maxlength="6" value="0.3" onkeyup="this.value=this.value.replace(/[^\d.]/g,'')" onpaste="this.value=this.value.replace(/[^\d.]/g,'')" key="priStoneWeight" data="zmin">
+               <input type="text" class="s_diam_weig  searchWeight_borderR zmax"  style="border: #dadada 1px solid;height: 23px;line-height: 23px;padding: 0 5px;min-width: 90px;border-radius: 23px;color: #8f7958;display: inline-block;" maxlength="6" value="5" onkeyup="this.value=this.value.replace(/[^\d.]/g,'')" onpaste="this.value=this.value.replace(/[^\d.]/g,'')" key="priStoneWeight" data="zmax">
+               <div class="u_white_cover"></div>
+               <div class="diam_slide_ipt">
+                  <div class="layout-slider" style="width:99%;">
+                     <input id="Slider1" type="slider" name="area" key="priStoneWeight" data="z" value="0.3;5" style="display: none;">
+                  </div>
+               </div>
+            </div>
+         </div>
+          <!-- 价格 -->
+          <div class="diam_slide_sel" style="margin-right: 15px;">
+            <span class="diam_sech_tit">价格</span>
+            <div class="diam_slide">
+                <input type="text" class="s_diam_pri searchPrice_borderL vmin"  style="border: #dadada 1px solid;height: 23px;line-height: 23px;padding: 0 5px;min-width: 90px;border-radius: 23px;color: #8f7958;display: inline-block;" maxlength="7" value="2000" onkeyup="this.value=this.value.replace(/[^\d,]/g,'') " onpaste="this.value=this.value.replace(/[^\d]/g,'')" key="salePrice" data="vmin">
+            <input type="text" class="s_diam_pri searchPrice_borderR vmax"  style="border: #dadada 1px solid;height: 23px;line-height: 23px;padding: 0 5px;min-width: 90px;border-radius: 23px;color: #8f7958;display: inline-block;" maxlength="7" value="100000" onkeyup="this.value=this.value.replace(/[^\d,]/g,'') " onpaste="this.value=this.value.replace(/[^\d]/g,'')" key="salePrice" data="vmax">
+               <div class="u_white_cover"></div>
+               <div class="diam_slide_ipt">
+                  <div class="layout-slider" style="width:99%;">
+                     <input id="Slider2" type="slider" name="area" key="salePrice" data="v" value="2000;100000" style="display: none;">
+                  </div>
+               </div>
+            </div>
+         </div>
+          <!-- 滑动end -->
+ </div>
+ <script type="text/javascript" src="__STATIC__/js/diy_jquerysliderhuadongjq.js"></script>
+<script type="text/javascript" src="__STATIC__/js/diy_huadongxn.js?r212814"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+        //手输价格或者钻重
+        jSliderInput();
+
+    });
+	var min= $('#pri_move').find('input.zmin').attr('value');
+    var max= $('#pri_move').find('input.zmax').attr('value');
+   $('#Slider1').attr('value',min+';'+max);
+   $("#Slider1").slider({ from: parseFloat(min), to: parseFloat(max), limits: false, step: 0.01, round: 2, skin: "plastic" });
+   $("#Slider2").slider({ from: 2000, to: 100000, limits: false, step: 100, round: 1, skin: "plastic" });
+   //ajax_page();
+</script>
+			<div class="left">
+            <ul class="ul2 show">
+             <if condition="!empty($filter_spec1)">
+                    <foreach name="filter_spec1" item="v" key="k">
+                        <!--<li data-num="pre{$k}" class="shap">-->
+                        <li data-num="pre{$k}" class="li8"><span>{$v.name}</span>
+                            <foreach name="v['item']" item="v2" key="k2">
+                                <if condition="empty($v2['imgurl'])">
+                                    <em data-key="{$v2['id']}" data-pkey="{$k}"><i data-key="{$v2['id']}" data-pkey="{$k}"></i>{$v2['item']}</em>
+                                <else />
+                                   <em data-key="{$v2['id']}" data-pkey="{$k}"><img src="{$v2['imgurl']}" alt=""></em>
+                                </if>
+                            </foreach>
+                        </li>
+                    </foreach>
+             </if>
+            </ul>
+        </div>
+            <div class="right">
+            <ul class="ul2 show">
+                <if condition="!empty($filter_spec2)">
+                    <foreach name="filter_spec2" item="v" key="k">
+                      <!--  <li data-num="pre{$k}" class="shap">-->
+                        <li data-num="pre{k}" class="li8"><span>{$v.name}</span>
+                            <foreach name="v['item']" item="v2" key="k2">
+                                <if condition="empty($v2['imgurl'])">
+                                    <em data-key="{$v2['id']}" data-pkey="{$k}"><i data-key="{$v2['id']}" data-pkey="{$k}"></i>{$v2['item']}</em>
+                                <else />
+                                   <em data-key="{$v2['id']}" data-pkey="{$k}"><img src="{$v2['imgurl']}" alt=""></em>
+                                </if>
+                            </foreach>
+                        </li>
+                    </foreach>
+                    </if>
+            </ul>
+        </div>
+			<div class="cf"></div>
+			<div class="operate"><a href="" class="btn1">展开高级搜索</a><a href="" class="btn2">收起高级搜索</a><a href="" class="btn3">清空筛选条件</a></div>
+
+
+
+
+		</div>
+
+<div id="goods_list">
+            <!-- 筛选产品结果排序 -->
+            <div class="product-result-title371">
+                <div class="order">
+                    <a href="" class="on">销量<i></i></a>
+                    <a href="">新品<i></i></a>
+                    <a href="">评论<i></i></a>
+                    <a href="">价格<i></i></a>
+                </div>
+                <div class="r">
+                    共<b>235</b>件宝贝&nbsp; |  <a href="" class="prev">&lt;</a> <span>1/25</span><a href="" class="next">&gt;</a>
+                </div>
+            </div>
+
+            <!-- 钻石筛选结果列表 -->
+            <div class="product-result2">
+                <volist name="goods_list" id="goods">
+                   <div class="item">
+                    <div class="left">
+                         {$goods['showtype']}
+                    </div>
+                    <div class="right">
+                        <a href="{:U('/Home/Goods/divgoodsList2')}" class="btn2"><img src="__STATIC__/images/icon371.png" alt="">配托</a>
+                         <a href="{:U('/Home/Goods/divgoodsList3')}" class="btn2"><img src="__STATIC__/images/icon371.png" alt="">配坠</a>
+                        <a href="/Home/Goods/diygoodsInfo/id/{$goods['goods_id']}/diytype/1">选择</a>
+                        <a href="">咨询客服</a>
+                    </div>
+                </div>
+                </volist>
+
+            </div>
+
+
+
+            <div class="prv-nxt2">
+                {$page->show()}
+            </div>
+        </div>
+
+
+
+
+		<!-- 热门钻饰 -->
+		<section class="section-hot">
+			<div class="title">看了又看 <a href="" class="more">更多&raquo;</a>
+			</div>
+			<div class="con">
+				<div class="item">
+					<a href=""><img src="__STATIC__/images/img12-1.jpg" alt=""></a>
+					<p>甜心宝贝[美之钻原创]<span>￥5688</span></p>
+					<p>已售56984件<span>累记评价5698</span></p>
+				</div>
+				<div class="item">
+					<a href=""><img src="__STATIC__/images/img12-2.jpg" alt=""></a>
+					<p>甜心宝贝[美之钻原创]<span>￥5688</span></p>
+					<p>已售56984件<span>累记评价5698</span></p>
+				</div>
+				<div class="item">
+					<a href=""><img src="__STATIC__/images/img12-3.jpg" alt=""></a>
+					<p>甜心宝贝[美之钻原创]<span>￥5688</span></p>
+					<p>已售56984件<span>累记评价5698</span></p>
+				</div>
+				<div class="item">
+					<a href=""><img src="__STATIC__/images/img12-4.jpg" alt=""></a>
+					<p>甜心宝贝[美之钻原创]<span>￥5688</span></p>
+					<p>已售56984件<span>累记评价5698</span></p>
+				</div>
+			</div>
+		</section>
+
+
+
+
+
+	</div>
+	<!-- /挑选裸钻 -->
+
+
+</section>
+
+<script type="text/javascript">
+// ajax 提交购物车
+var before_request = 1; // 上一次请求是否已经有返回来, 有才可以进行下一次请求
+function ChangeState(datakey,datapkey){
+    var showtype=$("#showtype").val();
+    if(before_request == 0) // 上一次请求没回来 不进行下一次请求
+        return false;
+    before_request = 0;
+    $.ajax({
+        type : "get",
+        url:"{:U('Home/Goods/ajaxshowdiy')}",//+tab,
+        data:{key:datakey,pkey:datapkey,slider1:Slider1.defaultValue,slider2:Slider2.defaultValue,showtype:showtype},
+        success: function(data){
+            $("#goods_list").empty().append(data);
+            before_request = 1;
+        }
+    });
+}
+
+	</script>
+
+
+
+
+
+
+
+
+
+
+<include file="Public/footer" />
+

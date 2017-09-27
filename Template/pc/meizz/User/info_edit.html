@@ -1,0 +1,113 @@
+<include file="Public/header" />
+<include file="User/navigate" />
+<section class="main">
+    <!-- main-left -->
+    <include file="User/menu" />
+    <!-- /main-left -->
+    <!-- main-right -->
+    <form action="" method="post">
+        <div class="main-right">
+            <h2>个人信息 <i style="color:#999;margin-left:10px;">为了可以给您提供个性化服务，请完善您的基本资料</i></h2>
+            <div class="page23">
+                <ul>
+                    <li class="li1">
+                        <span>用户头像</span>
+                        <div class="face">
+                            <img class="headpic" src="{$User['head_pic']|default='__STATIC__/images/face22.png'}" alt="">
+                            <div class="upload" onClick="GetUploadify2(1,'head_pic','head_pic','add_img')">更换头像</div>
+                            <input type="hidden" name="head_pic" id="head_pic" value="{$user.head_pic}">
+                        </div>
+                    </li>
+                    <li><span>用户名</span><input type="text" value="{$User['nickname']}"></li>
+                    <li><span>真实姓名</span>
+                        <input type="text" name="name" value="{$User['name']}" <if condition="!empty($User['name'])">disabled</if>>
+                        一旦填写不能更改
+                    </li>
+                    <li><span>性别</span>
+                        <label for="sex1"><input type="radio" name="sex" <if condition="$User['sex'] eq 0">checked</if> value="0">保密</label>
+                        <label for="sex1"><input type="radio" name="sex" id="sex1" <if condition="$User['sex'] eq 1">checked</if> value="1">男</label>
+                        <label for="sex2"><input type="radio" name="sex" id="sex2" <if condition="$User['sex'] eq 2">checked</if> value="2">女</label>
+                    </li>
+                    <li><span>出生日期</span>
+                        <input type="text" name="birthday" id="birthday" readonly="readonly" onclick="WdatePicker({lang:'zh-cn',skin:'twoer'})" value="{$User.birthday|date='Y-m-d',###}" />
+                    </li>
+                    <li><span>地区</span>
+                        <select  class="selec" name="province" id="province" onChange="get_city(this)" >
+                            <option value="0">请选择省份</option>
+                            <volist name="province" id="p">
+                                <option <if condition="$User['province'] eq $p['id']">selected</if> value="{$p.id}">{$p.name}</option>
+                            </volist>
+                        </select>
+                        <select  class="selec" name="city" id="city" onChange="get_area(this)">
+                            <option value="0">请选择城市</option>
+                            <volist name="city" id="p">
+                                <option <if condition="$User['city'] eq $p['id']">selected</if> value="{$p.id}">{$p.name}</option>
+                            </volist>
+                        </select>
+                        <select  class="selec" name="district" id="district">
+                            <option value="0">请选择地区</option>
+                            <volist name="area" id="p">
+                                <option <if condition="$User['district'] eq $p['id']">selected</if> value="{$p.id}">{$p.name}</option>
+                            </volist>
+                        </select>
+                    </li>
+                    <li><span>详细地址</span>
+                        <input type="text" class="addr" name="adderss" value="{$User['adderss']}">
+                    </li>
+                    <li><span>手机</span>
+                        {$User['mobile']}
+                        <a href="{:U('Home/User/mobile_validate',array('type'=>'mobile','step'=>1))}">更换手机</a>
+                    </li>
+                    <li><span>邮箱</span>
+                        <input type="text" name="email" value="{$User['email']}">
+                        <if condition="!empty($User['email']) and $User['email_validated'] eq 0"><a href="">验证邮箱</a></if>
+                    </li>
+                    <li><span>QQ号码</span>
+                        <input type="text" name="qq" value="{$User['qq']}">
+                    </li>
+                    <li><span>微信号码</span>
+                        <input type="text" name="weixin" value="{$User['weixin']}">
+                    </li>
+                    <li><span>新浪微博</span>
+                        <input type="text" name="weibo" value="{$User['weibo']}">
+                    </li>
+                    <li><span>结婚纪念日</span>
+                        <input type="text" name="marry" readonly="readonly" id="marry" onclick="WdatePicker({lang:'zh-cn',skin:'twoer'})" value="{$User.marry|date='Y-m-d',###}" />
+                    </li>
+                </ul>
+                <div class="operate">
+                    <input type="button" onclick="submit();" value="保 存">
+                </div>
+            </div>
+        </div>
+    </form>
+    <!-- /main-right -->
+</section>
+<script>
+    function delimg(file,t){
+        $.get(
+                "/index.php?m=Admin&c=Uploadify&a=delupload",{action:"del", filename:file},function(){}
+        );
+        $('#head_pic').val('');
+        $('#preview').attr('src','');
+        $(t).remove();
+    }
+    function add_img(str){
+        var head_pic = $('#head_pic').val();
+        $('#head_pic').val(str);
+        $('#preview').attr('src',str);
+        $('img[class="headpic"]').attr('src',str);
+//        if(!$('#delimg')){
+//            $('#img_box').append('<button id="delimg" type="button" onclick="delimg('+"'"+str+"'"+',this)">删除图片</button>');
+//        }else{
+//            $('#delimg').attr('onclick','delimg('+"'"+str+"'"+',this)');
+//        }
+        if(!head_pic){
+            $('#img_box').append('<button id="delimg" type="button" onclick="delimg('+"'"+str+"'"+',this)">删除图片</button>');
+        }else{
+            $('#delimg').attr('onclick','delimg('+"'"+str+"'"+',this)');
+        }
+
+    }
+</script>
+<include file="Public/footer" />

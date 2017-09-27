@@ -1,0 +1,68 @@
+<include file="Public/header" />
+<section class="main">
+    <div class="page53">
+        <h3>找回密码</h3>
+        <div class="step1">
+            <div class="title">
+                <span>填写账户名</span>
+                <span>验证身份</span>
+                <span>设置新密码</span>
+                <span>完成</span>
+            </div>
+            <form id="forget_pwd" action="{:U('User/identity')}" method="post">
+            <ul>
+                <li><input type="text" name="username" id="username" placeholder="手机号码"></li>
+                <if condition="$tpshop_config['verify_code_forget_show'] neq '1'">
+                      <li class="yzm2">
+                          <input type="text" name="verify_code" id="captcha" placeholder="验证码">
+                          <img onclick="verify('forget')" src="{:U('/Home/User/verify/type/forget')}" class="yzm2-img" title="点击刷新" id="verify_code_img"><a href="javascript:void(0);" onclick="verify('forget')" class="btn-refresh">换一张</a>
+                      </li>
+                </if>
+                
+                <li><input type="button" onclick="chkcaptcha()" value="下一步"></li>
+            </ul>
+            </form>
+        </div>
+    </div>
+</section>
+<script type="text/javascript">
+function chkcaptcha(){
+    var username = $('#username').val().trim();
+	<if condition="$tpshop_config['verify_code_forget_show'] neq '1'">
+    var captcha = $('#captcha').val().trim();
+	<else /> 
+     var captcha="123";
+	</if>
+    if(username == ''){
+        showErrorMsg('手机号码不能为空');
+        return false;
+    }else if(!checkMobile(username)){
+        showErrorMsg('手机号码格式不匹配');
+        return false;
+    }else if(captcha == ''){
+         showErrorMsg('验证码不能为空');
+         return false;
+    }else{
+        $.ajax({
+            url:'/index.php?m=Home&c=User&a=check_captcha&t='+Math.random(),
+            type:'post',
+            dataType:'json',
+            data:{verify_code:captcha,type:'forget'},
+            success:function(t){
+                if(t==1){
+                    gonext();
+                }else{
+                    showErrorMsg('验证码不正确');
+                    verify('forget');
+                    return false;
+                }
+            }
+        })
+    }
+}
+
+function gonext(){
+    $('#forget_pwd').submit();
+}
+</script>
+<include file="Public/footer" />

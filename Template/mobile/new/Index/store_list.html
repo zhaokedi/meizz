@@ -1,0 +1,88 @@
+<!DOCTYPE html >
+<html style="font-size: 58.5938px;">
+<head>
+<meta name="Generator" content="tpshop" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<title>地址列表-{$tpshop_config['shop_info_store_title']}</title>
+<meta http-equiv="keywords" content="{$tpshop_config['shop_info_store_keyword']}" />
+<meta name="description" content="{$tpshop_config['shop_info_store_desc']}" />
+<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+<link rel="stylesheet" href="__STATIC__/css/public.css">
+<!--<link rel="stylesheet" href="__STATIC__/css/user.css">-->
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/main.css">
+<script type="text/javascript" src="__STATIC__/js/jquery.js"></script>
+<script src="__PUBLIC__/js/global.js"></script>
+<script src="__PUBLIC__/js/mobile_common.js"></script>
+    <style type="text/css">
+        .addr-manager .item i{
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <a href="javascript:history.back(-1)" class="back"></a>
+    <h3>门店列表</h3>
+</header>
+<div class="h50"></div>
+
+
+
+<div id="tbh5v0">
+<div class="addr-manager">
+  <volist name="store_list" id="list" key="k">
+
+        <!--<div class="address_add   <if condition="$list[is_default] eq 1"> Default</if>">-->
+
+      <div class="item <if condition="$k eq 1"> Default</if>">
+
+
+                    <a href="{:U('/Mobile/index/index',array('store_id'=>$list['id']))}">
+
+                        <h3>{$list[name]}</h3>
+                       <p><if condition="$k eq 1">   <i>默认</i></if>{$list[address]}</p>
+
+                    </a>
+
+                 <!--<a href="{:U('/Mobile/User/edit_address',array('id'=>$list[address_id],'source'=>$_GET['source']))}" class="btn-edit"></a>-->
+             <!--<a href="{:U('/Mobile/User/edit_address',array('id'=>$list[address_id],'source'=>$_GET['source']))}"><img id="amend" src="__STATIC__/images/amend.png"/></a>-->
+        <!--</div>      -->
+    </div>
+   </volist>
+</div>
+
+
+<div style=" width:100%; height:50px;"></div>
+<!--<div class="list_footer">-->
+	<!--<a href="{:U('/Mobile/User/add_address',array('source'=>$_GET['source']))}">添加新地址</a>-->
+<!--</div>-->
+<!--<div class="addr-manager">-->
+    <!--<div class="operate">-->
+        <!--<a href="{:U('/Mobile/User/add_address',array('source'=>$_GET['source']))}" class="btn-add">添加收货地址</a>-->
+    <!--</div>-->
+<!--</div>-->
+<script>
+$(document).ready(function($) {
+  $(window).scroll(function() {
+        if ($(this).scrollTop() != 0) {
+            $('.gotop').fadeIn();
+        } else {
+            $('.gotop').fadeOut();
+        }
+    });
+    $('.gotop').click(function() {
+        $('body,html').animate({ scrollTop: 0 }, 800);
+    })
+});
+</script>
+<a href="javascript:void(0);" class="gotop"><img src="__STATIC__/images/topup.png"></a>
+</div>
+<script src="__STATIC__/js/slide.js"></script>
+<script src="__STATIC__/js/main.js"></script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,163 @@
+<include file="Public/header" />
+<include file="User/navigate" />
+<section class="main">
+	<!-- main-left -->
+	<include file="User/menu" />
+	<!-- /main-left -->
+	<!-- main-right -->
+
+	<style>
+		/*.btn-pay {*/
+			/*display: inline-block;*/
+			/*width: 150px;*/
+			/*height: 45px;*/
+			/*line-height: 45px;*/
+			/*border-radius: 0;*/
+			/*background-color: #cdaf82;*/
+			/*border: none;*/
+			/*margin-left: 150px;*/
+		/*}*/
+	</style>
+	<div class="main-right">
+		<h2>我的留言</h2>
+		<div class="page4 page4plus">
+			
+            <div class="queList">
+            	<ul>
+					<foreach name="message" item="vo">
+                	<li >
+                    	<div class="liBlock">
+                        	<div class="name name1">
+                            	留言内容：
+                            </div>
+                            <div class="text text1">
+								{$vo.msg_content}
+                            </div>
+                        </div>
+						<foreach name="vo.admin" item="val">
+                        <div class="liBlock">
+                        	<div class="name name2">
+                            	美之钻回复：
+                            </div>
+                            <div class="text text2">
+								{$val.msg_content}
+                            </div>
+                        </div>
+						</foreach>
+                    </li>
+					</foreach>
+                    <!--<li>-->
+                    	<!--<div class="liBlock">-->
+                        	<!--<div class="name name1">-->
+                            	<!--留言内容：-->
+                            <!--</div>-->
+                            <!--<div class="text text1">-->
+                            	<!--怎么更换戒托？-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div class="liBlock">-->
+                        	<!--<div class="name name2">-->
+                            	<!--美之钻回复：-->
+                            <!--</div>-->
+                            <!--<div class="text text2">-->
+                            	<!--您好！此款支持安装戒托，具体详情您可以致电400-800-8000官方售后技术支持指导操作安装。感谢您对美之钻的支持祝您购物愉快！-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</li>-->
+                </ul>
+            </div>
+
+			<div class="prv-nxt">
+				{$page}
+			</div>
+
+
+            <div class="queSubmit">
+            	
+                <div class="inputBlock">
+                	<div class="name">
+                    	发表留言：
+                    </div>
+                </div>
+                
+                <div class="warning">
+                	声明：您可以在购买前对产品包装、颜色、运输、库存等方面进行留言咨询，我们有专人进行回复！留言回复的工作时间为：周一至周五，9:00至18:00，请耐心等待工作人员回复。
+                </div>
+                <form action="" method="post" enctype="multipart/form-data" name="formMsg" onSubmit="return submitMsg()">
+                <div class="inputBlock">
+                	<div class="name">
+                    	发表留言：
+                    </div>
+                    <div class="input">
+                    	<input id="ra1" type="radio" name="msg_type" value="0" checked><label for="ra1">商品咨询</label>
+                        <input id="ra2" type="radio" name="msg_type" value="1" ><label for="ra2">库存及配送</label>
+                        <input id="ra3" type="radio" name="msg_type" value="2"><label for="ra3">支付问题</label>
+                        <input id="ra4" type="radio" name="msg_type" value="3"><label for="ra4">发票及保修</label>
+                        <input id="ra5" type="radio" name="msg_type" value="4"><label for="ra5">促销及赠品</label>
+                    </div>
+                </div>
+                
+                <div class="inputBlock">
+                	<div class="name">
+                    	发表留言：
+                    </div>
+                    <div class="input">
+                    	<textarea placeholder="请输入您要留言的内容" name="msg_content" required></textarea>
+                    </div>
+                </div>
+                
+                <div class="inputBlock">
+                	<div class="name">
+                    	&nbsp;
+                    </div>
+                    <div class="input">
+                    	<button type="submit" class="btn-pay">提交</button>
+                    </div>
+                </div>
+                </form>
+            </div>
+            
+		</div>
+	</div>
+	<!-- /main-right -->
+</section>
+
+
+
+
+
+<script>
+	function submitMsg() {
+		var frm = document.forms['formMsg'];
+		var msg_title = frm.elements['msg_title'].value;
+		var msg_content = frm.elements['msg_content'].value;
+		var msg = '';
+		if (msg_title.length == 0) {
+			alert('留言标题不能为空');
+			return false
+		}
+		if (msg_content.length == 0) {
+			alert('留言内容不能为空');
+			return false
+		}
+		if (msg_title.length > 100) {
+			alert('标题不能超过100字符');
+			return false
+		}
+		if ($.trim($('#verify_code').val()).length == 0) {
+			alert('验证码不能为空');
+			return false
+		}
+
+
+		return true;
+	}
+</script>
+
+
+
+<include file="Public/footer" />
+
+
+
+

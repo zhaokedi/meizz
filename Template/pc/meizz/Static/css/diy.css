@@ -1,0 +1,54 @@
+
+.jslider{display:block;width:100%;height:1em;position:relative;top:.6em;font-family:Arial,sans-serif}
+.jslider table{width:100%;border-collapse:collapse;border:0}
+.jslider td,.jslider th{padding:0;vertical-align:top;text-align:left;border:0}
+.jslider table,.jslider table tr,.jslider table tr td{width:100%;vertical-align:top}
+.jslider .jslider-bg{position:relative}
+.jslider .jslider-bg i{height:15px;position:absolute;font-size:0;top:0}
+.jslider .jslider-bg .l{width:0;background-position:0 0;left:0}
+.jslider .jslider-bg .f{width:100%;left:0;background-repeat:repeat-x;background-position:0 -20px}
+.jslider .jslider-bg .r{width:0;left:90%;background-position:right 0}
+.jslider .jslider-bg .v{position:absolute;width:60%;left:20%;top:0;height:15px;background-repeat:repeat-x;background-position:0 -40px}
+.jslider .jslider-pointer{width:17px;height:23px;background-position:0 -58px;position:absolute;left:20%;top:-6px;margin-left:-6px;cursor:pointer;cursor:hand}
+.jslider .jslider-pointer-hover{background-position:0 -58px}
+.jslider .jslider-pointer-to{left:80%}
+.jslider .jslider-label{font-size:12px;line-height:12px;color:black;opacity:.4;white-space:nowrap;padding:0 2px;position:absolute;top:-18px;left:0}
+.jslider .jslider-label-to{left:auto;right:0}
+.jslider .jslider-value{font-size:12px;white-space:nowrap;padding:1px 2px 0;position:absolute;top:-19px;left:20%;line-height:12px;-moz-border-radius:2px;-webkit-border-radius:2px;-o-border-radius:2px;border-radius:2px}
+.jslider .jslider-value-to{left:80%}
+.jslider .jslider-label small,.jslider .jslider-value small{position:relative;top:-0.4em}
+.jslider .jslider-scale{position:relative;top:9px}
+.jslider .jslider-scale span{position:absolute;height:5px;font-size:0}
+.jslider .jslider-scale ins{font-size:12px;text-decoration:none;position:absolute;left:0;top:5px;color:#bdbdbd;width:25px}
+.jslider-single .jslider-pointer-to,.jslider-single .jslider-value-to,.jslider-single .jslider-bg .v,.jslider-limitless .jslider-label{display:none}
+.jslider_plastic .jslider-bg i,.jslider_plastic .jslider-pointer{background-image:url('../images/jslider_plastic.png')}
+
+
+/****************************选钻****************************/
+
+/*筛选条件名称*/
+.u_filt_wp{overflow:hidden;width:100%;}
+.diam_sech_tit{font-family: Arial,"宋体";color: #8f7958;
+                display:inline-block;width: 60px;height:20px; text-align:center;}
+
+.ovly_nomove{background:#dedede;opacity: 0;filter: alpha(opacity=0);position:absolute;z-index: 10;width:495px;height: 64px;top: -10px;left: 0;}
+.diam_slide_sel,.diam_sel{text-align:left;float:left;margin-right: 15px;}
+.diam_slide_sel{margin-bottom: 22px;margin-top: 10px;}
+.diam_slide_sel2{margin-bottom: 22px;margin-top: 10px;margin-right: 15px;}
+
+.diam_sel{width:520px;margin-bottom: 16px;}
+
+/*滑动钻重和价格*/
+.diam_slide{width:520px;position:relative;z-index:0;height:29px;display:inline-block;padding-top:16px;}
+.s_diam_weig,.s_diam_pri{width:63px;height:24px;padding-right:27px;padding-left:10px;font-size:14px; color:#333333; font-family: Arial,"宋体";position:absolute;
+                          top:0;z-index:2;border:none;}
+
+
+.s_diam_weig{border: #dadada 1px solid;height: 23px;line-height: 23px;padding: 0 5px;min-width: 90px;border-radius: 23px;color: #8f7958;display: inline-block;
+}
+.s_diam_pri{border: #dadada 1px solid;height: 23px;line-height: 23px;padding: 0 5px;min-width: 90px;border-radius: 23px;color: #8f7958;display: inline-block;}
+.searchWeight_borderL,.searchPrice_borderL{left:5px;}
+.searchWeight_borderR,.searchPrice_borderR{right:5px;}
+.u_white_cover{width:100%; height:20px; position:absolute; left:0px; top:12px; background-color:#fefefe; z-index:1;}
+.diam_slide_ipt{width:510px;margin:15px 0px 0px 5px;}
+/*滑动钻重和价格 end*/

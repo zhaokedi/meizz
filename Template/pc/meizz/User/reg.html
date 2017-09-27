@@ -1,0 +1,299 @@
+<include file="Public/header" />
+<div class="register">
+    <!-- <div class="left">
+        <a href="" class="ad"><img src="__STATIC__/images/img31ad.png" alt=""></a>
+        <div class="txt">
+            <h3>优惠券使用方法</h3>
+            <p>1、优惠券有效期至2016年12月31日，过期作废；</p>
+            <p>2、本券无法与其他优惠券同时使用 ；</p>
+            <p>3、本券除部分特殊商品外，珂兰官网全网通用；</p>
+            <p>4、优惠券仅限美之钻官网使用，其他渠道及体验店暂无法使用，一个</p>
+            <p>订单只能使用一张优惠券，不可叠加，不兑换现金；</p>
+            <p>5、您可至个人中心查看优惠券。</p>
+        </div>
+    </div> -->
+    <div class="right">
+        <h3><img src="__STATIC__/images/title31.png" alt=""></h3>
+        <form id="reg-form" method="post" action="{:U('/Home/User/reg')}">
+            <ul>
+                <li><span>邀请码</span><input type="text" id="invite_id" name="invite_id" value="{$invite}"></li>
+                <li><span>手机号码</span><input type="text" id="username" name="username"></li>
+                <li><span>设置密码</span><input type="password" id="password" name="password"></li>
+                <li><span>确认密码</span><input type="password" id="password2" name="password2"></li>
+                <if condition="$regis_sms_enable eq 1">
+                    <li class="yzm">
+                        <span><i class="e5">验</i><i class="e5">证</i>码</span><input type="text" id="code" name="code" placeholder="手机验证码*">
+                        <button class="btn-yzm" id="sendSms" onclick="send_sms_reg_code()" type="button" id="count_down">获取验证码</button>
+                    </li>
+                <else/>
+                     <if condition="$tpshop_config['verify_code_reg_show'] neq '1'">
+                    <li class="yzm">
+                        <span><i class="e5">验</i><i class="e5">证</i>码</span>
+                        <input type="text" class="form-control" id="verify_code" name="verify_code" placeholder="图形验证码*">
+                        <img onclick="verify('user_reg');" style="vertical-align: middle;width:90px;height:40px;" src="/index.php/Home/User/verify/type/user_reg.html" id="verify_code_img" title="点击刷新">
+                    </li>
+                    </if>
+                </if>
+            </ul>
+            <div class="tips"><label for="x1"><input type="checkbox" checked name="agree" value="1" id="x1">已阅读并同意</label><a href="#">《美之钻服务协议》</a></div>
+            <div class="operate">
+                <input type="button" id="submit" onclick="checkSubmit()" value="提交">
+                <a href="{:U('/Home/User/login')}" class="btn-login">已有账号点此登录</a>
+            </div>
+        </form>
+        <div class="other">
+            <!-- <span>第三方平台登录</span>
+            <a href="" class="a1"><img src="__STATIC__/images/icon21.png" alt=""></a>
+            <!-- <a href="{:U('LoginApi/login',array('oauth'=>'qq'))}" class="a2" title="QQ登录"><img src="__STATIC__/images/icon22.png" alt=""></a> 
+            <a href="{:U('LoginApi/login',array('oauth'=>'alipay'))}" class="a3" title="支付宝登录"><img src="__STATIC__/images/icon23.png" alt=""></a>-->
+            <a href="{:U('/Home/User/forget_pwd')}" class="btn-forget">忘记密码?</a>
+        </div>
+    </div>
+</div>
+
+<!-- <div class="choujiang">
+    <div class="content">
+        <div class="title"><span>免费抽奖</span></div>
+        <div id="lottery">
+            <table border="0" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td class="lottery-unit lottery-unit-0"><img src="__STATIC__/images/prize1.png"></td>
+                    <td class="lottery-unit lottery-unit-1"><img src="__STATIC__/images/prize2.png"></td>
+                    <td class="lottery-unit lottery-unit-2"><img src="__STATIC__/images/prize3.png"></td>
+                    <td class="lottery-unit lottery-unit-3"><img src="__STATIC__/images/prize4.png"></td>
+                </tr>
+                <tr>
+                    <td class="lottery-unit lottery-unit-9"><img src="__STATIC__/images/prize9.png"></td>
+                    <td colspan="2"><a href="#">点击抽奖</a></td>
+                    <td class="lottery-unit lottery-unit-4"><img src="__STATIC__/images/prize5.png"></td>
+                </tr>
+                <tr>
+                    <td class="lottery-unit lottery-unit-8"><img src="__STATIC__/images/prize8.png"></td>
+                    <td class="lottery-unit lottery-unit-7"><img src="__STATIC__/images/prize9.png"></td>
+                    <td class="lottery-unit lottery-unit-6"><img src="__STATIC__/images/prize7.png"></td>
+                    <td class="lottery-unit lottery-unit-5"><img src="__STATIC__/images/prize6.png"></td>
+                </tr>
+            </table>
+        </div>
+        <div class="tips">您还有<b>0</b>次抽奖机会，完善资料后可获取更多抽奖机会。<a href="">去完善资料</a></div>
+        <div class="rule">
+            <h3>抽奖规则</h3>
+            <p>1、每个账户每天可抽奖1次；</p>
+            <p>2、如抽中优惠券，您的优惠券将会自动发送至个人中心，您可以在个人中心查看；如抽中小黄鸭吊坠，我们的客服将在5个工作日内与您联系，请确保手机畅通，如在期限内电话无法接通，则视为放弃领奖资格；</p>
+            <p>3、优惠券30元、50元、100元、500元需分别满足订单金额599元、1999元、3999元、6999元才可使用;</p>
+            <p>4、优惠券仅限美之钻官网使用，其他渠道及体验店暂无法使用，一个订单只能使用一张优惠券，不可叠加，不兑换现金；</p>
+            <p>5、本活动抽奖情况以美之钻数据为准，最终解释权归美之钻所有。</p>
+        </div>
+    </div>
+</div> -->
+
+<script>
+    function checkSubmit()
+    {
+        var flag = true;
+        /*$(".form-control").each(function() {
+          var e = $(this);
+          var msg = e.attr('placeholder').replace('*','');
+          if(e.val().length == 0){
+            showErrorMsg(msg+'不能为空');
+            if(flag){
+              flag = false;
+              return false;
+            }
+          }
+        });*/
+        var username = $("#username").val();
+        // var email = $("#email").val();
+        var password = $("#password").val();
+        var password2 = $("#password2").val();
+        <if condition="$regis_sms_enable eq 1">
+        var code = $("#code").val();
+		if(code == ''){
+            showErrorMsg('验证码不能为空');
+            flag = false;
+        }
+        <else/>
+		<if condition="$tpshop_config['verify_code_reg_show'] neq '1'">
+        var code = $("#verify_code").val();
+		if(code == ''){
+            showErrorMsg('验证码不能为空');
+            flag = false;
+        }
+		</if>
+        </if>
+        var rex = /^[0-9a-zA-Z]*$/g;
+
+        if(password == ''){
+            showErrorMsg('密码不能为空');
+            flag = false;
+        }
+        if(username == ''){
+            showErrorMsg('手机号码不能为空');
+            flag = false;
+        }
+        // if(password.length > 0 && password2.length > 0){
+          if(password != password2){
+            showErrorMsg('两次输入密码不一致');
+            flag = false;
+          }
+        // }
+        if(password.length > 0 && password.length < 6){
+            showErrorMsg('密码长度不能低于6位!');
+            flag = false;
+        }
+        if(!rex.test(password)){
+            showErrorMsg('密码只能是数字和字母组合!');
+            flag = false;
+        }
+        if(username.length > 0 && !checkMobile(username)){
+          showErrorMsg('手机号码格式不匹配');
+          flag = false;
+        }
+
+        /*if(username.length > 0 && !checkEmail(username)){
+          showErrorMsg('邮箱格式不匹配');
+          flag = false;
+        }*/
+        if(flag){
+          $.ajax({
+              type : 'POST',
+              url : $('#reg-form').attr('action'),
+              data : $('#reg-form').serialize(),
+              // dataType : 'json',
+              success : function(res){
+                  if(res.status == 1){
+                      window.location.href = res.url;
+                  }else{
+                    showErrorMsg(res.info);
+                    verify('user_reg');
+                  }
+              },
+              error : function(XMLHttpRequest, textStatus, errorThrown) {
+                showErrorMsg('网络失败，请刷新页面后重试');
+              }
+          })
+        }
+    }
+      // 发送手机短信
+    function send_sms_reg_code(){
+        var mobile = $("#username").val();
+        if(!checkMobile(mobile)){
+            showErrorMsg('请输入正确的手机号码');//alert('请输入正确的手机号码');
+            return false;
+        }
+        var url = "/index.php?m=Home&c=User&a=send_sms_reg_code&mobile="+mobile;
+        $.get(url,function(data){
+            obj = $.parseJSON(data);
+            if(obj.status == 1){
+                $('#sendSms').attr("disabled","disabled").addClass('disabled');
+                intAs = {$sms_time_out}; // 手机短信超时时间
+                jsInnerTimeout('sendSms',intAs);
+                layer.alert(obj.msg,{icon: 1,time:2000});
+            }else{
+                showErrorMsg(obj.msg);// alert(obj.msg);
+            }
+        })
+    }
+       //倒计时函数
+    function jsInnerTimeout(id,intAs)
+    {
+          var codeObj=$("#"+id);
+          //var intAs = parseInt(codeObj.attr("IntervalTime"));
+          intAs--;
+          if(intAs<=-1)
+          {
+              codeObj.removeAttr("disabled").removeClass('disabled');
+    //            codeObj.attr("IntervalTime",60);
+              codeObj.text("发送验证码");
+              return true;
+          }
+
+          codeObj.text(intAs+'秒');
+    //        codeObj.attr("IntervalTime",intAs);
+
+          setTimeout("jsInnerTimeout('"+id+"',"+intAs+")",1000);
+    };
+    //抽奖动画
+    /*var lottery={
+        index:-1,   //当前转动到哪个位置，起点位置
+        count:0,    //总共有多少个位置
+        timer:0,    //setTimeout的ID，用clearTimeout清除
+        speed:20,   //初始转动速度
+        times:0,    //转动次数
+        cycle:50,   //转动基本次数：即至少需要转动多少次再进入抽奖环节
+        prize:-1,   //中奖位置
+        init:function(id){
+            if ($("#"+id).find(".lottery-unit").length>0) {
+                $lottery = $("#"+id);
+                $units = $lottery.find(".lottery-unit");
+                this.obj = $lottery;
+                this.count = $units.length;
+                $lottery.find(".lottery-unit-"+this.index).addClass("active");
+            };
+        },
+        roll:function(){
+            var index = this.index;
+            var count = this.count;
+            var lottery = this.obj;
+            $(lottery).find(".lottery-unit-"+index).removeClass("active");
+            index += 1;
+            if (index>count-1) {
+                index = 0;
+            };
+            $(lottery).find(".lottery-unit-"+index).addClass("active");
+            this.index=index;
+            return false;
+        },
+        stop:function(index){
+            this.prize=index;
+            return false;
+        }
+    };
+
+    function roll(){
+        lottery.times += 1;
+        lottery.roll();
+        if (lottery.times > lottery.cycle+10 && lottery.prize==lottery.index) {
+            clearTimeout(lottery.timer);
+            lottery.prize=-1;
+            lottery.times=0;
+            click=false;
+        }else{
+            if (lottery.times<lottery.cycle) {
+                lottery.speed -= 10;
+            }else if(lottery.times==lottery.cycle) {
+                var index = Math.random()*(lottery.count)|0;
+                lottery.prize = index;
+            }else{
+                if (lottery.times > lottery.cycle+10 && ((lottery.prize==0 && lottery.index==7) || lottery.prize==lottery.index+1)) {
+                    lottery.speed += 110;
+                }else{
+                    lottery.speed += 20;
+                }
+            }
+            if (lottery.speed<40) {
+                lottery.speed=40;
+            };
+            //console.log(lottery.times+'^^^^^^'+lottery.speed+'^^^^^^^'+lottery.prize);
+            lottery.timer = setTimeout(roll,lottery.speed);
+        }
+        return false;
+    }
+
+    var click=false;
+
+    window.onload=function(){
+        lottery.init('lottery');
+        $("#lottery a").click(function(){
+            if (click) {
+                return false;
+            }else{
+                lottery.speed=100;
+                roll();
+                click=true;
+                return false;
+            }
+        });
+    };*/
+</script>
+<include file="Public/footer" />

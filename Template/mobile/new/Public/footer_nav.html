@@ -1,0 +1,64 @@
+<div style="height:0px; line-height:0px; clear:both;"></div>
+<!--<div class="v_nav">-->
+	<!--<div class="vf_nav">-->
+		<!--<ul>-->
+			<!--<li> <a href="{:U('Index/index')}">-->
+			    <!--<i class="vf_1"></i>-->
+			    <!--<span>首页</span></a></li>-->
+			<!--<li><a href="tel:{$tpshop_config['shop_info_phone']}">-->
+			    <!--<i class="vf_2"></i>-->
+			    <!--<span>客服</span></a></li>-->
+			<!--<li><span>&nbsp;</span></li>-->
+			<!--<li>-->
+			<!--<a href="{:U('Cart/cart')}">-->
+			   <!--<em class="global-nav__nav-shop-cart-num" id="cart_quantity" style="right:9px;"></em>-->
+			   <!--<i class="vf_3"></i>-->
+			   <!--<span>购物车</span>-->
+			   <!--</a>-->
+			<!--</li>-->
+			<!--<li><a href="{:U('User/index')}">-->
+			    <!--<i class="vf_4"></i>-->
+			    <!--<span>我的</span></a>-->
+			<!--</li>-->
+		<!--</ul>-->
+	<!--</div>-->
+<!--</div>-->
+<ul class="bnav">
+	<li><a href="{:U('Index/index')}"><img src="__STATIC__/images/new/ft331.png" alt="">首页</a></li>
+	<li><a href="{:U('Index/classindex')}"><img src="__STATIC__/images/new/ft332.png" alt="">分类</a></li>
+	<!--<li><a href=""><img src="__STATIC__/images/new/ft333.png" alt="">品牌简介</a></li>-->
+	<li><a href="{:U('Cart/cart')}"><img src="__STATIC__/images/new/ft334.png" alt="">购物车</a></li>
+	<li><a href="{:U('User/index')}"><img src="__STATIC__/images/new/ft335.png" alt="">我</a></li>
+</ul>
+<a href="javascript:void(0);" class="gotop"><img src="__STATIC__/images/topup.png"></a>
+<script type="text/javascript">
+$(document).ready(function(){
+    $(window).scroll(function() {
+        if ($(this).scrollTop() != 0) {
+            $('.gotop').fadeIn();
+        } else {
+            $('.gotop').fadeOut();
+        }
+    });
+    $('.gotop').click(function() {
+        $('body,html').animate({ scrollTop: 0 }, 800);
+    })
+	  /*var cart_cn = getCookie('cn');
+	  if(cart_cn == ''){
+		$.ajax({
+			type : "GET",
+			url:"/index.php?m=Home&c=Cart&a=header_cart_list",//+tab,
+			success: function(data){
+				cart_cn = getCookie('cn');
+				$('#cart_quantity').html(cart_cn);
+			}
+		});
+	  }
+	  $('#cart_quantity').html(cart_cn);*/
+});
+</script>
+<!-- 微信浏览器 调用微信 分享js-->
+<if condition="$signPackage neq null">
+	<include file="Public/wx_share"/>
+</if>
+<!-- 微信浏览器 调用微信 分享js  end-->

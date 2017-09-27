@@ -1,0 +1,97 @@
+<include file="Public/header" />
+<include file="User/navigate" />
+<!--<link rel="stylesheet" href="css/main.css">-->
+<!--<script src="js/css.js"></script>-->
+<!--[if lt IE 9]>
+<!--<script src="js/html5shiv.min.js"></script>-->
+<!--<![endif]&ndash;&gt;-->
+<link rel="shortcut icon" href="">
+<!--</head>-->
+<!--<body>-->
+
+<section class="main">
+	<!-- main-left -->
+	<include file="User/menu" />
+	<!--<div class="main-left">-->
+
+	<!-- /main-left -->
+	<!-- main-right -->
+	<div class="main-right">
+		<h2>积分兑换</h2>
+		<div class="page10">
+
+			<ul class="part1">
+				<li><p>可用积分</p><b>{$User.pay_points}</b></li>
+				<li><p>积分兑换</p><a href="{:U('Home/Goods/integral_mall')}">马上兑换</a></li>
+				<!--li><p>积分抽奖</p><a href="">立即前往</a></li-->
+			</ul>
+
+
+
+
+			<p class="tips"><a href="{:U('Home/User/integral_rule')}">积分规则</a></p>
+
+
+
+			<div class="part2">
+				<div class="slideTxtBox">
+					<div class="hd">
+						<ul><li>积分获取</li><li>积分消费</li></ul>
+					</div>
+					<div class="bd">
+						<div>
+							<table>
+								<tr><th>获取时间</th><th>积分</th><th>获取详情</th></tr>
+								<volist name="log1" id="vo">
+								<tr><td>{$vo.change_time|date="Y-m-d H:i:s",###}</td><td>{$vo.pay_points}</td><td>{$vo.desc}</td></tr>
+								</volist>
+								<!--<tr><td>2016-06-23 18:23:33</td><td>100</td><td>推广</td><td>邀请注册</td><td>2017-06-23-18:23:33</td></tr>-->
+								<!--<tr><td>2016-06-23 18:23:33</td><td>100</td><td>推广</td><td>邀请注册</td><td>2017-06-23-18:23:33</td></tr>-->
+
+							</table>
+						</div>
+						<div>
+							<table>
+								<tr><th>消费时间</th><th>积分</th><th>消费详情</th></tr>
+								<volist name="log2" id="vo">
+									<tr><td>{$vo.change_time|date="Y-m-d H:i:s",###}</td><td>{$vo.pay_points}</td><td>{$vo.desc}</td></tr>
+								</volist>
+								<!--<tr><td>2016-06-23 18:23:33</td><td>100</td><td>兑换</td><td>本次没有抽中任何奖品</td></tr>-->
+								<!--<tr><td>2016-06-23 18:23:33</td><td>100</td><td>兑换</td><td>您兑换了微波炉一台</td></tr>-->
+								<!--<tr><td>2016-06-23 18:23:33</td><td>100</td><td>兑换</td><td>您花99积分抽中了一台电动剃须刀</td></tr>-->
+								<!--<tr><td>2016-06-23 18:23:33</td><td>100</td><td>兑换</td><td>您兑换了微波炉一台</td></tr>-->
+							</table>
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+	</div>
+	<!-- /main-right -->
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<include file="Public/footer" />
+
+
+
+<!--<script src="js/jquery.min.js"></script>-->
+<!--<script src="js/slide.min.js"></script>-->
+<!--<script src="js/selectivizr.min.js"></script>-->
+<!--<script src="js/main.js"></script>-->
+<!--</body>-->
+<!--</html>-->
+

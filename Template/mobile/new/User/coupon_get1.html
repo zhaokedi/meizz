@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta charset="utf-8">
+<title>美之钻-我的优惠券</title>
+<link rel="stylesheet" href="__STATIC__/css/main.css">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=0">
+<meta name="imagemode" content="force">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<meta name="keywords" content="">
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="shortcut icon" type="image/x-icon" href="">
+<link rel="apple-touch-icon-precomposed" href="">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="-1">
+<script src="__STATIC__/js/jquery.min.js"></script>
+	<script src="__PUBLIC__/js/global.js"></script>
+	<script src="__PUBLIC__/js/mobile_common.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/js/layer/layer.js" ></script>
+</head>
+<body>
+
+<header>
+	<a href="javascript:history.back(-1)" class="back"></a>
+	<h3>我的优惠券</h3>
+	<a href="" class="menu"></a>
+</header>
+<div class="h50"></div>
+
+
+
+<include file="Public/menu"/>
+
+<div class="page48">
+	<div id="tabBox1" class="tabBox48">
+		<div class="hd">
+			<ul>
+				<li class="<if condition="$card_type eq 0">on</if>"><a href="{:U('coupon_get',array('usetype'=>0))}" >全部类型</a></li>
+				<li class="<if condition="$card_type eq 4">on</if>"><a href="{:U('coupon_get',array('usetype'=>4))}">现金券</a></li>
+				<li class="<if condition="$card_type eq 2">on</if>"><a href="{:U('coupon_get',array('usetype'=>2))}">折扣券</a></li>
+			</ul>
+		</div>
+		<div class="bd" id="tabBox1-bd">
+			<!-- 全部类型 -->
+			<div class="con">
+				<div id="more">
+					<volist name="coupon_list" id="vo">
+						<if condition="$vo.usetype eq 1">
+						<div class="item1 <if condition="$vo.is_none eq 1">over</if> ">
+							<else/>
+							<div class="item2 <if condition="$vo.is_none eq 1">over</if>">
+						</if>
+							<div class="left">
+								<if condition="$vo.usetype eq 4">
+									<h2><sup>￥</sup>{$vo.money}</h2>
+									<else/>
+									<h2>{$vo.discount}<sup>折</sup></h2>
+								</if>
+
+								<h3>{$vo.name}</h3>
+								<p class="time">有效期至{$vo.use_end_time|date="Y-m-d",###}</p>
+								<p class="btm">{$vo.content}</p>
+							</div>
+
+							<div class="right">
+								<if condition="$vo.is_none eq 1">
+
+									<b class="js">已<br>领<br>完</b>
+
+									<else/>
+									<p class="tips">{$vo.remaining_number}</p>
+									<if condition="$vo.is_get eq 0">
+										<a href="javascript:getcoupon({$vo['id']},{$vo['remaining_num']});" class="btn" id="getnow">立即领取</a>
+										<else/>
+									<a href="javascript:;" class="btn" >已领取</a>
+									</if>
+								</if>
+							</div>
+						</div>
+
+					</volist>
+
+					<!--<div class="item2">-->
+						<!--<div class="left">-->
+							<!--<h2>95<sup>折</sup></h2>-->
+							<!--<h3>宝贝折扣券</h3>-->
+							<!--<p class="time">有效期至2016-07-01</p>-->
+							<!--<p class="btm">本券只能用于韩饰类宝贝，并不与其它活动同享</p>-->
+						<!--</div>-->
+						<!--<div class="right">-->
+							<!--<p class="tips">剩余42张</p>-->
+							<!--<a href="" class="btn">立即领取</a>-->
+						<!--</div>-->
+					<!--</div>-->
+					<!--<div class="item1 over">-->
+						<!--<div class="left">-->
+							<!--<h2><sup>￥</sup>200</h2>-->
+							<!--<h3>电商节现金券</h3>-->
+							<!--<p class="time">有效期至2016-07-01</p>-->
+							<!--<p class="btm">本券只能抵扣钻饰类宝贝，并不与其它活动同享</p>-->
+						<!--</div>-->
+						<!--<div class="right">-->
+							<!--<b class="js">已<br>领<br>完</b>-->
+						<!--</div>-->
+					<!--</div>-->
+
+
+				</div>
+			</div>
+			<!-- /全部类型 -->
+			<!-- 现金券 -->
+			<!--<div class="con">-->
+				<!--<div>-->
+					<!--<div class="item1">-->
+						<!--<div class="left">-->
+							<!--<h2><sup>￥</sup>500</h2>-->
+							<!--<h3>钻石现金券</h3>-->
+							<!--<p class="time">有效期至2016-07-01</p>-->
+							<!--<p class="btm">本券只能抵扣钻饰类宝贝，并不与其它活动同享</p>-->
+						<!--</div>-->
+						<!--<div class="right">-->
+							<!--<p class="tips">剩余42张</p>-->
+							<!--<a href="" class="btn">立即领取</a>-->
+						<!--</div>-->
+					<!--</div>-->
+
+				<!--</div>-->
+			<!--</div>-->
+			<!-- /现金券 -->
+			<!-- 折扣券 -->
+			<!--<div class="con">-->
+				<!--<div>-->
+					<!--<div class="item2">-->
+						<!--<div class="left">-->
+							<!--<h2>95<sup>折</sup></h2>-->
+							<!--<h3>宝贝折扣券</h3>-->
+							<!--<p class="time">有效期至2016-07-01</p>-->
+							<!--<p class="btm">本券只能用于韩饰类宝贝，并不与其它活动同享</p>-->
+						<!--</div>-->
+						<!--<div class="right">-->
+							<!--<p class="tips">剩余42张</p>-->
+							<!--<a href="" class="btn">立即领取</a>-->
+						<!--</div>-->
+					<!--</div>-->
+
+				<!--</div>-->
+			<!--</div>-->
+			<!-- /折扣券 -->
+
+		</div>
+	</div>
+
+<empty name="coupon_list">
+	<p style="font-size: .5rem;position: absolute;width: 100%;text-align: center;margin-top: 3rem">暂无可领取的优惠券</p>
+	<else/>
+	<div class="operate">
+		<a href="javascript:ajax_coupon_list();" class="btn-more">加载更多</a>
+	</div>
+</empty>
+</div>
+
+
+
+
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="__STATIC__/js/slide.js"></script>
+<script src="__STATIC__/js/main.js"></script>
+<script>
+	/*
+	 * 注意：
+	 * 1. 所有的JS接口只能在公众号绑定的域名下调用，公众号开发者需要先登录微信公众平台进入“公众号设置”的“功能设置”里填写“JS接口安全域名”。
+	 * 2. 如果发现在 Android 不能分享自定义内容，请到官网下载最新的包覆盖安装，Android 自定义分享接口需升级至 6.0.2.58 版本及以上。
+	 * 3. 常见问题及完整 JS-SDK 文档地址：http://mp.weixin.qq.com/wiki/7/aaa137b55fb2e0456bf8dd9148dd613f.html
+	 * 开发中遇到问题详见文档“附录5-常见错误及解决办法”解决，如仍未能解决可通过以下渠道反馈：
+	 * 邮箱地址：weixin-open@qq.com
+	 * 邮件主题：【微信JS-SDK反馈】具体问题
+	 * 邮件内容说明：用简明的语言描述问题所在，并交代清楚遇到该问题的场景，可附上截屏图片，微信团队会尽快处理你的反馈。
+	 */
+	wx.config({
+		debug: false,
+		appId: '{$signPackage.appId}',
+		timestamp: '{$signPackage.timestamp}',
+		nonceStr: '{$signPackage.nonceStr}',
+		signature: '{$signPackage.signature}',
+		jsApiList: [
+			'checkJsApi',
+			'chooseWXPay',
+			'addCard',
+			'openLocation',
+			'getLocation',
+			'addCard',
+			'chooseCard',
+			'openCard',
+			'hideMenuItems'
+		]
+	});
+</script>
+
+<script>
+//	$(function(){
+//		ajax_coupon_list();
+//	})
+
+	page=1;
+	function ajax_coupon_list(){
+		page++;
+		var usetype="{$usetype}";
+		$.ajax({
+
+			type : "post",
+			url:"{:U('coupon_get')}",
+			data:{page:page,usetype:usetype},
+			success:function(data){
+				if($.trim(data) == ''){
+					$('.btn-more').text("已无更多");
+				}else {
+					$("#more").append(data);
+
+				}
+
+		}
+		})
+	}
+function getcoupon(id,num){
+	$.ajax({
+		url: "{:U('getAddInfo')}",
+		type: 'POST',
+		data: {
+			'num':1,
+		},
+		success: function (rdata) {
+			if (rdata['status'] == 1) {
+				var i=0;
+				var cardlist=[];
+				for (i=0;i<rdata['data'].length;i++){
+					cardlist[i] ={
+						cardId: 'peXkJuDewFIYqpqVfoWg4WoHInPk',
+						cardExt: '{"code": "", "openid": "", "timestamp": " ' + rdata['data'][i]['timestamp'] + '", "signature":"' + rdata['data'][i]['signature'] + '","nonce_str":"' + rdata['data'][i]['nonce_str'] + '"}'}
+				}
+				wx.addCard({
+					cardList:cardlist
+//										{
+//											cardId: 'peXkJuMsypYJJ88hDx9McoiUeDp8',
+//											cardExt: '{"code": "", "openid": "", "timestamp": " ' + timestamp + '", "signature":"' + signature + '","nonce_str":"' + nonce_str + '"}'
+//										},
+					, // 需要添加的卡券列表
+					success: function (res) {
+						var cardList = res.cardList; // 添加的卡券列表信息
+						alert('已添加卡券：' + JSON.stringify(res.cardList));
+
+						$.ajax({
+							type : "post",
+							url:"{:U('get_coupon')}",
+							data:{id:id},
+							success:function(data){
+								if(data['status']>0){
+									layer.msg('领取成功');
+									$("#getnow").text('已领取')
+									num--
+									$(".tips").text('剩余'+num+'张')
+								}else {
+									layer.msg(data['msg']);
+								}
+
+							}
+						})
+					}
+				});
+			} else if (rdata['status'] == 2) {
+				layer.msg(rdata['errmsg'], {
+					time: 1000
+				}, function () {
+//					window.location.reload();
+				})
+			}
+		},
+		error: function () {
+
+		}
+	});
+
+
+}
+
+</script>
+</body>
+</html>

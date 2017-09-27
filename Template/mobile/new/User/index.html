@@ -1,0 +1,108 @@
+<include file="Public/header"/>
+<style type="text/css">
+	.video{
+		padding: 0;
+	}
+</style>
+<body >
+<div id="tbh5v0">
+<div class="user_com">
+	<header>
+		<a href="javascript:history.back(-1)" class="back"></a>
+		<h3>会员中心</h3>
+		<a href="" class="menu"></a>
+	</header>
+<include file="Public/uer_topnav"/>
+	<include file="Public/menu"/>
+	<div class="member">
+	<ul class="operate">
+		<li><a href="{:U('/Mobile/User/order_list',array('type'=>'WAITPAY'))}"><img src="__STATIC__/images/new/icon51.png" alt="">待付款</a></li>
+		<li><a href="{:U('/Mobile/User/order_list',array('type'=>'WAITRECEIVE'))}"><img src="__STATIC__/images/new/icon52.png" alt="">待收货</a></li>
+		<li><a href="{:U('User/comment',array('status'=>0))}"><img src="__STATIC__/images/new/icon53.png" alt="">待评价</a></li>
+		<li><a href="{:U('User/return_money')}"><img src="__STATIC__/images/new/icon54.png" alt="">退款/售后</a></li>
+		<!--<li><a href="javascript:void(0);"><img src="__STATIC__/images/new/icon54.png" alt="">退款/售后</a></li>-->
+	</ul>
+		<!--<ul  class="other">-->
+			<!--<li class="bain1"><strong>￥{$user['user_money']}元</strong><span>余额</span></li>-->
+			<!--<li class="bain1"><strong>{$coupon_count}</strong><span>优惠券</span></li>-->
+			<!--<li><strong>{$user['pay_points']}</strong><span>积分</span></li>-->
+		<!--</ul>-->
+	<ul class="other">
+		<!--<li><a href="{:U('Mobile/User/apoint_list')}">我的预约</a></li>-->
+		<!--<li><a href="{:U('User/shop')}">体验店列表</a></li>-->
+		<!--<li><a href="{:U('User/prize')}">抽奖活动</a></li>-->
+		<!--<li><a href="{:U('User/prize_list')}">我的奖品</a></li>-->
+
+	</ul>
+		<!--<ul class="other">-->
+
+			<!---->
+		<!--</ul>-->
+	<ul class="other">
+
+		<!--<li><a href="{:U('User/order_list')}" >全部订单</a></li>-->
+		<!--<li><a href="{:U('User/coupon_get',array('usetype'=>0))}">领取优惠券中心</a></li>-->
+		<!--<li><a href="{:U('User/coupon')}">我的优惠券</a></li>-->
+		<li><a href="{:U('Mobile/User/account')}">我的钱包</a></li>
+		<li><a href="{:U('User/comment')}">我的评价</a></li>
+		<li><a href="{:U('User/return_goods_list')}">我的售后</a></li>
+		<!--<li><a href="{:U('User/fenqi_list')}">我的分期</a></li>-->
+
+
+	<!--</ul>-->
+	<!--<ul class="other">-->
+		<li><a href="{:U('User/address_list')}">地址管理</a></li>
+		<!--<li><a href="{:U('User/withdraw_set')}">提现设置</a></li>-->
+		<!--<li><a href="{:U('User/sign')}">积分签到</a></li>-->
+		<!--<li><a href="{:U('User/points')}">我的积分</a></li>-->
+		<!--<li><a href="{:U('User/integral_mall')}">积分商城</a></li>-->
+		<li><a href="{:U('User/message_list')}">我的留言</a></li>
+		<li><a href="{:U('User/collect_list')}">我的收藏</a></li>
+		<!--<li><a href="{:U('User/myson')}">我的下级</a></li>-->
+		<!--<li><a href="{:U('User/invite')}">推荐奖励</a></li>-->
+		<!--<li><a href="{:U('User/commission')}">我的佣金记录</a></li>-->
+
+	</ul>
+		<ul class="other">
+			<li><a href="{:U('User/logout')}">注销登录</a></li>
+		</ul>
+	</div>
+
+	<div class="h50"></div>
+<!--<div class="Wallet">-->
+	<!--<ul>-->
+	<!--<li class="bain1"><strong>￥{$user['user_money']}元</strong><span>余额</span></li>-->
+	<!--<li class="bain1"><strong>{$coupon_count}</strong><span>优惠券</span></li>-->
+	<!--<li><strong>{$user['pay_points']}</strong><span>积分</span></li>-->
+	<!--</ul>-->
+	<!--<a href="{:U('Mobile/User/account')}"><em class="Icon Icon1"></em><dl><dt>我的钱包</dt><dd style="color:#aaaaaa;">查看我的钱包</dd></dl></a>-->
+<!--</div>-->
+
+
+<!--<div class="Wallet">-->
+	<!--<a href="{:U('Mobile/User/order_list')}" ><em class="Icon Icon2"></em><dl class="b"><dt>全部订单</dt><dd>查看订单</dd></dl></a>-->
+	<!--<a href="{:U('Mobile/User/coupon')}"><em class="Icon Icon3"></em><dl class="b"><dt>我的优惠券</dt><dd>&nbsp;</dd></dl></a>-->
+	<!--<a href="{:U('Mobile/User/comment')}"><em class="Icon Icon4"></em><dl class="b"><dt>我的评价</dt><dd>查看评价</dd></dl></a>-->
+	<!--<a href="{:U('Mobile/User/collect_list')}"><em class="Icon Icon10"></em><dl><dt>我的收藏</dt><dd>&nbsp;</dd></dl></a>-->
+<!--</div>-->
+<!--<div class="Wallet">-->
+	<!--<a href="{:U('User/address_list')}"><em class="Icon Icon5"></em><dl class="b"><dt>地址管理</dt><dd>&nbsp;</dd></dl></a>-->
+	<!--<a href="{:U('User/points')}"><em class="Icon Icon6"></em><dl class="b"><dt>我的积分</dt><dd>&nbsp;</dd></dl></a>-->
+	<!--<a href="{:U('User/message_list')}"><em class="Icon Icon7"></em><dl class="b"><dt>我的留言</dt><dd>&nbsp;</dd></dl></a>-->
+	<!--<a href="{:U('User/return_goods_list')}"><em class="Icon Icon11"></em><dl><dt>售后服务</dt><dd>&nbsp;</dd></dl></a>-->
+    <!---->
+    <!--<if condition="$tpshop_config['distribut_switch'] eq 1">-->
+	<!--<a href="{:U('Distribut/index')}"><em class="Icon Icon1"></em><dl><dt>我发展收益</dt><dd>&nbsp;</dd></dl></a>    -->
+    <!--</if>    -->
+<!--</div>-->
+<!--<div class="Wallet">-->
+	<!--<a href="{:U('User/logout')}"><em class="Icon Icon8"></em><dl><dt>注销登录</dt></dl></a>-->
+<!--</div>-->
+</div>
+	<script src="__STATIC__/js/slide.js"></script>
+	<script src="__STATIC__/js/main.js"></script>
+<include file="Public/footer"/>
+</div>
+<include file="Public/footer_nav"/>
+</body>
+</html>

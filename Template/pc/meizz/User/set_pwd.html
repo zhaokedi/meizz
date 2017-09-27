@@ -1,0 +1,57 @@
+<include file="Public/header" />
+<section class="main">
+    <div class="page53">
+        <h3>找回密码</h3>
+        <div class="step3">
+            <div class="title">
+                <span>填写账户名</span>
+                <span>验证身份</span>
+                <span>设置新密码</span>
+                <span>完成</span>
+            </div>
+            <form action="" id="vi_form" method="post">
+            <ul>
+                <li><input type="password" placeholder="6-16字符，可使用数字和字母的组合" name="password" id="password"></li>
+                <li><input type="password" placeholder="请再次输入密码" name="password2" id="password_repeat"></li>
+                <li><input type="button" id="submit_fm" onclick="dosubmit()" value="下一步"></li>
+            </ul>
+            </form>
+        </div>
+    </div>
+</section>
+<script type="text/javascript">
+var flag1 = flag2 = false;
+function checkpwd(){
+    var password = $('#password').val();
+    var password_repeat = $('#password_repeat').val();
+    var rex = /^[0-9a-zA-Z]*$/g;
+    if(password == ''){
+        showErrorMsg('密码不能为空');
+        return false;
+    }else if(password.length<6 || password.length>16){
+        showErrorMsg('密码长度不正确');
+        return false;
+    }else if(!rex.test(password)){
+        showErrorMsg('密码只能是数字和字母组合!');
+        flag = false;
+    }else{
+        flag1 = true;
+    }
+    if(password_repeat == ''){
+        showErrorMsg('重复密码不能为空');
+        return false;
+    }else if(password!=password_repeat){
+        showErrorMsg('两次密码不一样');
+        return false;
+    }else{
+        flag2 = true;
+    }
+    return (flag1 && flag2);
+}
+function dosubmit(){
+    if(checkpwd()){
+        $('#vi_form').submit();
+    }
+}
+</script>
+<include file="Public/footer" />

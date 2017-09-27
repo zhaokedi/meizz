@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html  style="font-size: 58.5938px;">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta charset="utf-8">
+<title></title>
+	<link rel="stylesheet" href="__STATIC__/css/main.css">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=0">
+<meta name="imagemode" content="force">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<meta name="keywords" content="">
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="shortcut icon" type="image/x-icon" href="">
+<link rel="apple-touch-icon-precomposed" href="">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="-1">
+	<script type="text/javascript" src="__STATIC__/js/jquery.js"></script>
+</head>
+<body>
+
+<header>
+	<a href="javascript:history.back(-1)" class="back"></a>
+	<h3>个人资料</h3>
+</header>
+<div class="h50"></div>
+
+
+
+<div class="modify-nickname">
+	<form method="post" action="" id="edit_profile"  onSubmit="return checkinfo()">
+	<div class="input">
+		<input type="text" value="{$User.nickname}" name="nickname" placeholder="*昵称" id="nickname">
+		<a href="" class="clear"></a>
+	</div>
+	<p class="tips">最多20个字符，可由中英文、数字、“_”、“-”组成</p>
+	<input type="submit" value="保  存">
+	</form>
+</div>
+
+
+
+
+
+
+<script src="__STATIC__/js/slide.js"></script>
+<script src="__STATIC__/js/main.js"></script>
+
+<script language="javascript">
+	$(function(){
+		$('input[type=text],input[type=password]').bind({
+			focus:function(){
+				$(".global-nav").css("display",'none');
+			},
+			blur:function(){
+				$(".global-nav").css("display",'flex');
+			}
+		});
+	})
+
+	var email_empty = "请输入您的电子邮件地址！";
+	var email_error = "您输入的电子邮件地址格式不正确！";
+	var old_password_empty = "请输入您的原密码！";
+	var new_password_empty = "请输入6位以上新密码！";
+	var confirm_password_empty = "请输入6位以上确认密码！";
+	var both_password_error = "您现两次输入的密码不一致！";
+	/* 会员修改密码 */
+	function editPassword() {
+		var frm = document.forms['formPassword'];
+		var old_password = frm.elements['old_password'].value;
+		var new_password = frm.elements['new_password'].value;
+		var confirm_password = frm.elements['comfirm_password'].value;
+
+		var msg = '';
+		var reg = null;
+
+		if (old_password.length == 0) {
+			msg += old_password_empty + '\n';
+		}
+
+		if (new_password.length < 6) {
+			msg += new_password_empty + '\n';
+		}
+
+		if (confirm_password.length < 6) {
+			msg += confirm_password_empty + '\n';
+		}
+
+		if (new_password.length > 0 && confirm_password.length > 0) {
+			if (new_password != confirm_password) {
+				msg += both_password_error + '\n';
+			}
+		}
+
+		if (msg.length > 0) {
+			alert(msg);
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	function checkinfo(){
+		var nickname = $('#nickname').val();
+		var email = $('#email_ep').val();
+		var mobile = $('#mobile_ep').val();
+		if(nickname==''){
+			alert("昵称不能为空");
+			return false;
+		}
+
+		if(!checkEmail(email)){
+			alert("邮箱格式不正确");
+			return false;
+		}
+
+		if(!checkMobile(mobile)){
+			alert("手机格式不正确");
+			return false;
+		}
+		return true;
+	}
+</script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<div class="page5">
+    <if condition="empty($cartList)">
+        <p style="text-align:center">
+             购物车中没有商品哟！
+        </p>
+    <else/>
+        <div class="title">
+            <!-- <a href="" class="on">全部宝贝<b>5</b><i></i></a>
+             | <a href="">特价宝贝<b>3</b><i></i></a>
+             | <a href="">库存紧张<b>0</b><i></i></a> -->
+             <div class="r" style="width:250px;">
+                预付款  <span>￥<b>{$price_reat}</b></span>   <a href="{:U('Home/Cart/cart2')}" class="btn-pay">结 算</a>
+             </div>
+        </div>
+        <ul class="page5-list-title">
+            <li class="li0"><label for="checkbox-all"><input type="checkbox" name="select_all" id="select_all" <if condition="$select_all eq 1" >checked="checked"</if> onchange="check_all(this);" value="1">全选</label></li>
+            <li class="li1">宝贝</li >
+            <li class="li2">单价</li>
+            <li class="li3">数量</li>
+            <li class="li4">金额</li>
+            <li class="li5">操作</li>
+        </ul>
+        <foreach name="cartList" item="v" key="k" >
+            <ul class="page5-item">
+                <li class="li0">
+                    <input type="checkbox" name="cart_select[{$v.id}]"  disabled="disabled" <if condition="$v[selected] eq 1" >checked="checked"</if> value="1" onclick="ajax_cart_list();">
+                </li>
+                <li class="li1">
+                    <a href="{:U('Home/Goods/goodsInfo',array('id'=>$v[goods_id]))}"><img src="{$v.goods_id|goods_thum_images=100,100}" alt=""></a>
+                    <p class="txt">{$v.goods_name}</p>
+                    <if condition="$v.is_gift eq 1">
+                    <volist name="v.gift_link" id="vo">
+                        <div class="r">礼包{$i}: {$vo}</div>
+                    </volist>
+                        <else/>
+                    <div class="r">{$v.spec_key_name}</div>
+                    </if>
+                </li>
+                <li class="li2">
+                    <del>{$v.market_price}</del>
+                    <p>{$v.member_goods_price}</p>
+                </li>
+                <li class="li3">
+                    <div class="jia-jian">
+                        <a class="jian" href="javascript:void(0);" title="减" onClick="switch_num(-1,{$v.id},{$v.store_count});"></a>
+                        <input type="text" class="num" value="{$v.goods_num}" name="goods_num[{$v.id}]" id="goods_num[{$v.id}]" readonly />
+                        <a class="jia" href="javascript:void(0);" title="加" onClick="switch_num(1,{$v.id},{$v.store_count});"></a>
+                    </div>
+
+                </li>
+                <li class="li4">
+                    <p>{$v.goods_fee}</p>
+                </li>
+                <li class="li5">
+                    <a href="javascript:void(0);" onclick="if(confirm('确定要删除吗?')) ajax_del_cart({$v.id});" class="btn-delete">删除</a>
+                </li>
+            </ul>
+        </foreach>
+        <div class="page5-total">
+            <label for="checkbox-all2"><input type="checkbox" name="select_all" id="select_all2" <if condition="$select_all eq 1" >checked="checked"</if> onchange="check_all(this);" value="1">全选</label>
+            <a href="javascript:void(0);" onclick="del_cart_more();" class="btn-delete">删除</a>
+            <div class="r">已选宝贝<b>{$total_price['num']}</b>件    合计(含运费 含保险) ：<i>￥<b>{$total_price['total_fee']}    预付款 ：<i>￥<b>{$price_reat}</b></i><a href="{:U('Home/Cart/cart2')}" class="btn-pay">结 算</a></div>
+        </div>
+    </if>
+</div>

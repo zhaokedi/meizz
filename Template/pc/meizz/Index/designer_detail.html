@@ -1,0 +1,242 @@
+
+
+
+
+<include file="Public/header"/></head>
+<link rel="stylesheet" href="__STATIC__/css/plus.css">
+
+<style>
+	.DDC2 button {
+		width: 298px;
+		height: 40px;
+		background-color: #8f7958;
+		border-radius: 3px;
+		border: none;
+		text-align: center;
+		color: #fff;
+	}
+	.prv-nxt .prev, .prv-nxt .next{
+		width: auto;
+	}
+</style>
+
+<div class="DDCont">
+	
+    <div class="DDC1 cf">
+    	
+        <div class="text left">
+        	<img class="userimg" src="{$design.headurl}">
+        	<h1>{$design.name}</h1>
+			<volist name="design.job" id="vo1">
+            	<p>{$vo1}</p>
+			</volist>
+
+            <b></b>
+            <p>上门服务费：{$design.money}元</p>
+            <p>设计评分：<span class="raty" data-score="{$design.level}"></span></p>
+            <p>&nbsp;</p>
+            <p>{$design.desc}</p>
+        </div>
+        <div class="img slideBox left">
+        	<div class="hd">
+				<ul></ul>
+			</div>
+			<div class="bd">
+
+				<ul>
+					<!--<li><a href="#"><img src="images/DD_img01.jpg"></a></li>-->
+					<!--<li><a href="#"><img src="images/DD_img01.jpg"></a></li>-->
+					<!--<li><a href="#"><img src="images/DD_img01.jpg"></a></li>-->
+					<volist name="imagelist" id="vo">
+						<li><a href="#"><img src="{$vo.image_url}"></a></li>
+					</volist>
+
+				</ul>
+			</div>
+        </div>
+        
+    </div>
+    
+    <div class="DDC2 cf">
+    	<form action="" method="post" id="form">
+			<input type="hidden" name="design_id" value="{$design.id}">
+			<input type="hidden" name="money" value="{$design.money}">
+        <div class="form left">
+        	<h1>上门服务预约</h1>
+            <h2>预约设计师上门定制，一对一沟通</h2>
+            <div class="inputBlock cf">
+            	<div class="name left">
+                	定制服务
+                </div>
+                <div class="input left">
+                	<select name="server">
+						<volist name="design.server" id="vo2">
+							<option value="{$vo2}">{$vo2}</option>
+						</volist>
+                    </select>
+                </div>
+            </div>
+            <div class="inputBlock cf">
+            	<div class="name left">
+                	上门时间
+                </div>
+                <div class="input left">
+                	<!--<input type="text">-->
+					<select name="server_time">
+						<volist name="design.server_time" id="vo2">
+							<option value="{$vo2}">{$vo2}</option>
+						</volist>
+
+					</select>
+                </div>
+            </div>
+            <div class="inputBlock cf">
+            	<div class="name left">
+                	服务范围
+                </div>
+                <div class="input left" >
+					<input type="text" name="range" value="{$design.range}">
+
+                </div>
+            </div>
+			<div class="inputBlock cf">
+				<div class="name left">
+					您的姓名
+				</div>
+				<div class="input left">
+					<input type="text" name="username" >
+
+				</div>
+			</div>
+			<div class="inputBlock cf">
+				<div class="name left">
+					手机号码
+				</div>
+				<div class="input left" >
+					<input type="text" name="mobile">
+
+				</div>
+			</div>
+			<div class="inputBlock cf">
+				<div class="name left">
+					您的地址
+				</div>
+				<div class="input left" >
+					<input type="text" name="address" >
+
+				</div>
+			</div>
+			<!--<div class="inputBlock cf">-->
+				<!--<div class="name left">-->
+					<!--我的需求-->
+				<!--</div>-->
+				<!--<div class="input left" >-->
+					<!--<input type="text" name="request" >-->
+
+				<!--</div>-->
+			<!--</div>-->
+			<div class="btn">
+				<button type="button" onclick="appo_sub()">提交预约</button>
+			</div>
+        </div>
+		</form>
+        <div class="list left">
+        	<div class="title">
+            	用户评论
+            </div>
+            <ul>
+				<volist name="comment" id="vo">
+            	<li>
+                	<h1>{$vo.username}<span class="raty" data-score="{$vo.goods_rank}"></span></h1>
+                   	<p>{$vo.content}</p>
+                </li>
+				</volist>
+                <!--<li>-->
+                	<!--<h1>1231222****<span class="raty" data-score="3"></span></h1>-->
+                   	<!--<p>非常好</p>-->
+                <!--</li>-->
+            </ul>
+
+        </div>
+		<div class="prv-nxt">
+			{$page}
+		</div>
+    
+    </div>
+    
+    
+</div>
+
+
+
+
+
+
+
+
+
+
+<script src="__STATIC__/js/jquery.raty.min.js"></script>
+<script>
+
+	jQuery().ready(function() {
+
+		jQuery("#form").validate({
+			rules: {
+				username: "required",
+				mobile: "required",
+				address: "required",
+
+
+			},
+			messages: {
+				username: "请输入姓名",
+				mobile: "请输入手机号码",
+				address: "请输入地址",
+			}
+		});
+	});
+	function appo_sub(){
+		var money=$("input[name='money']").val();
+		var design_id=$("input[name='design_id']").val();
+		$.ajax({
+			type : 'post',
+			url : "{:U('save_appo')}",
+			data : $("#form").serialize(),
+			dataType : 'json',
+			success : function(data){
+
+				if(data['status']==1){
+
+					layer.confirm('预约成功,设计师服务费用为'+money+'元,是否立即支付？', {
+								btn: ['立即支付','等会再付'] //按钮
+							}, function(){
+						location.href = "/index.php?m=Home&c=Cart&a=designcart4&appo_id="+data['lastid']; // 跳转到结算页
+							}, function(index){
+								layer.close(index);
+								return false;// 取消
+							}
+					);
+				}else{
+
+					layer.msg(data.msg, {icon: 2,time: 2000});
+				}
+//				layer.closeAll();
+			}
+		})
+	}
+$(".raty").raty({
+	readOnly:true,
+	score:function(){
+		return $(this).attr("data-score");
+	},
+	path:'__STATIC__/images/images-out'
+});
+
+jQuery(".img.slideBox").slide({titCell:".hd ul",mainCell:".bd ul",autoPage:true,effect:"leftLoop",autoPlay:true});
+
+</script>
+
+
+<include file="Public/footer" />
+

@@ -1,0 +1,28 @@
+<volist name="commentlist" id="v">
+    <div class="item">
+        <span class="face"><img src="{$v['head_pic']|default='__STATIC__/images/face34.png'}" width="52" height="52" alt=""></span>
+        <p>{$v['username']} 深圳 <time>{$v['add_time']|date="Y-m-d H:i:s",###}</time></p>
+        <div><span>商品点评</span>{$v['content']|htmlspecialchars_decode}</div>
+        <div><span>服务点评</span>接待我的顾问很有耐心，站在顾客的角度为顾客考虑，选择最适合的，非常满意，有需要还会在去的</div>
+        <div><span>买家晒图</span>
+            <if condition="!empty($v['img'])">
+            <div class="img-show">
+                <foreach name="v['img']" item="v2">
+                    <a href="{$v2}" target="_blank"><img alt="" src="{$v2}" width="105" height="105" /></a>&nbsp;&nbsp;
+                </foreach>
+            </div>
+            </if>
+        </div>
+        <div class="color"><span>卖家回复</span>{$v3['content']}</div>
+    </div>
+</volist>
+<if condition="$totalPages gt 1">
+    <div class="prv-nxt">{$page}</div>
+</if>
+<script>
+    // 点击分页触发的事件
+    $("#ajax_comment_return .pagination  a").click(function(){
+        cur_page = $(this).data('p');
+        ajaxComment(commentType,cur_page);
+    });
+</script>

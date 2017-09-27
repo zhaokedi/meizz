@@ -1,0 +1,121 @@
+<include file="Public/header" />
+<include file="User/navigate" />
+
+
+<section class="main">
+	<!-- main-left -->
+	<include file="User/menu" />
+	<!-- /main-left -->
+	<!-- main-right -->
+	<div class="main-right">
+		<h2>物流详情</h2>
+		<div class="page47">
+			<div class="part1">
+
+					<if condition="$result[status] eq 0">
+					<div class="item">
+						<h4>待发货</h4>
+						<p>{:date("Y-m-d",time())}</p>
+						<p>{:date("H:i:s",time())}</p>
+						<!--<i></i>-->
+						<!--<p>2016-09-07</p>-->
+						<!--<p>11:52:36</p>-->
+					</div>
+				<else/>
+					<volist name="mydat" id="vo">
+						<div class="item">
+							<h4>{$key}</h4>
+							<if condition="$key neq '签收'">
+							<i></i>
+							</if>
+							<p>{:date("Y-m-d",strtotime($vo))}</p>
+							<p>{:date("H:i:s",strtotime($vo))}</p>
+							<!--<p>11:52:36</p>-->
+						</div>
+					</volist>
+				</if>
+				<!--<div class="item">-->
+					<!--<h4>待揽件</h4>-->
+					<!--<i></i>-->
+					<!--<p>2016-09-07</p>-->
+					<!--<p>11:52:36</p>-->
+				<!--</div>-->
+				<!--<div class="item">-->
+					<!--<h4>运输</h4>-->
+					<!--<i></i>-->
+					<!--<p>2016-09-07</p>-->
+					<!--<p>11:52:36</p>-->
+				<!--</div>-->
+				<!--<div class="item">-->
+					<!--<h4>派送</h4>-->
+					<!--<i></i>-->
+					<!--<p>2016-09-07</p>-->
+					<!--<p>11:52:36</p>-->
+				<!--</div>-->
+				<!--<div class="item">-->
+					<!--<h4>签收</h4>-->
+					<!--<p>2016-09-07</p>-->
+					<!--<p>11:52:36</p>-->
+				<!--</div>-->
+			</div>
+			<div class="part2">
+				<h3>订单信息</h3>
+				<ul>
+					<li><span>运单号码：</span>{$delivery.invoice_no}</li>
+					<li><span>物流公司：</span>{$delivery.shipping_name}</li>
+					<li><span>客服电话：</span>{$tpshop_config['shop_info_phone']}</li>
+					<!--<li>发货地址：福建省泉州市 海尾中兴南路96号 362200 曹先生 18859986153</li>-->
+					<li>收货地址：{$region_list[$order_info['province']]['name']}{$region_list[$order_info['city']]['name']}{$region_list[$order_info['district']]['name']}{$order_info.address} {$order_info.zipcode} {$order_info.consignee} {$order_info.mobile}</li>
+				</ul>
+			</div>
+			<div class="part3">
+				<h3>运单状态</h3>
+				<ul>
+					<if condition="$result[status] eq 1">
+						<li>
+							<volist name="detail" id="vo" key="k">
+							<time>{$key}</time>
+								<volist name="vo" id="vo1" key="k1">
+									<p>{$vo1.time}{$vo1.context} </p>
+								</volist>
+							<!--<p>21:46:54【泉州市】快件已到达 泉州丰泽东海站</p>-->
+							<!--<p>00:09:50【泉州市】泉州丰泽东海站 已发出</p>-->
+							</volist>
+						</li>
+						<else />
+						<p>{$result.message}</p>
+					</if>
+					<!--<li>-->
+						<!--<time>2016-09-07   周三	</time>-->
+						<!--<p>18:56:02包裹正在等待揽收</p>-->
+						<!--<p>03:13:18【泉州市】快件已到达 泉州转运中心</p>-->
+						<!--<p>04:55:01【泉州市】泉州转运中心 已发出</p>-->
+						<!--<p>07:32:45到厦门市【厦门转运中心】</p>-->
+						<!--<p>07:32:45【厦门市】快件已到达 厦门转运中心</p>-->
+						<!--<p>07:34:42【厦门市】厦门转运中心 已发出</p>-->
+						<!--<p>13:38:15【厦门市】快件已到达 厦门观音山分部</p>-->
+						<!--<p>13:38:16【厦门市】厦门观音山分部派件员：叶晓惠 18106986857正在为您派件</p>-->
+						<!--<p>15:17:01【厦门市】【已签收，签收人是郑】</p>-->
+					<!--</li>-->
+				</ul>
+			</div>
+		</div>
+	</div>
+	<!-- /main-right -->
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<include file="Public/footer" />
+

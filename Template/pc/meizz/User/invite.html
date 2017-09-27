@@ -1,0 +1,74 @@
+<include file="Public/header" />
+<include file="User/navigate" />
+<!--<link rel="stylesheet" href="css/main.css">-->
+<!--<script src="js/css.js"></script>-->
+<!--[if lt IE 9]>
+<!--<script src="js/html5shiv.min.js"></script>-->
+<!--<![endif]&ndash;&gt;-->
+<link rel="shortcut icon" href="">
+<!--</head>-->
+<!--<body>-->
+
+<section class="main">
+	<!-- main-left -->
+	<include file="User/menu" />
+	<!--<div class="main-left">-->
+
+	<!-- /main-left -->
+	<!-- main-right -->
+	<div class="main-right">
+		<h2>推荐奖励</h2>
+		<div class="page10">
+
+
+			<div class="part2">
+				<div class="slideTxtBox">
+
+						<div>
+							<table>
+								<tr><th>推荐用户</th><th>获得积分</th><th>获取时间</th><th>获取详情</th></tr>
+								<volist name="list" id="vo">
+								<tr><td>{$vo.next_nickname}</td><td>{$vo.pay_points}</td><td>{$vo.change_time|date="Y-m-d",###}</td><td>{$vo.desc}</td></tr>
+								</volist>
+								<!--<tr><td>2016-06-23 18:23:33</td><td>100</td><td>推广</td><td>邀请注册</td><td>2017-06-23-18:23:33</td></tr>-->
+								<!--<tr><td>2016-06-23 18:23:33</td><td>100</td><td>推广</td><td>邀请注册</td><td>2017-06-23-18:23:33</td></tr>-->
+
+							</table>
+						</div>
+
+				</div>
+
+			</div>
+
+			<div class="prv-nxt">
+				{$page}
+			</div>
+
+		</div>
+	</div>
+	<!-- /main-right -->
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<include file="Public/footer" />
+
+
+
+<!--<script src="js/jquery.min.js"></script>-->
+<!--<script src="js/slide.min.js"></script>-->
+<!--<script src="js/selectivizr.min.js"></script>-->
+<!--<script src="js/main.js"></script>-->
+<!--</body>-->
+<!--</html>-->
+

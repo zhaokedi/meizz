@@ -1,0 +1,28 @@
+<volist name="list" id="item">
+
+	<div class="item">
+		<!--<div class="title">售后编号<span>{$item.id}</span></div>-->
+		<ul class="info">
+			<li><span>产品名称</span>{$goodsList[$item['goods_id']]}</li>
+			<li><span>姓名</span>{$item.username}</li>
+			<li><span>申请时间</span>{$item.addtime|date="Y-m-d",###}</li>
+			<li><span>状态</span>
+				<if condition="$item['status'] eq 0">审核中</if>
+				<if condition="$item['status'] eq 1">通过</if>
+				<if condition="$item['status'] eq 2">未通过</if>
+			</li>
+		</ul>
+		<p><a href="" class="more "><span class="sp1">展开详情</span><span class="sp2">收起详情</span></a></p>
+		<ul class="info2">
+			<!--<li><span>商品状态</span>已发货 <a href="">查看物流</a></li>-->
+			<li><span><em class="e2">备</em>注</span>{$item.remark}</li>
+			<li><span>期数</span>{$item.num}</li>
+			<li><span>联系电话</span>{$item.mobile}</li>
+			<li><span>客服回复</span>{$item.mremark}</li>
+
+		</ul>
+	</div>
+</volist>
+
+
+

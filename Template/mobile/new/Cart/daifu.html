@@ -1,0 +1,176 @@
+<!DOCTYPE html >
+<html style="font-size: 58.5938px;">
+<head>
+	<meta name="Generator" content="tpshop" />
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width">
+	<title>购物流程-{$tpshop_config['shop_info_store_title']}</title>
+	<meta http-equiv="keywords" content="{$tpshop_config['shop_info_store_keyword']}" />
+	<meta name="description" content="{$tpshop_config['shop_info_store_desc']}" />
+	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+	<link rel="stylesheet" href="__STATIC__/css/public.css">
+	<link rel="stylesheet" href="__STATIC__/css/flow.css">
+	<link rel="stylesheet" href="__STATIC__/css/style_jm.css">
+	<link rel="stylesheet" type="text/css" href="__STATIC__/css/main.css">
+	<script type="text/javascript" src="__STATIC__/js/jquery.js"></script>
+	<script src="__PUBLIC__/js/global.js"></script>
+	<script src="__PUBLIC__/js/mobile_common.js"></script>
+	<script src="__STATIC__/js/common.js"></script>
+	<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+	<script>
+		/*
+		 * 注意：
+		 * 1. 所有的JS接口只能在公众号绑定的域名下调用，公众号开发者需要先登录微信公众平台进入“公众号设置”的“功能设置”里填写“JS接口安全域名”。
+		 * 2. 如果发现在 Android 不能分享自定义内容，请到官网下载最新的包覆盖安装，Android 自定义分享接口需升级至 6.0.2.58 版本及以上。
+		 * 3. 常见问题及完整 JS-SDK 文档地址：http://mp.weixin.qq.com/wiki/7/aaa137b55fb2e0456bf8dd9148dd613f.html
+		 *
+		 * 开发中遇到问题详见文档“附录5-常见错误及解决办法”解决，如仍未能解决可通过以下渠道反馈：
+		 * 邮箱地址：weixin-open@qq.com
+		 * 邮件主题：【微信JS-SDK反馈】具体问题
+		 * 邮件内容说明：用简明的语言描述问题所在，并交代清楚遇到该问题的场景，可附上截屏图片，微信团队会尽快处理你的反馈。
+		 */
+		wx.config({
+			debug: false,
+			appId: '{$signPackage.appId}',
+			timestamp: '{$signPackage.timestamp}',
+			nonceStr: '{$signPackage.nonceStr}',
+			signature: '{$signPackage.signature}',
+			jsApiList: [
+				'checkJsApi',
+				'chooseWXPay',
+				'onMenuShareTimeline',
+				'onMenuShareAppMessage',
+				'onMenuShareQQ',
+				'onMenuShareWeibo',
+
+
+			]
+		});
+	</script>
+</head>
+<body>
+
+<header>
+	<a href="javascript:history.back(-1)" class="back"></a>
+	<h3>在线支付</h3>
+</header>
+<div class="h50"></div>
+
+
+<div class="pay-online">
+
+	<div class="tips">
+		<img src="__STATIC__/images/new/ok.png" alt="" class="icon">
+		<h3>代付链接生成成功点右上角分享给朋友~</h3>
+		<p>如果非微信复制下面链接</p>
+		<p>亲，江湖告急，帮忙付个款，滴水之恩，定当涌泉相报。</p>
+
+		<textarea   readonly="readonly" style="border: none; background-color: #cccccc;ime-mode: disabled; width: 100%;  "    >{$url}</textarea>
+
+	</div>
+	<!--<input value="{$url}" style="border: 0px">-->
+
+
+
+
+	<!--<div class="info">-->
+	<!--</div>-->
+</div>
+<script src="__STATIC__/js/slide.js"></script>
+<script src="__STATIC__/js/main.js"></script>
+<script type="text/javascript">
+	        window.shareData = {
+	            "imgUrl": "http://www.merrystone.cn/Template/pc/meizz/Static/images/logo.png",
+	            "timeLineLink": "{$url}",
+	            "sendFriendLink":"{$url}",
+				"tTitle": "美之钻代付",
+				"tContent": "{$order[content]}",
+				"fTitle": "美之钻代付",
+				"fContent": "{$order[content]}",
+	// 	   		 "backurl": 'http://t.cn/RGsH1My'
+	        };
+		wx.ready(function () {
+			wx.showOptionMenu();
+		  // 2. 分享接口
+		  // 2.1 监听“分享给朋友”，按钮点击、自定义分享内容及分享结果接口
+		    wx.onMenuShareAppMessage({
+				title: window.shareData.tTitle,
+				desc: window.shareData.tContent,
+				link: window.shareData.sendFriendLink,
+				imgUrl: window.shareData.imgUrl,
+			    type: '', // 分享类型,music、video或link，不填默认为link
+			    dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+			    success: function () {
+			   //		window.location = window.shareData.backurl;
+	                                if(window.shareData.backurl){
+	                                        window.location = window.shareData.backurl;
+	                                }
+			    },
+			    cancel: function () {
+			        //alert('分享朋友失败');
+			    }
+			});
+		  // 2.2 监听“分享到朋友圈”按钮点击、自定义分享内容及分享结果接口
+			wx.onMenuShareTimeline({
+				title: window.shareData.fTitle?window.shareData.fTitle:window.shareData.tTitle,
+				desc: window.shareData.tContent,
+				link: window.shareData.sendFriendLink,
+				imgUrl: window.shareData.imgUrl,
+			    success: function () {
+			       //  shareHandle('frineds');
+			   // 	window.location = window.shareData.backurl;
+	                                if(window.shareData.backurl){
+	                                        window.location = window.shareData.backurl;
+	                                }else{
+						shareHandle('frineds');
+					}
+			    },
+			    cancel: function () {
+			        //alert('分享朋友圈失败');
+			    }
+			});
+
+		  // 2.4 监听“分享到微博”按钮点击、自定义分享内容及分享结果接口
+			wx.onMenuShareWeibo({
+				title: window.shareData.tTitle,
+				desc: window.shareData.tContent,
+				link: window.shareData.sendFriendLink,
+				imgUrl: window.shareData.imgUrl,
+			    success: function () {
+					shareHandle('weibo');
+			       	//alert('分享微博成功');
+			    },
+			    cancel: function () {
+			        //alert('分享微博失败');
+			    }
+			});
+			wx.error(function (res) {
+				/*if(res.errMsg == 'config:invalid signature'){
+					wx.hideOptionMenu();
+				}else if(res.errMsg == 'config:invalid url domain'){
+					wx.hideOptionMenu();
+				}else{
+					wx.hideOptionMenu();
+					//alert(res.errMsg);
+				}*/
+				if(res.errMsg){
+//					wx.hideOptionMenu();
+				}
+			});
+		});
+
+		function shareHandle(to) {
+			var submitData = {
+				module: window.shareData.moduleName,
+				moduleid: window.shareData.moduleID,
+				token:'wbvqno1458545761',
+				wecha_id:'oN3irwfbhBhSqS2DpiP2nwGmK-fg',
+				url: window.shareData.sendFriendLink,
+				to:to
+			};
+
+			$.post('index.php?g=Wap&m=Share&a=shareData&token=wbvqno1458545761&wecha_id=oN3irwfbhBhSqS2DpiP2nwGmK-fg',submitData,function (data) {},'json')
+		}
+</script>
+</body>
+</html>
