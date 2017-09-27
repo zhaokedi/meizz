@@ -1,0 +1,62 @@
+<include file="Public/min-header" />
+<div class="wrapper">
+	<include file="Public/breadcrumb"/>
+	<section class="content">
+       <div class="row">
+       		<div class="col-xs-12">
+	       		<div class="box">
+	             <div class="box-header">
+              		<nav class="navbar navbar-default">				
+	               		<div class="pull-right navbar-form">
+	               			<label><a class="btn btn-block btn-primary" href="{:U('Admin/Research/research')}">新增问卷</a></label>
+	               		</div>
+	               	</nav>	            
+	             </div>
+	             <div class="box-body">
+		           <div class="row">
+		            	<div class="col-sm-12">
+			              <table id="list-table" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+			                 <thead>
+			                   <tr role="row">
+			                   	   <th>问卷ID</th>
+				                   <th>问卷名称</th>
+				                   <!--<th>广告位描述</th>-->
+				                   <th>启用</th>
+				                   <th>操作</th>
+			                   </tr>
+			                 </thead>
+							<tbody>
+							  <foreach name="list" item="vo" key="k" >
+							  	<tr role="row">
+							  	 <td>{$vo.id}</td>
+			                     <td>{$vo.title}</td>
+
+			                     <td>
+                                                 <img width="20" height="20" src="__PUBLIC__/images/<if condition='$vo[is_star] eq 1'>yes.png<else />cancel.png</if>" onclick="changeTableVal('research_list','id','{$vo.id}','is_star',this)"/>
+                                             </td>
+			                     <td>
+			                      <a class="btn btn-info" href="{:U('Admin/Research/question',array('pid'=>$vo['id']))}">查看问卷</a>
+			                      <a class="btn btn-info" href="{:U('Home/Index/research',array('id'=>$vo['id']))}">查看结果</a>
+			                      <a class="btn btn-primary" href="{:U('Admin/Research/research',array('act'=>'edit','id'=>$vo['id']))}"><i class="fa fa-pencil"></i></a>
+									 <a class="btn btn-danger" onclick="delfunc(this)" data-url="{:U('Research/researchHandle')}" data-id="{$vo.id}"><i class="fa fa-trash-o"></i></a>
+			                     
+								</td>
+			                   </tr>
+			                  </foreach>
+			                   </tbody>
+			               </table>
+		               </div>
+		          </div>
+		         	
+	              <div class="row">
+	              	    <div class="col-sm-6 text-left"></div>
+	                    <div class="col-sm-6 text-right">{$page}</div>		
+	              </div>
+	          </div>
+	        </div>
+       	</div>
+       </div>
+   </section>
+</div>
+</body>
+</html>

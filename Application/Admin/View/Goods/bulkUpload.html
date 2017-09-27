@@ -1,0 +1,46 @@
+<include file="Public/min-header"/>
+<link href="__PUBLIC__/plugins/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css" />
+<script src="__PUBLIC__/plugins/daterangepicker/moment.min.js" type="text/javascript"></script>
+<script src="__PUBLIC__/plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script>
+<style type="text/css">
+    #tab_tongyong .table-bordered tr td input{display:initial;}
+</style>
+<div class="wrapper">
+    <include file="Public/breadcrumb"/>
+    <section class="content">
+        <!-- Main content -->
+        <div class="container-fluid">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-list"></i>批量上传</h3>
+                </div>
+                <div class="panel-body">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a href="#tab_goods_attr" data-toggle="tab">上传CSV</a></li>
+                    </ul>
+                    <!--表单数据-->
+                     <form class="navbar-form form-inline" action="{:U('Goods/uploadGoods')}" name="change_System" method="post" enctype="multipart/form-data">
+                            <!-- excel上传-->
+                            <div class="tab-pane" id="tab_goods_attr">
+                                <table class="table table-bordered" id="goods_attr_table">
+                                    <tr>
+                                        <td>CSV上传:</td>
+                                        <td>
+                                           <input type="file" name="file">
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <!-- excel上传-->
+                        </div>
+                        <div class="pull-right">
+                        <input type="submit" class="btn btn-primary" class="btn btn-primary" value="提交">
+                        </div>
+                    </form><!--表单数据-->
+                </div>
+            </div>
+        </div>    <!-- /.content -->
+    </section>
+</div>
+</body>
+</html>

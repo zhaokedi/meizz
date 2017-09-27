@@ -1,0 +1,83 @@
+<include file="Public/min-header"/>
+<div class="wrapper">
+    <include file="Public/breadcrumb"/>
+	<section class="content">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="box">
+                        <div class="box-header">
+                            <h3 class="box-title">添加评论</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <form action="{:U('Apointment/commentHandle')}" method="post" class="form-horizontal">
+                        <div class="box-body">
+                            <div class="form-group">
+                                <label class="control-label col-sm-2">设计师</label>
+
+                                <div class="col-sm-10">
+                                    <input type="text" placeholder="设计师" class="form-control large"  value="{$design_list[$apoint_info[id]][name]}" readonly>
+                                    <!--<span class="help-inline">一般为分类名称英文缩写。</span>-->
+                                </div>
+                            </div>
+                            <!--<tr>-->
+                                <!--<td>设计评分：</td>-->
+                                <!--<td>-->
+                                    <!--<select name="goods_rank" class="input-sm">-->
+
+                                        <!--<option value="1" <if condition="$info[level] eq 1">selected</if>>1</option>-->
+                                        <!--<option value="2" <if condition="$info[level] eq 2">selected</if>>2</option>-->
+                                        <!--<option value="3" <if condition="$info[level] eq 3">selected</if>>3</option>-->
+                                        <!--<option value="4" <if condition="$info[level] eq 4">selected</if>>4</option>-->
+                                        <!--<option value="5" <if condition="$info[level] eq 5">selected</if>>5</option>-->
+
+                                    <!--</select>-->
+                                <!--</td>-->
+                            <!--</tr>-->
+                            <div class="form-group">
+                                <label class="control-label col-sm-2">设计评分</label>
+
+                                <div class="col-sm-10">
+                                    <select name="goods_rank" class="input-sm">
+
+                                        <option value="1" >1</option>
+                                        <option value="2">2</option>
+                                        <option value="3" >3</option>
+                                        <option value="4" >4</option>
+                                        <option value="5" >5</option>
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-2">发布用户名</label>
+
+                                <div class="col-sm-10">
+                                    <input type="text" placeholder="发布用户名" class="form-control large" name="username" value="">
+                                    <!--<span class="help-inline">一般为分类名称英文缩写。</span>-->
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-2">评论内容</label>
+                                <div class="col-sm-10">
+                                    <textarea type="text" placeholder="评论内容" class="form-control large" name="content" >{$apoint_info.content}</textarea>
+                                    <!--<span class="help-inline">这将是它在站点上显示的名字。</span>-->
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                        <div class="box-footer">
+                        	<input type="hidden" name="act" value="{$act}">
+                        	<input type="hidden" name="design_id" value="{$apoint_info.id}">
+                        	<button type="reset" class="btn btn-primary pull-left"><i class="icon-ok"></i>重填  </button>
+                            <button type="submit" class="btn btn-primary pull-right"><i class="icon-ok"></i>提交  </button>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+</div>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<include file="Public/min-header"/>
+<div class="wrapper">
+    <include file="Public/breadcrumb"/>
+	<section class="content">
+       <div class="row">
+       		<div class="col-xs-12">
+	       	  <div class="box">
+	           	<div class="box-header">
+	               <nav class="navbar navbar-default">	     
+				        <div class="collapse navbar-collapse">
+				          <form class="navbar-form form-inline" action="" method="post" onsubmit="return submitsql()" id="submitsql">
+							<div>  要执行的sql查询语句，SQL语句必须按照MYSQL的语法编写</div>
+				          	<div class="input-group">
+
+								<textarea cols="40" rows="6" name="sql" id="sql">{$sql}</textarea>
+				          	
+				          	</div>
+
+				            <div class="form-group">
+					            <!--<a href="javascript:void(0)" onclick="gobackup(this)" class="btn btn-primary pull-right">查询</a>-->
+								<button type="submit" class="btn btn-primary pull-right" name="submit">查询</button>
+				            </div>		          
+				          </form>		
+				      	</div>
+	    			</nav>               
+	            </div>	    
+	             <!-- /.box-header -->
+	             <div class="box-body" style="overflow-x: scroll">
+	           		<div class="row">
+	            	<div class="col-sm-12">
+	            	<form  method="post" action="">
+		              <table class="table table-bordered table-striped" >
+		                 <thead >
+		                   <tr>
+		                       <!--<th class="text-center" style="width: 2px;"><input type="checkbox" onclick="javascript:$('input[name*=backs]').prop('checked',this.checked);"></th>-->
+							   <empty name="list">{$error}
+							   <else/>
+								   <volist name="list1" id="vo" key="k">
+								   <th class="sorting" tabindex="0">{$Think.lang.$key|strtolower}</th>
+								   </volist>
+								   <!--<th class="sorting" tabindex="0">记录条数</th>-->
+								   <!--<th class="sorting" tabindex="0">占用空间</th>-->
+								   <!--<th class="sorting" tabindex="0">编码</th>-->
+								   <!--<th class="sorting" tabindex="0">创建时间</th>-->
+								   <!--<th class="sorting" tabindex="0">说明</th>-->
+								   <!--<th class="sorting" tabindex="0">操作</th>-->
+							   </empty>
+
+		                   </tr>
+		                 </thead>
+						<tbody >
+						  <foreach name="list" item="vo" >
+						  	<tr>
+ 							 <!--<td><input type="checkbox" name="backs[]" value="{$vo.name}"></td>-->
+								<volist name="vo" id="v1">
+		                     <td>{$v1}</td>
+								</volist>
+		                     <!--<td>{$vo.rows}</td>-->
+		                     <!--<td>{$vo.data_length|format_bytes}</td>-->
+		                     <!--<td>{$vo.collation}</td>-->
+		                     <!--<td>{$vo.create_time}</td>-->
+		                     <!--<td>{$vo.comment}</td>-->
+		                     <!--<td>-->
+		                      <!--<a class="btn btn-success" href="{:U('Tools/optimize',array('tablename'=>$vo['name']))}">优化</a>-->
+		                      <!--<a class="btn btn-info" href="{:U('Tools/repair',array('tablename'=>$vo['name']))}" data-url="">修复</a>-->
+							<!--</td>-->
+		                   </tr>
+		                  </foreach>
+		                   </tbody>
+		                 <tfoot>
+		                 </tfoot>
+		               </table>
+		           </form>
+	               </div>
+	           </div>
+	          </div>
+	        </div>
+       	</div>
+       </div>
+   </section>
+</div>
+<script type="text/javascript">
+function submitsql(){
+
+	var sql=$('#sql').val();
+	var sql=sql.trim(sql);
+
+	var str=sql.substr(0,6);
+
+	if(str !='select'){
+		alert('请输入正确的sql查询语句');
+		return false;
+	}
+	return true;
+//	$.ajax({
+//		type :'post',
+//		url : "{:U('Admin/Tools/dosql')}",
+//		datatype : 'json',
+//		data : {sql:sql},
+//		success : function(data){
+//
+//		}
+//	})
+
+}
+</script>
+</body>
+</html>

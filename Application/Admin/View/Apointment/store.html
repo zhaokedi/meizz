@@ -1,0 +1,232 @@
+<include file="Public/min-header" />
+<link href="__PUBLIC__/plugins/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css" />
+<script src="__PUBLIC__/plugins/daterangepicker/moment.min.js" type="text/javascript"></script>
+<script src="__PUBLIC__/plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script>
+<div class="wrapper">
+    <include file="Public/breadcrumb"/>
+    <section class="content ">
+        <!-- Main content -->
+        <div class="container-fluid">
+            <div class="pull-right">
+                <a href="javascript:history.go(-1)" data-toggle="tooltip" title="" class="btn btn-default" data-original-title="返回"><i class="fa fa-reply"></i></a>
+            	<!--a href="javascript:;" class="btn btn-default" data-url="http://www.tp-shop.cn/Doc/Index/article/id/1014/developer/user.html" onclick="get_help(this)"><i class="fa fa-question-circle"></i> 在线帮助</a-->
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-list"></i> 添加门店</h3>
+                </div>
+                <div class="panel-body ">   
+                    <!--表单数据-->
+                    <form method="post" id="handleposition" action="{:U('Admin/Apointment/storeHandle')}">
+                        <!--通用信息-->
+                    <div class="tab-content col-md-10">                 	  
+                        <div class="tab-pane active" id="tab_tongyong">                           
+                            <table class="table table-bordered">
+                                <tbody>
+                                <tr>
+                                    <td class="col-sm-2">门店名称：</td>
+                                    <td class="col-sm-6">
+                                        <input type="text" class="form-control" name="name" id="title" value="{$info.name}" >
+                                        <span id="err_attr_name" style="color:#F00; display:none;"></span>                                        
+                                    </td>
+                                    <td class="col-sm-4">请填写门店名称</td>
+                                </tr>
+                                <tr>
+                                    <td class="col-sm-2">门店电话：</td>
+                                    <td class="col-sm-6">
+                                        <input type="text" class="form-control" name="tel" id="tel" value="{$info.tel}" >
+                                        <!--<span id="err_attr_name" style="color:#F00; display:none;"></span>-->
+                                    </td>
+                                    <td class="col-sm-4">请填写门店电话</td>
+                                </tr>
+                                <tr>
+                                    <td class="col-sm-2">门店位置：</td>
+                                    <td class="col-sm-6">
+                                        <input type="text" class="form-control" name="position" id="position" value="{$info.position}" >
+                                        <!--<span id="err_attr_name" style="color:#F00; display:none;"></span>-->
+                                    </td>
+                                    <td class="col-sm-4">请填写门店位置</td>
+                                </tr>
+                                <tr>
+                                    <td class="col-sm-2">门店地址：</td>
+                                    <td class="col-sm-6">
+                                        <input type="text" class="form-control" name="address" id="address" value="{$info.address}" >
+                                        <!--<span id="err_attr_name" style="color:#F00; display:none;"></span>-->
+                                    </td>
+                                    <td class="col-sm-4">请填写门店地址</td>
+                                </tr>
+                                <tr>
+                                    <td class="col-sm-2">门店坐标：</td>
+                                    <td class="col-sm-6">
+                                        <input type="text" class="form-control" name="zuobiao" id="zuobiao" value="{$info.zuobiao}" >
+                                        <!--<span id="err_attr_name" style="color:#F00; display:none;"></span>-->
+                                        <div class="col-sm-4">
+                                            <input type="text" class="form-control"  id="addrname"  placeholder="输入要搜索的地名">
+                                            <button type="button" class="btn" style="margin-top:5px;" onclick="map_search();">搜索</button>
+                                        </div>
+                                        <div id="allmap" style="width:800px;height:600px;margin-top: 5px">
+
+                                        </div>
+                                    </td>
+                                    <td class="col-sm-4">请选择门店坐标 </td>
+                                </tr>
+
+                                </tbody> 
+                                <tfoot>
+                                	<tr>
+                                	<td><input class="btn btn-default" type="reset" value="重置">
+                                		<input type="hidden" name="act" value="{$act}">
+                                		<input type="hidden" name="id" value="{$info.id}">
+                                	</td>
+                                	<td class="col-sm-4"></td>
+                                	<td class="text-right"><input class="btn btn-primary" type="button" onclick="adsubmit()" value="保存">
+
+                                    </td>
+                                    </tr>
+                                </tfoot>                               
+                                </table>
+                        </div>                           
+                    </div>              
+			    	</form><!--表单数据-->
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<!--<div id="allmap" style="width:1200px;height:600px;display:none;">-->
+
+<!-- 引入百度功能中拾取坐标的js  -->
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=Vss6Up7UwHme6idruedFeTu3tnz258T0"></script>
+<link rel="stylesheet" href="http://api.map.baidu.com/library/SearchInfoWindow/1.5/src/SearchInfoWindow_min.css" />
+<script type="text/javascript" src="http://api.map.baidu.com/library/SearchInfoWindow/1.5/src/SearchInfoWindow_min.js"></script>
+
+<!-- 弹出层改版 -->
+<script type="text/javascript">
+    $(function(){
+        $map = new BMap.Map("allmap");
+
+        $map.addControl(new BMap.NavigationControl());//添加默认缩放平移控件
+        $map.enableScrollWheelZoom(true);
+
+        var map = $map;
+        var lat = $("input[name='zuobiao']").val();
+        var address = $("input[name='address']").val();
+        if( lat != '' ){
+            map.centerAndZoom(address,15);
+        }else {
+            $map.centerAndZoom("厦门市",15);
+        }
+
+        //单击获取点击的经纬度
+        map.addEventListener("click",function(e){
+            var msg = "选定的坐标是：" + e.point.lng + "," + e.point.lat + '?';
+            var zuobiao = e.point.lng + "," + e.point.lat;
+            layer.confirm(msg, {icon: 3}, function(index){
+                layer.closeAll();
+                $("input[name='zuobiao']").val(zuobiao);
+            });
+        });
+    });
+    function map_search(){
+        var addrname=$("#addrname").val();
+        if(addrname==''){
+            layer.msg("请输入要搜索的地名!");
+            return;
+        }
+         var map = $map;
+
+        var local = new BMap.LocalSearch(map, {
+            renderOptions:{map: map}
+        });
+        local.search(addrname);
+//        layer.open({
+//            type: 1,
+//            title: false,
+//            closeBtn: true,
+//            area: ['1200px','600px'],
+//            skin: 'layui-layer-nobg', //没有背景色
+//            shadeClose: true,
+//            content: $('#allmap')
+//        });
+    }
+
+</script>
+
+
+<script>
+
+function adsubmit(){
+	if($('#title').val() ==''){
+		layer.msg('门店名称不能为空');return;
+	}
+	if($('#price').val() ==''){
+		layer.msg('团购价格不能为空');return;
+	}
+	if($('#group_num').val() ==''){
+		layer.msg('限购数量不能为空');return;
+	}
+	$('#handleposition').submit();
+}
+
+$(document).ready(function() {
+	$('#start_time').daterangepicker({
+		format:"YYYY-MM-DD",
+		singleDatePicker: true,
+		showDropdowns: true,
+		minDate:'{$min_date}',
+		maxDate:'2030-01-01',
+		startDate:'{$min_date}',
+	    locale : {
+            applyLabel : '确定',
+            cancelLabel : '取消',
+            fromLabel : '起始时间',
+            toLabel : '结束时间',
+            customRangeLabel : '自定义',
+            daysOfWeek : [ '日', '一', '二', '三', '四', '五', '六' ],
+            monthNames : [ '一月', '二月', '三月', '四月', '五月', '六月','七月', '八月', '九月', '十月', '十一月', '十二月' ],
+            firstDay : 1
+        }
+	});
+	
+	$('#end_time').daterangepicker({
+		format:"YYYY-MM-DD",
+		singleDatePicker: true,
+		showDropdowns: true,
+		minDate:'{$min_date}',
+		maxDate:'2030-01-01',
+		startDate:'{$min_date}',
+	    locale : {
+            applyLabel : '确定',
+            cancelLabel : '取消',
+            fromLabel : '起始时间',
+            toLabel : '结束时间',
+            customRangeLabel : '自定义',
+            daysOfWeek : [ '日', '一', '二', '三', '四', '五', '六' ],
+            monthNames : [ '一月', '二月', '三月', '四月', '五月', '六月','七月', '八月', '九月', '十月', '十一月', '十二月' ],
+            firstDay : 1
+        }
+	});
+
+});
+
+function selectGoods(){
+    var url = "{:U('Promotion/search_goods',array('tpl'=>'select_goods'))}";
+    layer.open({
+        type: 2,
+        title: '选择商品',
+        shadeClose: true,
+        shade: 0.2,
+        area: ['75%', '75%'],
+        content: url, 
+    });
+}
+
+function call_back(goods_id,goods_name,store_count){
+	$('#goods_id').val(goods_id);
+	$('#goods_name').val(goods_name);
+	$('#group_num').val(store_count);
+	layer.closeAll('iframe');
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<if condition="$tpltype eq 1">
+    <div class="input-group">
+        <span class="input-group-addon">连续签到</span>
+        <input style="width: 1.75rem;" class="form-control" type="number" value="{$item['day']|intval}" name="reword_order[day][]" />
+        <span class="input-group-addon" style="border-left: 0; border-right: 0;">天 奖励</span>
+        <input style="width: 1.75rem;" class="form-control" type="number" value="{$item['credit']|intval}" name="reword_order[credit][]" />
+        <span class="input-group-addon" style="border-left: 0; border-right: 0;">积分</span>
+        <span class="form-control btn btn-default delrule">删除</span>
+    </div>
+<elseif condition="$tpltype eq 2"/>
+    <div class="input-group">
+        <span class="input-group-addon">总签到</span>
+        <input style="width: 1.8rem;" class="form-control" type="number" value="{$item['day']|intval}" name="reword_sum[day][]"/>
+        <span class="input-group-addon" style="border-left: 0; border-right: 0;">天 奖励</span>
+        <input style="width: 1.8rem;" class="form-control" type="number" value="{$item['credit']|intval}"  name="reword_sum[credit][]" />
+        <span class="input-group-addon" style="border-left: 0; border-right: 0;">积分</span>
+        <span class="form-control btn btn-default delrule">删除</span>
+    </div>
+<elseif condition="$tpltype eq 3"/>
+    <div class="input-group">
+        <span class="input-group-addon">日期</span>
+        {ifp 'sale.rule.edit'}
+            {php echo tpl_form_field_date('reword_special[date][]', !empty($item['date']) ? date('Y-m-d',$item['date']) : date('Y-m-d'), false)}
+        {else}
+            <input class="form-control" value="{php echo date('Y-m-d', $item['date'])}" style="width: 90px; padding: 5px;" disabled />
+        {/if}
+        <span class="input-group-addon" style="border-left: 0; border-right: 0;">标题</span>
+        <input class="form-control" value="{$item['title']}" placeholder="非必填" style="width: 90px;" {ifp 'sale.rule.edit'} name="reword_special[title][]"{else}disabled{/if} />
+        <span class="input-group-addon" style="border-left: 0; border-right: 0;">颜色</span>
+        <input class="form-control" value="{if empty($item['color'])}#cccccc{else}{$item['color']}{/if}" type="color" style="width: 50px; padding: 5px;" {ifp 'sale.rule.edit'} name="reword_special[color][]"{else}disabled{/if} />
+        <span class="input-group-addon" style="border-left: 0; border-right: 0;">奖励</span>
+        <input class="form-control" type="number" value="{$item['credit']}" style="width: 70px;" {ifp 'sale.rule.edit'} name="reword_special[credit][]"{else}disabled{/if}/>
+        <span class="input-group-addon" style="border-left: 0; border-right: 0;">积分</span>
+        <span class="form-control btn btn-default delrule">删除</span>
+    </div>
+</if>

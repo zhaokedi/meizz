@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
+
+<url>
+  <loc>http://mzz.weiyuntian.com</loc>
+  <changefreq>weekly</changefreq>
+</url>
+<url>
+  <loc>http://mzz.weiyuntian.com/index.php</loc>
+  <changefreq>weekly</changefreq>
+</url>
+<url>
+  <loc>http://mzz.weiyuntian.com/Home/User/login.html</loc>
+  <changefreq>weekly</changefreq>
+</url>
+<url>
+  <loc>http://mzz.weiyuntian.com/Home/User/reg.html</loc>
+  <changefreq>weekly</changefreq>
+</url>
+<url>
+  <loc>http://mzz.weiyuntian.com/Home/Article</loc>
+  <changefreq>weekly</changefreq>
+</url>
+<url>
+  <loc>http://mzz.weiyuntian.com/Home/Goods/goodsList.html</loc>
+  <changefreq>weekly</changefreq>
+</url>
+<url>
+  <loc>http://mzz.weiyuntian.com/Home/Article/detail/article_id/.html</loc>
+  <changefreq>weekly</changefreq>
+</url>
+<url>
+  <loc>http://mzz.weiyuntian.com/Home/Article/detail/article_id/3.html</loc>
+  <changefreq>weekly</changefreq>
+</url>
+<url>
+  <loc>http://mzz.weiyuntian.com/Home/Article/detail/article_id/2.html</loc>
+  <changefreq>weekly</changefreq>
+</url>
+<url>
+  <loc>http://mzz.weiyuntian.com/Home/Article/detail/article_id/4.html</loc>
+  <changefreq>weekly</changefreq>
+</url>
+<url>
+  <loc>http://mzz.weiyuntian.com/Home/Article/detail/article_id/5.html</loc>
+  <changefreq>weekly</changefreq>
+</url>
+<url>
+  <loc>http://mzz.weiyuntian.com/Home/Goods/goodsList/id/42.html</loc>
+  <changefreq>weekly</changefreq>
+</url>
+</urlset>

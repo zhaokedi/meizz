@@ -1,0 +1,132 @@
+<include file="Public/min-header"/>
+<div class="wrapper">
+  <include file="Public/breadcrumb"/>
+	<section class="content">
+       <div class="row">
+       		<div class="col-xs-12">
+	       		<div class="box">
+	             <div class="box-header">
+	               <h3 class="box-title">日志列表</h3>
+	             </div>
+	             <div class="box-body">
+	             <div class="row">
+	            	<div class="col-sm-12">
+		              <table id="list-table" class="table table-bordered table-striped dataTable">
+		                 <thead>
+		                   <tr role="row">
+		                   <th style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);"></th>
+			                   <th>ID</th>
+			                   <th>角色名称</th>
+			                   <th>描述</th>
+			                   <th>IP</th>
+			                   <th>操作时间</th>
+			                 <!--  <th>操作</th>-->
+		                   </tr>
+		                 </thead>
+						<tbody>
+						  <foreach name="list" item="vo" key="k" >
+							  	<tr role="row" align="center">
+							  		<td class="text-center">
+                                        <input type="checkbox" name="selected[]" value="{$vo.log_id}">
+                                        <input type="hidden" name="shipping_code[]" value="flat.flat">
+                                    </td>
+				                     <td>{$vo.log_id}</td>
+				                     <td>{$vo.user_name}</td>
+				                     <td>{$vo.log_info}</td>
+				                     <th>{$vo.log_ip}</th>
+				                     <td>{$vo.log_time|date="Y-m-d H:i:s",###}</td>
+                                     <!--
+				                     <td>
+				                      	<a class="btn btn-danger" href="javascript:void(0)" data-url="{:U('Admin/logDel')}" data-id="{$vo.log_id}" onclick="delfun(this)"><i class="fa fa-trash-o"></i></a>
+									 </td>
+                                     -->
+			                    </tr>
+		                  </foreach>
+		                   </tbody>
+		                 <tfoot>
+		                 
+		                 </tfoot>
+		               </table>
+		               <select name="operate" id="operate">
+                                <option value="0">操作选择</option>
+                               <!--  <option value="show">显示</option>
+                                <option value="hide">隐藏</option> -->
+                                <option value="del">删除</option>
+                            </select>
+                            <button onclick="op()">确定</button>
+                            <form id="op" action="{:U('Admin/op')}" method="post">
+                                <input type="hidden" name="selected">
+                                <input type="hidden" name="type">
+                            </form>	 
+	               </div>
+	          </div>
+              <div class="row">
+              	    <div class="col-sm-6 text-left"></div>
+                    <div class="col-sm-6 text-right">{$page}</div>		
+              </div>
+	          </div>
+	        </div>
+       	</div>
+       </div>
+   </section>
+</div>
+<script>
+function delfun(obj){
+	
+	
+	//询问框
+layer.confirm('确认删除？', {
+  btn: ['确定','取消'] //按钮
+}, function(){
+    // 确定
+		$.ajax({
+			type : 'post',
+			url : $(obj).attr('data-url'),
+			data : {act:'del',log_id:$(obj).attr('data-id')},
+			dataType : 'json',
+			success : function(data){
+				if(data==1){
+					$(obj).parent().parent().remove();
+				}else{
+					layer.msg(data, {icon: 2,time: 2000});   //alert(data);
+				}
+			}
+		})
+	
+ 
+	
+}, function(){
+	// 取消
+});
+	
+	
+	 
+	 
+	return false;
+}
+
+	function op(){
+        //获取操作
+        var op_type = $('#operate').find('option:selected').val();
+        if(op_type == 0){
+			layer.msg('请选择操作', {icon: 1,time: 1000});   //alert('请选择操作');
+            return;
+        }
+        //获取选择的id
+        var selected = $('input[name*="selected"]:checked');
+        var selected_id = [];
+        if(selected.length < 1){
+
+			layer.msg('请选择项目', {icon: 1,time: 1000}); //            alert('请选择项目');
+            return;
+        }
+        $(selected).each(function(){
+            selected_id.push($(this).val());
+        })
+        $('#op').find('input[name="selected"]').val(selected_id);
+        $('#op').find('input[name="type"]').val(op_type);
+        $('#op').submit();
+    }
+</script>  
+</body>
+</html>

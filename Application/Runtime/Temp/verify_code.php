@@ -1,0 +1,1 @@
+a:5:{s:10:"admin_show";s:1:"0";s:8:"reg_show";s:1:"0";s:10:"login_show";s:1:"0";s:11:"forget_show";s:1:"0";s:12:"message_show";s:1:"0";}

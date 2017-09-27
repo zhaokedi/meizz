@@ -1,0 +1,1 @@
+a:3:{s:12:"freight_free";s:7:"1000000";s:10:"point_rate";s:2:"10";s:8:"__hash__";s:65:"4697983bdda48e56b9930130e93a204c_1309c8d61c3e2cd935a8e299d9ff0d5f";}

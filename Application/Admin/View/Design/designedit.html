@@ -1,0 +1,364 @@
+<include file="Public/min-header"/>
+<link href="__PUBLIC__/plugins/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css" />
+<script src="__PUBLIC__/plugins/daterangepicker/moment.min.js" type="text/javascript"></script>
+<script src="__PUBLIC__/plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script>
+<div class="wrapper">
+    <include file="Public/breadcrumb"/>
+    <section class="content ">
+        <!-- Main content -->
+        <div class="container-fluid">
+            <div class="pull-right">
+                <a href="javascript:history.go(-1)" data-toggle="tooltip" title="" class="btn btn-default" data-original-title="返回"><i class="fa fa-reply"></i></a>
+				<!-- <a href="javascript:;" class="btn btn-default" data-url="http://www.tp-shop.cn/Doc/Index/article/id/1012/developer/user.html" onclick="get_help(this)"><i class="fa fa-question-circle"></i> 帮助</a> -->
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-list"></i> 编辑设计师</h3>
+                </div>
+                <div class="panel-body ">
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a href="#tab_tongyong" data-toggle="tab">通用信息</a>
+                        </li>
+                        <!-- <li><a href="#tab_goods_desc" data-toggle="tab">描述信息</a></li>-->
+                        <li>
+                            <a href="#tab_goods_images" data-toggle="tab">作品相册</a>
+                        </li>
+
+                    </ul>
+                    <!--表单数据-->
+                    <form method="post" id="handleposition" action="{:U('Admin/Design/designHandle')}">
+                        <!--通用信息-->
+                    <div class="tab-content col-md-10">
+                        <div class="tab-pane active" id="tab_tongyong">
+                            <table class="table table-bordered">
+                                <tbody>
+                                <!--<tr>-->
+                                    <!--<td>是否启用：</td>-->
+                                    <!--<td>-->
+                                        <!--<input type="radio" name="type" value="1" <if condition="$info[type] eq 1"> checked="checked"</if>> 是-->
+                                        <!--<input type="radio" name="type" value="0" <if condition="$info[type] eq 0"> checked="checked"</if>> 否-->
+                                    <!--</td>-->
+                                <!--</tr>-->
+                                <tr>
+                                    <td class="col-sm-2">设计师名字：</td>
+                                    <td class="col-xs-4">
+                                        <input type="text" class="form-control" name="name" value="{$info.name}" >
+                                        <span id="err_attr_name" style="color:#F00; display:none;"></span>
+                                    </td>
+                                </tr>
+                                <tr id="gift_pack">
+                                <td>职称：
+                                    <p>（首页默认用第一个职称）</p>
+                                </td>
+                                <td>
+                                    <div class="col-xs-4" id="job">
+                                        <volist name="info.job" id="vo">
+                                            <div>
+                                                <input type="text"  name="job[]" class="form-control" value="{$vo}"><a onclick="deljob(this)"  class="btn">删除</a>
+                                            </div>
+                                        </volist>
+                                    </div>
+                                    <div class="col-xs-3" id="goods_ids">
+                                        <input class="btn btn-primary" type="button" onclick="addjob()" value="添加职称">
+                                    </div>
+
+                                </td>
+
+                                </tr>
+                                <tr>
+                                    <td>设计评分：</td>
+                                    <td>
+                                        <select name="level" class="input-sm">
+
+                                            <option value="1" <if condition="$info[level] eq 1">selected</if>>1</option>
+                                            <option value="2" <if condition="$info[level] eq 2">selected</if>>2</option>
+                                            <option value="3" <if condition="$info[level] eq 3">selected</if>>3</option>
+                                            <option value="4" <if condition="$info[level] eq 4">selected</if>>4</option>
+                                            <option value="5" <if condition="$info[level] eq 5">selected</if>>5</option>
+
+                                        </select>
+                                    </td>
+                                </tr>
+                                <td>服务时间：</td>
+                                <td>
+                                    <div class="col-xs-4" id="server_time">
+                                        <volist name="info.server_time" id="vo">
+                                            <div>
+                                                <input type="text"  name="server_time[]" class="form-control" value="{$vo}"><a onclick="deltime(this)"  class="btn">删除</a>
+                                            </div>
+                                        </volist>
+                                    </div>
+                                    <div class="col-xs-3" >
+                                        <input class="btn btn-primary" type="button" onclick="addtime()" value="添加时间">
+                                    </div>
+                                </td>
+                                </tr>
+                                <td>可提供的定制服务：</td>
+                                <td>
+                                    <div class="col-xs-4" id="server">
+                                        <volist name="info.server" id="vo">
+                                            <div>
+                                                <input type="text"  name="server[]" class="form-control" value="{$vo}"><a onclick="delserver(this)"  class="btn">删除</a>
+                                            </div>
+                                        </volist>
+                                    </div>
+                                    <div class="col-xs-3" >
+                                        <input class="btn btn-primary" type="button" onclick="addserver()" value="添加服务">
+                                    </div>
+                                </td>
+                                </tr>
+                                <tr>
+                                    <td>服务范围:</td>
+                                    <td>
+                                        <input type="text" value="{$info.range}" name="range" class="form-control" style="width:350px;"/>
+                                        <span id="err_goods_sku" style="color:#F00; display:none;"></span></td>
+                                </tr>
+                                <tr>
+                                    <td>预付定金:</td>
+                                    <td>
+                                        <input type="text" value="{$info.money}" name="money" class="form-control" style="width:150px;" onkeyup="this.value=this.value.replace(/[^\d.]/g,'')" onpaste="this.value=this.value.replace(/[^\d.]/g,'')" />
+                                        <span id="err_prepay_price" style="color:#F00; display:none"></span></td>
+                                </tr>
+
+                                <tr>
+                                    <td>设计师头像:</td>
+                                    <td>
+                                        <input type="button" value="上传图片"  onclick="GetUploadify(1,'','goods','call_back');"/>
+                                        <input type="text" class="input-sm"  name="headurl" id="original_img" value="{$info.headurl}"/>
+                                        <if condition="$info['headurl'] neq null">
+                                            &nbsp;&nbsp; <a target="_blank" href="{$info.headurl}" id="original_img2"> <img width="25" height="25" src="/Public/images/image_icon.jpg"> </a>
+                                        </if><span id="err_original_img" style="color:#F00; display:none;"></span></td>
+                                </tr>
+                                <tr>
+                                    <td>设计师照片:</td>
+                                    <td>
+                                        <input type="button" value="上传图片"  onclick="GetUploadify(1,'','goods','call_back3');"/>
+                                        <input type="text" class="input-sm"  name="picture" id="picture" value="{$info.picture}"/>
+                                        <if condition="$info['picture'] neq null">
+                                            &nbsp;&nbsp; <a target="_blank" href="{$info.picture}" id="picture2"> <img width="25" height="25" src="/Public/images/image_icon.jpg"> </a>
+                                        </if><span id="err_picture" style="color:#F00; display:none;"></span></td>
+                                </tr>
+                                <tr>
+                                    <td>代表作品:</td>
+                                    <td>
+                                        <input type="button" value="上传图片"  onclick="GetUploadify(1,'','goods','call_back4');"/>
+                                        <input type="text" class="input-sm"  name="goodsimg" id="goodsimg" value="{$info.goodsimg}"/>
+                                        <if condition="$info['goodsimg'] neq null">
+                                            &nbsp;&nbsp; <a target="_blank" href="{$info.goodsimg}" id="goodsimg2"> <img width="25" height="25" src="/Public/images/image_icon.jpg"> </a>
+                                        </if><span id="err_goodsimg" style="color:#F00; display:none;"></span></td>
+                                </tr>
+                                <tr>
+                                    <td>设计师简介:</td>
+                                    <td width="85%" >			<textarea class="span12" id="goods_content" name="desc" title="">{$info.desc}</textarea><span id="err_goods_content" style="color:#F00; display:none;"></span></td>
+                                </tr>
+
+                                <tr>
+                                    <td>默认排序：</td>
+                                    <td>
+                                        <input type="text" class="input-sm" name="orderby" value="{$info.orderby|default='50'}"  placeholder="50">
+                                    </td>
+                                </tr>
+                                </tbody>
+                                <!--<tfoot>-->
+                                	<!--<tr>-->
+                                	<!--<td><input type="hidden" name="act" value="{$act}">-->
+                                        <!--<input type="hidden" name="id" value="{$info.id}">-->
+                                	<!--</td>-->
+                                	<!--<td class="text-right"><input class="btn btn-primary" type="button" onclick="adsubmit()" value="保存"></td></tr>-->
+                                <!--</tfoot>-->
+                            </table>
+                        </div>
+                        <!-- 商品相册-->
+                        <div class="tab-pane" id="tab_goods_images">
+                            <table class="table table-bordered">
+                                <tbody>
+                                <tr>
+                                    <td>
+                                        <foreach name="design_images" item="vo" key="k" >
+                                            <div style="width:100px; text-align:center; margin: 5px; display:inline-block;" class="goods_xc">
+                                                <input type="hidden" value="{$vo['image_url']}" name="design_images[]">
+                                                <a onclick="" href="{$vo['image_url']}" target="_blank"><img width="100" height="100" src="{$vo['image_url']}"></a>
+                                                <br>
+                                                <a href="javascript:void(0)" onclick="ClearPicArr2(this,'{$vo['imgage_url']}')">删除</a>
+                                            </div>
+                                        </foreach>
+                                        <div class="goods_xc" style="width:100px; text-align:center; margin: 5px; display:inline-block;">
+                                            <input type="hidden" name="design_images[]" value="" />
+                                            <a href="javascript:void(0);" onclick="GetUploadify(10,'','goods','call_back2');"><img src="/Public/images/add-button.jpg" width="100" height="100" /></a>
+                                            <br/>
+                                            <a href="javascript:void(0)">&nbsp;&nbsp;</a>
+                                        </div></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="pull-right">
+                            <!--<input type="hidden" name="goods_id" value="{$goodsInfo.goods_id}">-->
+                            <input type="hidden" name="act" value="{$act}">
+                            <input type="hidden" name="id" value="{$info.id}">
+                            <td class="text-right"><input class="btn btn-primary" type="button" onclick="adsubmit()" value="保存"></td></tr>
+
+                            <!--<button class="btn btn-primary" onclick="ajax_submit_form('addEditGoodsForm','{:U('Goods/addEditGoods?is_ajax=1')}');" title="" data-toggle="tooltip" type="button" data-original-title="保存">-->
+                                <!--保存-->
+                            <!--</button>-->
+                        </div>
+                        <!--商品相册-->
+                    </div>
+			    	</form><!--表单数据-->
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<script>
+    // 上传商品图片成功回调函数
+    function call_back(fileurl_tmp) {
+        $("#original_img").val(fileurl_tmp);
+        $("#original_img2").attr('href', fileurl_tmp);
+    }
+    function call_back3(fileurl_tmp) {
+        $("#picture").val(fileurl_tmp);
+        $("#picture2").attr('href', fileurl_tmp);
+    }
+    function call_back4(fileurl_tmp) {
+        $("#goodsimg").val(fileurl_tmp);
+        $("#goodsimg2").attr('href', fileurl_tmp);
+    }
+    // 上传作品相册回调函数
+    function call_back2(paths) {
+        var last_div = $(".goods_xc:last").prop("outerHTML");
+        for( i = 0; i < paths.length; i++) {
+            $(".goods_xc:eq(0)").before(last_div);
+            // 插入一个 新图片
+            $(".goods_xc:eq(0)").find('a:eq(0)').attr('href', paths[i]).attr('onclick', '').attr('target', "_blank");
+            // 修改他的链接地址
+            $(".goods_xc:eq(0)").find('img').attr('src', paths[i]);
+            // 修改他的图片路径
+            $(".goods_xc:eq(0)").find('a:eq(1)').attr('onclick', "ClearPicArr2(this,'" + paths[i] + "')").text('删除');
+            $(".goods_xc:eq(0)").find('input').val(paths[i]);
+            // 设置隐藏域 要提交的值
+        }
+    }
+    /*
+     * 上传之后删除组图input
+     * @access   public
+     * @val      string  删除的图片input
+     */
+    function ClearPicArr2(obj, path) {
+        $.ajax({
+            type : 'GET',
+            url : "{:U('Admin/Uploadify/delupload')}",
+            data : {
+                action : "del",
+                filename : path
+            },
+            success : function() {
+                $(obj).parent().remove();
+                // 删除完服务器的, 再删除 html上的图片
+            }
+        });
+    }
+    function addjob(){
+        var str='<div><input type="text" name="job[]" class="form-control" >' +
+                '<a onclick="deljob(this)" class="btn">删除</a>';
+        $('#job').append(str);
+    }
+    //删除职称
+    function deljob(obj){
+        $(obj).parent().remove()
+    }
+    function addtime(){
+        var str='<div><input type="text" name="server_time[]" class="form-control" >' +
+                '<a onclick="deltime(this)" class="btn">删除</a>';
+        $('#server_time').append(str);
+    }
+    //删除职称
+    function delserver(obj){
+        $(obj).parent().remove()
+    }
+    function addserver(){
+        var str='<div><input type="text" name="server[]" class="form-control" >' +
+                '<a onclick="delserver(this)" class="btn">删除</a>';
+        $('#server').append(str);
+    }
+    //删除职称
+    function deltime(obj){
+        $(obj).parent().remove()
+    }
+function adsubmit(){
+	$('#handleposition').submit();
+}
+
+$(document).ready(function() {
+
+	$('#start_time').daterangepicker({
+		format:"YYYY-MM-DD",
+		singleDatePicker: true,
+		showDropdowns: true,
+		minDate:'2016-01-01',
+		maxDate:'2030-01-01',
+		startDate:'2016-01-01',
+	    locale : {
+            applyLabel : '确定',
+            cancelLabel : '取消',
+            fromLabel : '起始时间',
+            toLabel : '结束时间',
+            customRangeLabel : '自定义',
+            daysOfWeek : [ '日', '一', '二', '三', '四', '五', '六' ],
+            monthNames : [ '一月', '二月', '三月', '四月', '五月', '六月','七月', '八月', '九月', '十月', '十一月', '十二月' ],
+            firstDay : 1
+        }
+	});
+
+	$('#end_time').daterangepicker({
+		format:"YYYY-MM-DD",
+		singleDatePicker: true,
+		showDropdowns: true,
+		minDate:'2016-01-01',
+		maxDate:'2030-01-01',
+		startDate:'2016-01-01',
+		/*
+        startDate: moment().startOf('day'),
+        endDate: moment(),
+        minDate: '01/01/2014',    //最小时间
+        maxDate : moment(), //最大时间
+        dateLimit : {
+            days : 30
+        }, //起止时间的最大间隔
+        showDropdowns : true,
+        showWeekNumbers : false, //是否显示第几周
+        timePicker : true, //是否显示小时和分钟
+        timePickerIncrement : 60, //时间的增量，单位为分钟
+        timePicker12Hour : false, //是否使用12小时制来显示时间
+        ranges : {
+            '最近1小时': [moment().subtract('hours',1), moment()],
+            '今日': [moment().startOf('day'), moment()],
+            '昨日': [moment().subtract('days', 1).startOf('day'), moment().subtract('days', 1).endOf('day')],
+            '最近7日': [moment().subtract('days', 6), moment()],
+            '最近30日': [moment().subtract('days', 29), moment()]
+        },
+        opens : 'right', //日期选择框的弹出位置
+        buttonClasses : [ 'btn btn-default' ],
+        applyClass : 'btn-small btn-primary blue',
+        cancelClass : 'btn-small',
+        format : 'YYYY-MM-DD HH:mm:ss', //控件中from和to 显示的日期格式
+        separator : ' to ',
+        */
+	    locale : {
+            applyLabel : '确定',
+            cancelLabel : '取消',
+            fromLabel : '起始时间',
+            toLabel : '结束时间',
+            customRangeLabel : '自定义',
+            daysOfWeek : [ '日', '一', '二', '三', '四', '五', '六' ],
+            monthNames : [ '一月', '二月', '三月', '四月', '五月', '六月','七月', '八月', '九月', '十月', '十一月', '十二月' ],
+            firstDay : 1
+        }
+	});
+
+});
+
+</script>
+ </body>
+ </html>

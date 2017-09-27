@@ -1,0 +1,1 @@
+a:9:{s:7:"is_mark";s:1:"1";s:8:"mark_txt";s:9:"美之钻";s:8:"mark_img";s:50:"/Public/upload/Public/2016/06-24/576cea1a9e57e.png";s:10:"mark_width";s:0:"";s:11:"mark_height";s:0:"";s:11:"mark_degree";s:2:"53";s:12:"mark_quality";s:2:"55";s:3:"sel";s:1:"9";s:9:"mark_type";s:4:"text";}

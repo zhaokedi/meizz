@@ -1,0 +1,463 @@
+<include file="Public/header" />
+<include file="Public/banner" />
+<!-- 专注钻石定制 -->
+<section class="section11">
+    <a href="" class="item1"><img src="__STATIC__/images/img11-1.jpg" alt=""></a>
+    <a href="" class="item2"><img src="__STATIC__/images/img11-2.jpg" alt=""></a>
+    <a href="" class="item3"><img src="__STATIC__/images/img11-3.jpg" alt=""></a>
+    <a href="" class="item4"><img src="__STATIC__/images/img11-4.jpg" alt=""></a>
+    <a href="" class="item5"><img src="__STATIC__/images/img11-5.jpg" alt=""></a>
+</section>
+
+<!-- 热门钻饰 -->
+<section class="section12" id="home_hot">
+    <div class="title">
+        <h3>热门钻饰 <a href="/Home/Goods/goodsList/id/6.html" class="more">更多&raquo;</a></h3>
+        <p>
+            <!--<volist name="hot" id="cat">-->
+            <!--<a <if condition="$i eq 1">class="on"</if> data-catid="{$cat['id']}" href="javascript:void(0);">{$cat['name']}</a>-->
+            <!--</volist>-->
+            <volist name="hot1" id="cat">
+                <a <if condition="$i eq 1">class="on"</if> data-catid="{$cat['id']}" href="javascript:void(0);">{$cat['name']}</a>
+            </volist>
+            <br/><br/>
+            <volist name="hot2" id="cat">
+                <a  data-catid="{$cat['id']}" href="javascript:void(0);">{$cat['name']}</a>
+            </volist>
+            <br/><br/>
+            <volist name="hot3" id="cat">
+                <a data-catid="{$cat['id']}" href="javascript:void(0);">{$cat['name']}</a>
+            </volist>
+        </p>
+    </div>
+    <volist name="hot" id="cat">
+    <div class="con cat_{$cat['id']}" <if condition="$i neq 1">style="display: none;"</if>>
+        <volist name="cat.hot_goods" id="goods">
+        <div class="item">
+            <a href="{:U('/Home/Goods/goodsInfo',array('id'=>$goods[goods_id]))}" title="{$goods['goods_name']}"><img src="{$goods['goods_id']|goods_thum_images=297,297}" alt="{$goods['goods_name']}"></a>
+            <p>{$goods['goods_name']|getSubstr=0,19}<span>￥{$goods['shop_price']}</span></p>
+            <p>已售{$goods['sales_sum']}件<span>累记评价{$goods['comment_count']}</span></p>
+        </div>
+        </volist>
+    </div>
+    </volist>
+
+    <!--<volist name="hot1" id="cat">-->
+        <!--<div class="con cat_{$cat['id']}" <if condition="$i neq 1">style="display: none;"</if>>-->
+        <!--<volist name="cat.hot_goods" id="goods">-->
+            <!--<div class="item">-->
+                <!--<a href="{:U('/Home/Goods/goodsInfo',array('id'=>$goods[goods_id]))}" title="{$goods['goods_name']}"><img src="{$goods['goods_id']|goods_thum_images=297,297}" alt="{$goods['goods_name']}"></a>-->
+                <!--<p>{$goods['goods_name']|getSubstr=0,19}<span>￥{$goods['shop_price']}</span></p>-->
+                <!--<p>已售{$goods['sales_sum']}件<span>累记评价{$goods['comment_count']}</span></p>-->
+            <!--</div>-->
+        <!--</volist>-->
+        <!--</div>-->
+    <!--</volist>-->
+    <!--<volist name="hot2" id="cat">-->
+        <!--<div class="con cat_{$cat['id']}" <if condition="$i neq 1">style="display: none;"</if>>-->
+        <!--<volist name="cat.hot_goods" id="goods">-->
+            <!--<div class="item">-->
+                <!--<a href="{:U('/Home/Goods/goodsInfo',array('id'=>$goods[goods_id]))}" title="{$goods['goods_name']}"><img src="{$goods['goods_id']|goods_thum_images=297,297}" alt="{$goods['goods_name']}"></a>-->
+                <!--<p>{$goods['goods_name']|getSubstr=0,19}<span>￥{$goods['shop_price']}</span></p>-->
+                <!--<p>已售{$goods['sales_sum']}件<span>累记评价{$goods['comment_count']}</span></p>-->
+            <!--</div>-->
+        <!--</volist>-->
+        <!--</div>-->
+    <!--</volist>-->
+    <!--<volist name="hot3" id="cat">-->
+        <!--<div class="con cat_{$cat['id']}" <if condition="$i neq 1">style="display: none;"</if>>-->
+        <!--<volist name="cat.hot_goods" id="goods">-->
+            <!--<div class="item">-->
+                <!--<a href="{:U('/Home/Goods/goodsInfo',array('id'=>$goods[goods_id]))}" title="{$goods['goods_name']}"><img src="{$goods['goods_id']|goods_thum_images=297,297}" alt="{$goods['goods_name']}"></a>-->
+                <!--<p>{$goods['goods_name']|getSubstr=0,19}<span>￥{$goods['shop_price']}</span></p>-->
+                <!--<p>已售{$goods['sales_sum']}件<span>累记评价{$goods['comment_count']}</span></p>-->
+            <!--</div>-->
+        <!--</volist>-->
+        <!--</div>-->
+    <!--</volist>-->
+</section>
+
+<!-- 壹圆许愿 -->
+<!--
+<section class="section13">
+    <div class="title">
+        <img src="__STATIC__/images/title11.png" alt="">
+        <div class="r">
+            <a href="">我的许愿</a><a href="">如何参加</a><a href="">更多许愿</a>&raquo;
+        </div>
+    </div>
+    <div class="con">
+        <div class="item">
+            <a href=""><img src="__STATIC__/images/img13-1.jpg" alt=""></a>
+            <div class="btm">
+                <p>50分裸钻（F色/八心八箭）</p>
+                <div class="percent"><span></span></div>
+                <p class="info">开奖进度<span>36%</span><a href="">马上许愿</a></p>
+            </div>
+        </div>
+        <div class="item">
+            <a href=""><img src="__STATIC__/images/img13-2.jpg" alt=""></a>
+            <div class="btm">
+                <p>50分裸钻（F色/八心八箭）</p>
+                <div class="percent"><span></span></div>
+                <p class="info">开奖进度<span>16%</span><a href="">马上许愿</a></p>
+            </div>
+        </div>
+        <div class="item">
+            <a href=""><img src="__STATIC__/images/img13-3.jpg" alt=""></a>
+            <div class="btm">
+                <p>50分裸钻（F色/八心八箭）</p>
+                <div class="percent"><span></span></div>
+                <p class="info">开奖进度<span>86%</span><a href="">马上许愿</a></p>
+            </div>
+        </div>
+        <div class="item">
+            <a href=""><img src="__STATIC__/images/img13-4.jpg" alt=""></a>
+            <div class="btm">
+                <p>50分裸钻（F色/八心八箭）</p>
+                <div class="percent"><span></span></div>
+                <p class="info">开奖进度<span>56%</span><a href="">马上许愿</a></p>
+            </div>
+        </div>
+    </div>
+</section>
+-->
+<!-- 自主个性定制 -->
+<section class="section14">
+    <div class="title">
+        <img src="__STATIC__/images/title12.png" alt="">
+        <div class="r">
+            <img src="__STATIC__/images/icon-talk.png" alt="">
+            不懂参数-求助客服
+            <input type="text" placeholder="15606955520">
+            <input type="submit" value="提 交">
+        </div>
+    </div>
+    <!-- 条件筛选371 -->
+    <div class="product-filter371">
+    <link rel="stylesheet" type="text/css" media="screen" href="__STATIC__/css/diy.css" />
+
+    <div class="u_filt_wp" id="diy_border">
+         <!-- 钻重 -->
+         <div class="diam_slide_sel">
+
+            <span class="diam_sech_tit">钻重</span>
+            <div class="diam_slide" id="pri_move">
+                                <input type="text" class="s_diam_weig searchWeight_borderL zmin" style="border: #dadada 1px solid;height: 23px;line-height: 23px;padding: 0 5px;min-width: 90px;border-radius: 23px;color: #8f7958;display: inline-block;" maxlength="6" value="0.3" onkeyup="this.value=this.value.replace(/[^\d.]/g,'')" onpaste="this.value=this.value.replace(/[^\d.]/g,'')" key="priStoneWeight" data="zmin">
+               <input type="text" class="s_diam_weig  searchWeight_borderR zmax"  style="border: #dadada 1px solid;height: 23px;line-height: 23px;padding: 0 5px;min-width: 90px;border-radius: 23px;color: #8f7958;display: inline-block;" maxlength="6" value="5" onkeyup="this.value=this.value.replace(/[^\d.]/g,'')" onpaste="this.value=this.value.replace(/[^\d.]/g,'')" key="priStoneWeight" data="zmax">
+               <div class="u_white_cover"></div>
+               <div class="diam_slide_ipt">
+                  <div class="layout-slider" style="width:99%;">
+                     <input id="Slider1" type="slider" name="area" key="priStoneWeight" data="z" value="0.3;5" style="display: none;">
+                  </div>
+               </div>
+            </div>
+         </div>
+          <!-- 价格 -->
+          <div class="diam_slide_sel" style="margin-right: 15px;">
+            <span class="diam_sech_tit">价格</span>
+            <div class="diam_slide">
+                <input type="text" class="s_diam_pri searchPrice_borderL vmin"  style="border: #dadada 1px solid;height: 23px;line-height: 23px;padding: 0 5px;min-width: 90px;border-radius: 23px;color: #8f7958;display: inline-block;" maxlength="7" value="2000" onkeyup="this.value=this.value.replace(/[^\d,]/g,'') " onpaste="this.value=this.value.replace(/[^\d]/g,'')" key="salePrice" data="vmin">
+            <input type="text" class="s_diam_pri searchPrice_borderR vmax"  style="border: #dadada 1px solid;height: 23px;line-height: 23px;padding: 0 5px;min-width: 90px;border-radius: 23px;color: #8f7958;display: inline-block;" maxlength="7" value="100000" onkeyup="this.value=this.value.replace(/[^\d,]/g,'') " onpaste="this.value=this.value.replace(/[^\d]/g,'')" key="salePrice" data="vmax">
+               <div class="u_white_cover"></div>
+               <div class="diam_slide_ipt">
+                  <div class="layout-slider" style="width:99%;">
+                     <input id="Slider2" type="slider" name="area" key="salePrice" data="v" value="2000;100000" style="display: none;">
+                  </div>
+               </div>
+            </div>
+         </div>
+          <!-- 滑动end -->
+ </div>
+ <script type="text/javascript" src="__STATIC__/js/diy_jquerysliderhuadongjq.js"></script>
+<script type="text/javascript" src="__STATIC__/js/diy_huadongxn.js?r212814"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+        //手输价格或者钻重
+        jSliderInput();
+
+    });
+	var min= $('#pri_move').find('input.zmin').attr('value');
+    var max= $('#pri_move').find('input.zmax').attr('value');
+   $('#Slider1').attr('value',min+';'+max);
+   $("#Slider1").slider({ from: parseFloat(min), to: parseFloat(max), limits: false, step: 0.01, round: 2, skin: "plastic" });
+   $("#Slider2").slider({ from: 2000, to: 100000, limits: false, step: 100, round: 1, skin: "plastic" });
+   //ajax_page();
+</script>
+        <div class="left">
+            <ul class="ul2 show">
+             <if condition="!empty($filter_spec1)">
+                    <foreach name="filter_spec1" item="v" key="k">
+                        <li data-num="pre{$k}" class="li8"><span>{$v.name}</span>
+                            <foreach name="v['item']" item="v2" key="k2">
+                                <if condition="empty($v2['imgurl'])">
+                                    <em data-key="{$v2['id']}" data-pkey="{$k}"><i data-key="{$v2['id']}" data-pkey="{$k}"></i>{$v2['item']}</em>
+                                <else />
+                                   <em data-key="{$v2['id']}" data-pkey="{$k}"><img src="{$v2['imgurl']}" alt=""></em>
+                                </if>
+                            </foreach>
+                        </li>
+                    </foreach>
+             </if>
+            </ul>
+        </div>
+        <div class="right">
+            <ul class="ul2 show">
+                <if condition="!empty($filter_spec2)">
+                    <foreach name="filter_spec2" item="v" key="k">
+                        <li data-num="pre{$k}" class="li8"><span>{$v.name}</span>
+                            <foreach name="v['item']" item="v2" key="k2">
+                                <if condition="empty($v2['imgurl'])">
+                                    <em data-key="{$v2['id']}" data-pkey="{$k}"><i data-key="{$v2['id']}" data-pkey="{$k}"></i>{$v2['item']}</em>
+                                <else />
+                                   <em data-key="{$v2['id']}" data-pkey="{$k}"><img src="{$v2['imgurl']}" alt=""></em>
+                                </if>
+                            </foreach>
+                        </li>
+                    </foreach>
+              </if>
+            </ul>
+        </div>
+        <div class="cf"></div>
+        <div class="resault">
+            <div class="left2" id="showdiy">
+
+            </div>
+            <input id="showtype" type="hidden" name="showtype" value="" style="display: none;">
+            <div class="right2">
+                <a href="javascript:void(0);" class="btn1" id="btn1" style="display:none">查看详情</a>
+                <a href="{:U('/Home/Goods/divgoodsList')}" class="btn2">更多定制</a>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- 钻石工坊研究中心 -->
+<section class="section15" id="yanjiu">
+    <img src="__STATIC__/images/title13.png" alt="" class="title">
+    <div class="item">
+        <a href=""><img src="__STATIC__/images/img14-1.jpg" alt=""></a>
+        <div class="btm">
+            <volist name="article_list" id="vo" offset="0" length="4">
+            <a href="{:U('Article/detail',array('article_id'=>$vo['article_id']))}">{$vo.title}</a>
+            </volist>
+        </div>
+    </div>
+    <div class="item">
+        <a href=""><img src="__STATIC__/images/img14-2.jpg" alt=""></a>
+        <div class="btm">
+            <volist name="article_list" id="vo" offset="4" length="4">
+                <a href="{:U('Article/detail',array('article_id'=>$vo['article_id']))}">{$vo.title}</a>
+            </volist>
+        </div>
+    </div>
+</section>
+
+<style>
+    .section16 .yyCont{ width:100%; margin-top:30px; padding:60px 0 80px 130px; background:url(__STATIC__/images/yuyue_img01.jpg) right top no-repeat;}
+    .section16 .yyCont b{ color:#8f7958; font-weight:normal;}
+    .section16 .yyCont input{ border-radius:3px ; width:240px ;}
+    .section16 .yyCont select{ width:240px; border-radius:3px ; outline: none; margin-left: 10px; height: 30px; box-shadow: inset 1px 2px 5px rgba(0, 0, 0, 0.08); border: solid 1px #e2e2e2;}
+    .section16 .yyCont button{ width:298px; height:40px; background-color:#8f7958; border-radius:3px; border:none; text-align:center; color:#fff;}
+</style>
+<section class="section16">
+    <div class="title">预约进店</div>
+    <div class="yyCont">
+        <form id="pointForm" name="pointForm" method="post" onsubmit="return check_submit()">
+            <b>您的姓名</b><input type="text" name="username" id="username">
+            <div style="height:20px;"></div>
+            <b>手机号码</b><input type="text" name="mobile" id="mobile" onblur="checkMobilePhone(this.value)"><span id="mobile_phone_notice"></span>
+            <div style="height:20px;"></div>
+            <b>预约时间</b><input type="text" name="yuyue_time" id="yuyue_time" readonly onclick="WdatePicker({lang:'zh-cn',skin:'twoer'})">
+            <div style="height:20px;"></div>
+            <b>预约门店</b>
+            <select name="store_id">
+                <volist name="store_list" id="list" key="k">
+                <option value="{$list['id']}"> {$list[name]}</option>
+                </volist>
+            </select>
+            <div style="height:20px;"></div>
+            <b>预约类型</b>
+            <select name="type_id">
+                <volist name="apointtypelist" id="vo">
+                    <option value="{$vo.id}">{$vo.type_name}</option>
+                </volist>
+            </select>
+            <div style="height:20px;"></div>
+            <button type="submit">提交</button>
+        </form>
+    </div>
+</section>
+
+
+<!-- 体验中心 -->
+<section class="section16">
+    <div class="title">体验中心</div>
+    <div class="con">
+        <img src="__STATIC__/images/img15.png" alt="">
+    </div>
+    <div class="btm">
+        <img src="__STATIC__/images/icon-help.png" alt="">
+        发送地址到手机
+        <input type="text" placeholder="15606955520">
+        <input type="submit" value="提 交">
+        <a href="">联系客服上门服务</a>
+        <a href="">神州专车免费使用</a>
+    </div>
+</section>
+<!-- 全国电商中心 -->
+<section class="section17">
+    <div class="title">
+        <span>全国电商中心</span>
+        <i>售前咨询 400 800 6688-801</i>
+        <i>配货中心 400 800 6688-802</i>
+        <i>物流部 400 800 6688-803</i>
+        <i>售后保养 400 800 6688-804</i>
+    </div>
+    <ul>
+        <li><img src="__STATIC__/images/icon11-1.png" alt="">全国免费配送</li>
+        <li><img src="__STATIC__/images/icon11-2.png" alt="">货到付款</li>
+        <li><img src="__STATIC__/images/icon11-3.png" alt="">轻松分期购</li>
+        <li><img src="__STATIC__/images/icon11-4.png" alt="">钻石以小换大</li>
+        <li><img src="__STATIC__/images/icon11-5.png" alt="">钻石一钻2证</li>
+        <li><img src="__STATIC__/images/icon11-6.png" alt="">7天免费退换</li>
+        <li><img src="__STATIC__/images/icon11-7.png" alt="">终身保养</li>
+    </ul>
+</section>
+<include file="Public/footer" />
+<if condition="$tpshop_config['indexad_ad_show'] neq '1'">
+   <div id="indexad" class="indexad" style="width:{$tpshop_config['indexad_ad_width']}px;height:{$tpshop_config['indexad_ad_height']+15}px;background:{$tpshop_config['indexad_bgcolor']}; overflow:hidden;" >
+      <if condition="$tpshop_config['indexad_media_type'] eq '0'">
+          <div class="float_top">
+                <a id="btn_close" href="javascript:;" onclick="closead();" class="close"></a>
+          </div>
+          <empty name="tpshop_config['indexad_ad_link']">
+              <IMG src="{$tpshop_config['indexad_ad_code']}" width="100%" height="{$tpshop_config['indexad_ad_height']}px" border=0>
+          <else />
+              <a href="{$tpshop_config['indexad_ad_link']}" target="_blank"><IMG src="{$tpshop_config['indexad_ad_code']}" width="100%" height="100%" border=0></a>
+          </empty>
+      <elseif condition="$tpshop_config['indexad_media_type'] eq '1'" />
+          <div class="float_layer" style="background:{$tpshop_config['indexad_bgcolor']};">
+            <div class="float_top">
+                <a id="btn_close" href="javascript:;" onclick="closead();" class="close"></a>
+            </div>
+            <div class="content">
+                <div class="wrap">
+                     <object type="application/x-shockwave-flash" data="{$tpshop_config['indexad_ad_code']}" width="{$tpshop_config['indexad_ad_width']}" height="{$tpshop_config['indexad_ad_height']}" plugspace="http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash" id="vcastr3">
+                     <param name="movie" value="{$tpshop_config['indexad_ad_code']}" />
+                     <param name="allowFullScreen" value="true" />
+                     <param name="BGColor" value="#000000"/>
+                     <embed width="{$tpshop_config['indexad_ad_width']}px" height="{$tpshop_config['indexad_ad_height']}px" src="{$tpshop_config['indexad_ad_code']}" quality="autohigh" wmode="transparent" type="application/x-shockwave-flash" allowfullscreen="true" plugspace="http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash"></embed>
+                     </object>
+                </div>
+          </div>
+        </div>
+      <elseif condition="$tpshop_config['indexad_media_type'] eq '2'" />
+      <div class="float_top">
+                <a id="btn_close" href="javascript:;" onclick="closead();" class="close"></a>
+            </div>
+      {$tpshop_config['indexad_contents']|htmlspecialchars_decode}
+      <elseif condition="$tpshop_config['indexad_media_type'] eq '3'" />
+      <div class="float_top">
+                <a id="btn_close" href="javascript:;" onclick="closead();" class="close"></a>
+            </div>
+      <if condition="$tpshop_config['indexad_ad_link'] neq ''">
+              <a href="{$tpshop_config['indexad_ad_link']}" target="_blank">{$tpshop_config['indexad_contents']}</a>
+          <else>
+              {$tpshop_config['indexad_contents']}
+          </if>
+      </if>
+   </div>
+<script>
+    function check_submit()
+    {
+        var username = $.trim($("#pointForm").find('#username').val());
+        var mobile = $("#pointForm").find('#mobile').val();
+
+        if(username.length >0 && mobile.length > 0 )
+        {
+            return true;
+        } else{
+            return false;
+        }
+
+    }
+    function checkMobilePhone(mobile){
+        if(mobile == ''){
+            $('#mobile_phone_notice').css('color','red');
+            $('#mobile_phone_notice').html('* 手机号码不能为空');
+//            flag = false;
+        }else if(checkMobile(mobile)){
+            $('#mobile_phone_notice').css('color','green');
+            $('#mobile_phone_notice').html('');
+//            flag = true;
+        }else{
+            $('#mobile_phone_notice').css('color','red');
+            $('#mobile_phone_notice').html('* 手机号码格式不正确');
+//            flag = false;
+        }
+    }
+
+scrollx({
+	id:'indexad',
+	<if condition="$tpshop_config['indexad_pid'] eq '0'">
+	f:1
+	</if>
+	<if condition="$tpshop_config['indexad_pid'] eq '1'">
+	l:0,
+	f:1
+	</if>
+	<if condition="$tpshop_config['indexad_pid'] eq '2'">
+	l:0,
+	t:200,
+	f:1
+	</if>
+	<if condition="$tpshop_config['indexad_pid'] eq '4'">
+	t:200,
+	f:1
+	</if>
+})
+/*
+id 你要滚动的内容的id
+l 横坐标的位置 不写为紧贴右边
+t 你要放在页面的那个位置默认是贴着底边 0是贴着顶边
+f 1表示固定 不写或者0表示滚动
+*/
+function closead()
+{
+  $("#indexad").hide();
+  oDiv.style.display = 'none';
+  $("#indexad").html('');
+}
+
+</script>
+<script>
+function ChangeState(datakey,datapkey){
+	var diyzz="0;5";
+	var diyprice=$("#Slider2").val();
+	var showtype=$("#showtype").val();
+   $.ajax({
+	       type:'get',
+		   url:"{:U('Home/Goods/showdiy')}",
+		   data:{key:datakey,pkey:datapkey,slider1:Slider1.defaultValue,slider2:Slider2.defaultValue,showtype:showtype},
+		   dataType:'json',
+		   success:function(data){
+			   if(data!=null)
+			   {
+				   if(data.showtype!=null)
+				   {
+				   $("#showdiy").html(data.showtype);
+				   $('#btn1').attr('href',"/Home/Goods/diygoodsInfo/id/"+data.goods_id+"/diytype/1");
+				   $('#btn1').show();
+				   }else
+				   {
+					   $("#showdiy").html('');
+				   $('#btn1').attr('href',"javascript:void(0)");
+				   $('#btn1').hide();
+				   }
+				   $("#showtype").val(data.specs);
+			   }
+		   }
+   })
+}
+	</script>
+</if>

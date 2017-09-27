@@ -1,0 +1,123 @@
+<include file="Public/min-header"/>
+
+<div class="wrapper">
+    <include file="Public/breadcrumb"/>
+    <section class="content ">
+        <!-- Main content -->
+        <div class="container-fluid">
+            <div class="pull-right">
+                <a href="javascript:history.go(-1)" data-toggle="tooltip" title="" class="btn btn-default" data-original-title="返回"><i class="fa fa-reply"></i></a>
+				<!-- <a href="javascript:;" class="btn btn-default" data-url="http://www.tp-shop.cn/Doc/Index/article/id/1012/developer/user.html" onclick="get_help(this)"><i class="fa fa-question-circle"></i> 帮助</a> -->
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-list"></i> 添加广告</h3>
+                </div>
+                <div class="panel-body ">
+                    <!--表单数据-->
+                    <form method="post" id="handleposition" action="{:U('Admin/Prize/prizeHandle')}">
+                        <!--通用信息-->
+                    <div class="tab-content col-md-10">
+                        <div class="tab-pane active" id="tab_tongyong">
+                            <table class="table table-bordered">
+                                <tbody>
+                                <tr>
+                                    <td class="col-sm-2">奖品名称：</td>
+                                    <td class="col-sm-8">
+                                        <input type="text" class="form-control" name="name" value="{$info.name}" >
+                                        <span id="err_attr_name" style="color:#F00; display:none;"></span>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>奖品所属活动：</td>
+                                    <td>
+                                        <select name="pdid" class="input-sm">
+                                            <volist name="prize_draw" id="item">
+                                                   <option value="{$item.id}" <if condition="$info[pdid] eq $item[id]">selected</if>>{$item.name}</option>
+                                           </volist>
+                                        </select>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>奖品类型：</td>
+                                    <td>
+                                        <label> <input type="radio" name="type"  value="1" <if condition="$info[type] eq 1">checked</if>>奖品</label>
+                                        <label> <input type="radio" name="type" value="2" <if condition="$info[type] eq 2">checked</if>> 未中奖提示语</label>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td class="col-sm-2">剩余数量：</td>
+                                    <td class="col-sm-8">
+                                        <input type="text" class="form-control" name="now_num" value="{$info.now_num}" >
+                                        <span  style="color:#F00; display:none;"></span>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td class="col-sm-2">总数量：</td>
+                                    <td class="col-sm-8">
+                                        <input type="text" class="form-control" name="total_num" value="{$info.total_num}" >
+                                        <span  style="color:#F00; display:none;"></span>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td class="col-sm-2">概率：</td>
+                                    <td class="col-sm-8">
+                                        <input type="text" class="form-control" name="chance" value="{$info.chance}" >
+                                        <span id="" style="color:#F00; display:none;"></span>
+                                    </td>
+                                    <td class="col-sm-2">
+                                        <p>抽中概率为（当前奖品概率/所有奖品概率总和） </p>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>奖品小图标：</td>
+                                    <td>
+                      					<div class="col-sm-4">
+                      						<input type="text" class="form-control" style="width:304px;margin-left:-15px;" name="icon" id="icon" value="{$info.icon}" >
+                      					</div>
+                      					<div class="col-sm-2">
+                                        	<input type="button" class="btn btn-default" onClick="GetUploadify(1,'icon','prize','')"  value="上传图片"/>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>默认排序：</td>
+                                    <td>
+                                        <input type="text" class="input-sm" name="orderby" value="{$info.orderby}"  placeholder="50">
+                                    </td>
+                                </tr>
+                                </tbody>
+                                <tfoot>
+                                	<tr>
+                                	<td><input type="hidden" name="act" value="{$act}">
+                                        <input type="hidden" name="prize_id" value="{$info.prize_id}">
+                                	</td>
+                                	<td class="text-right"><input class="btn btn-primary" type="button" onclick="adsubmit()" value="保存"></td></tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+			    	</form><!--表单数据-->
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<script>
+function adsubmit(){
+	$('#handleposition').submit();
+}
+
+
+
+
+</script>
+ </body>
+ </html>

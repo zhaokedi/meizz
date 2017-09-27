@@ -1,0 +1,119 @@
+
+<!DOCTYPE html>
+<html dir="ltr" lang="cn">
+<head>
+    <meta charset="UTF-8" />
+    <title>订单打印</title>
+    <link href="__PUBLIC__/bootstrap/css/bootstrap.css" rel="stylesheet" media="all" />
+    <script type="text/javascript" src="__PUBLIC__/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/bootstrap/css/bootstrap.min.css"></script>
+    <link href="__PUBLIC__/bootstrap/css/font-awesome.min.css" type="text/css" rel="stylesheet" />
+    <style media="print" type="text/css">.noprint{display:none}</style>
+    <!--<link type="text/css" href="view/stylesheet/stylesheet.css" rel="stylesheet" media="all" />-->
+</head>
+<body>
+<div class="container">
+    <div style="page-break-after: always;">
+        <h1 class="text-center">订单信息</h1>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <td style="width: 50%;">发送自</td>
+                <td style="width: 50%;">订单详情</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <if condition="stripos($printstr,'|add|') nheq false">
+                    <address>
+                    <strong>{$shop.store_name}</strong><br />
+                    {$shop.address}            </address>
+                    </if>
+                    <if condition="stripos($printstr,'|tel|') nheq false">
+                    <b>电话:</b> {$shop.phone}<br />
+                    </if>
+                    <if condition="stripos($printstr,'|Email|') nheq false">
+                    <b>E-Mail:</b> {$shop.smtp_user}<br />
+                    </if>
+                    <if condition="stripos($printstr,'|web|') nheq false">
+                    <b>网址:</b> <a href="{$shop.tpshop_http}">{$shop.tpshop_http}</a>
+                    </if>
+                    </td>
+                    
+                    <td>
+                    <if condition="stripos($printstr,'|orderid|') nheq false">
+                    <b>订单 ID:</b> {$order.order_id}<br />
+                    </if>
+                    <if condition="stripos($printstr,'|time|') nheq false">
+                    <b>下单时间:</b> {$order.add_time|date='Y-m-d H:i',###}<br />
+                    </if>
+                    <if condition="stripos($printstr,'|username|') nheq false">
+                    <b>会   员:</b> {$order.consignee}<br />
+                    </if>
+                    <if condition="stripos($printstr,'|usertel|') nheq false">
+                    <b>会员电话:</b> {$order.mobile}<br />
+                    </if>
+                    <if condition="stripos($printstr,'|pay|') nheq false">
+                    <b>支付方式:</b> {$order.pay_name|default='其他方式'}
+                    </if>
+                    <if condition="stripos($printstr,'|shopping|') nheq false">
+                    <b>配送方式:</b> {$order.shipping_name}<br />
+                    </if>
+                    
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <if condition="stripos($printstr,'|owen|') nheq false">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <td style="width: 50%;"><b>到</b></td>
+                <td style="width: 50%;"><b>联系</b></td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>{$order.province}&nbsp;&nbsp;{$order.city}&nbsp;&nbsp;{$order.district}<br />{$order.address}</td>
+                <td>{$order.mobile}<br/>
+                    </td>
+            </tr>
+            </tbody>
+        </table>
+        </if>
+        <if condition="stripos($printstr,'|goods|') nheq false">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+
+                <td><b>商品</b></td>
+                <td><b>属性</b></td>
+                <td><b>数量</b></td>
+                <td><b>单价</b></td>
+                <td class="text-right"><b>小计</b></td>
+            </tr>
+            </thead>
+            <tbody>
+            <volist name="orderGoods" id="good">
+                <tr>
+                    <td>
+                        {$good.goods_name}
+                    </td>
+                    <td>{$good.spec_key_name}</td>
+                    <td>{$good.goods_num}</td>
+                    <td>{$good.goods_price}</td>
+                    <td class="text-right">{$good.goods_total}</td>
+                </tr>
+            </volist>
+
+            </tbody>
+        </table>
+        </if>
+    </div>
+    <div><input class="btn btn-default noprint" type="submit" onclick="window.print();" value="打印">
+</div>
+</div>
+
+</body>
+</html>

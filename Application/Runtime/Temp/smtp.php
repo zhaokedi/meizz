@@ -1,0 +1,1 @@
+a:5:{s:11:"smtp_server";s:18:"smtp.mxhichina.com";s:9:"smtp_port";s:2:"25";s:9:"smtp_user";s:16:"ckd@mweishop.com";s:8:"smtp_pwd";s:11:"123456789aA";s:8:"smtp_get";s:17:"3048327507@qq.com";}

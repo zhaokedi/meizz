@@ -1,0 +1,64 @@
+<include file="Public/min-header" />
+<div class="wrapper">
+	<include file="Public/breadcrumb"/>
+	<section class="content">
+       <div class="row">
+       		<div class="col-xs-12">
+	       		<div class="box">
+	             <div class="box-header">
+              		<nav class="navbar navbar-default">				
+	               		<div class="pull-right navbar-form">
+	               			<label><a class="btn btn-block btn-primary" href="{:U('Admin/Prize/prizedraw')}">新增抽奖活动</a></label>
+	               		</div>
+	               	</nav>	            
+	             </div>
+	             <div class="box-body">
+		           <div class="row">
+		            	<div class="col-sm-12">
+			              <table id="list-table" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+			                 <thead>
+			                   <tr role="row">
+			                   	   <th>活动ID</th>
+				                   <th>活动名称</th>
+				                   <th>开始时间</th>
+				                   <th>结束时间</th>
+				                   <th>活动描述</th>
+				                   <th>是否开启</th>
+				                   <th>操作</th>
+			                   </tr>
+			                 </thead>
+							<tbody>
+							  <foreach name="list" item="vo" key="k" >
+							  	<tr role="row">
+							  	 <td>{$vo.id}</td>
+			                     <td>{$vo.name}</td>
+			                     <td>{$vo.starttime|date="Y-m-d H:i:s",###}</td>
+			                     <td>{$vo.endtime|date="Y-m-d H:i:s",###}</td>
+			                     <td>{$vo.desc}</td>
+			                     <td>
+                                      <img width="20" height="20" src="__PUBLIC__/images/<if condition='$vo[is_open] eq 1'>yes.png<else />cancel.png</if>" onclick="changeTableVal('prize_draw','id','{$vo.id}','is_open',this)"/>
+                                  </td>
+			                     <td>
+			                      <a class="btn btn-info" href="{:U('Admin/Prize/prizeList',array('pid'=>$vo['id']))}">查看奖品</a>
+			                      <a class="btn btn-primary" href="{:U('Admin/Prize/prizedraw',array('act'=>'edit','id'=>$vo['id']))}"><i class="fa fa-pencil"></i></a>
+			                     
+								</td>
+			                   </tr>
+			                  </foreach>
+			                   </tbody>
+			               </table>
+		               </div>
+		          </div>
+		         	
+	              <div class="row">
+	              	    <div class="col-sm-6 text-left"></div>
+	                    <div class="col-sm-6 text-right">{$page}</div>		
+	              </div>
+	          </div>
+	        </div>
+       	</div>
+       </div>
+   </section>
+</div>
+</body>
+</html>

@@ -1,0 +1,128 @@
+<include file="Public/min-header"/>
+<div class="wrapper">
+  <section class="content">
+    <div class="container-fluid">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div id="ajax_return"> 
+			    <div class="table-responsive">
+			        <table class="table table-bordered table-hover" id="goos_table">
+			            <thead>
+			            <tr>
+                            <td class="text-left">选择</td>
+			                <td class="text-left">打印内容</td>            
+			            </tr>
+			            </thead>
+			            <tbody>
+                                    <tr>
+                                         <td class="text-left">
+                                            <input type="checkbox" checked="checked" value="goods"/>
+                                        </td>
+                                        <td class="text-left">商品明细</td>
+                                    </tr>
+                                     <tr>
+                                         <td class="text-left">
+                                            <input type="checkbox" checked="checked" value="orderid"/>
+                                        </td>
+                                        <td class="text-left">订单 ID</td>
+                                    </tr>
+                                     <tr>
+                                         <td class="text-left">
+                                            <input type="checkbox" checked="checked" value="time"/>
+                                        </td>
+                                        <td class="text-left">下单时间</td>
+                                    </tr>
+                                     <tr>
+                                         <td class="text-left">
+                                            <input type="checkbox" checked="checked" value="username"/>
+                                        </td>
+                                        <td class="text-left">会员姓名</td>
+                                    </tr>
+                                     <tr>
+                                         <td class="text-left">
+                                            <input type="checkbox" checked="checked" value="usertel"/>
+                                        </td>
+                                        <td class="text-left">会员电话</td>
+                                    </tr>
+                                     <tr>
+                                         <td class="text-left">
+                                            <input type="checkbox" checked="checked" value="pay"/>
+                                        </td>
+                                        <td class="text-left">支付方式</td>
+                                    </tr>
+                                    <tr>
+                                         <td class="text-left">
+                                            <input type="checkbox" checked="checked" value="shopping"/>
+                                        </td>
+                                        <td class="text-left">配送方式</td>
+                                    </tr>
+                                    <tr>
+                                         <td class="text-left">
+                                            <input type="checkbox" checked="checked" value="add"/>
+                                        </td>
+                                        <td class="text-left">商家地址</td>
+                                    </tr>
+                                    <tr>
+                                         <td class="text-left">
+                                            <input type="checkbox" checked="checked" value="tel"/>
+                                        </td>
+                                        <td class="text-left">商家电话</td>
+                                    </tr>
+                                    <tr>
+                                         <td class="text-left">
+                                            <input type="checkbox" checked="checked" value="Email"/>
+                                        </td>
+                                        <td class="text-left">商家E-Mail</td>
+                                    </tr>
+                                    <tr>
+                                         <td class="text-left">
+                                            <input type="checkbox" checked="checked" value="web"/>
+                                        </td>
+                                        <td class="text-left">网址</td>
+                                    </tr>
+                                    <tr>
+                                         <td class="text-left">
+                                            <input type="checkbox" checked="checked" value="owen"/>
+                                        </td>
+                                        <td class="text-left">收货信息</td>
+                                    </tr>
+	                        <tr>
+			                    <td class="text-right" colspan="2">
+			                        <a href="javascript:void(0)" onclick="select_type();" class="btn btn-info">确定</a>			                       
+								</td>
+                           </tr>     
+			            </tbody>
+			        </table>
+			    </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <script>
+  function select_type()
+  {	  
+  
+
+	   if($("input[type='checkbox']:checked").length == 0)
+	   {
+		   layer.alert('请选择打印内容', {icon: 2}); 
+		   return false;
+	   }
+	    var gotype="|";
+	    $("input[type='checkbox']").each(function(){
+			 if($(this).is(':checked') == false)
+		   {
+			   
+		   }else{
+			   gotype += $(this).val()+"|";
+		   }
+			
+	    });
+		var url = "/Admin/Order/mergeorder_print/order_sn_go/{$order_sn_go}/printstr/"+gotype;
+		window.open(url);
+  }    
+  </script>
+</div>
+</body>
+</html>
